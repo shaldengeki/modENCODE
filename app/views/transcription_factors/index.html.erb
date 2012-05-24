@@ -1,0 +1,29 @@
+<h1>Listing transcription_factors</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Flybase</th>
+    <th>Cg</th>
+    <th>Refseq</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @transcription_factors.each do |transcription_factor| %>
+  <tr>
+    <td><%= transcription_factor.name %></td>
+    <td><%= transcription_factor.flybase_id %></td>
+    <td><%= transcription_factor.cg_id %></td>
+    <td><%= transcription_factor.refseq_id %></td>
+    <td><%= link_to 'Show', transcription_factor %></td>
+    <td><%= link_to 'Edit', edit_transcription_factor_path(transcription_factor) %></td>
+    <td><%= link_to 'Destroy', transcription_factor, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Transcription factor', new_transcription_factor_path %>

@@ -1,0 +1,31 @@
+<h1>Listing reagents</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Transcription factor</th>
+    <th>Source</th>
+    <th>Reagent type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @reagents.each do |reagent| %>
+  <tr>
+    <td><%= reagent.name %></td>
+    <td><%= reagent.description %></td>
+    <td><%= reagent.transcription_factor %></td>
+    <td><%= reagent.source %></td>
+    <td><%= reagent.reagent_type %></td>
+    <td><%= link_to 'Show', reagent %></td>
+    <td><%= link_to 'Edit', edit_reagent_path(reagent) %></td>
+    <td><%= link_to 'Destroy', reagent, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Reagent', new_reagent_path %>

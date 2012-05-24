@@ -1,5 +1,12 @@
 ModENCODE::Application.routes.draw do
 
+  resources :reagents
+
+  resources :transcription_factors
+  resources :reagent_types
+  resources :sources
+
+  root :to => 'transcription_factors#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

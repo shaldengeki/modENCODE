@@ -1,0 +1,2 @@
+module ReagentTypesHelper
+end

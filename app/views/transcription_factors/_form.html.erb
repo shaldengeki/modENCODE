@@ -1,0 +1,33 @@
+<%= form_for(@transcription_factor) do |f| %>
+  <% if @transcription_factor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@transcription_factor.errors.count, "error") %> prohibited this transcription_factor from being saved:</h2>
+
+      <ul>
+      <% @transcription_factor.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :flybase_id %><br />
+    <%= f.text_field :flybase_id %>
+  </div>
+  <div class="field">
+    <%= f.label :cg_id %><br />
+    <%= f.text_field :cg_id %>
+  </div>
+  <div class="field">
+    <%= f.label :refseq_id %><br />
+    <%= f.text_field :refseq_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

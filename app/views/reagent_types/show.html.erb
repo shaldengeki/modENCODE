@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @reagent_type.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @reagent_type.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_reagent_type_path(@reagent_type) %> |
+<%= link_to 'Back', reagent_types_path %>

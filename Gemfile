@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead:
 gem 'rails'
-
 gem 'mysql2'
 gem 'jquery-rails'
 gem 'cancan'
@@ -14,10 +12,9 @@ group :assets do
   gem 'bootstrap-sass'
   gem 'coffee-rails'
   gem 'jquery-ui-rails'
-
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
-
+  gem 'execjs'
+  gem 'therubyracer', :platform => :ruby
   gem 'uglifier'
 end
 group :test, :development do
