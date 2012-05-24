@@ -1,25 +1,24 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead:
-gem 'rails', :git => 'git://github.com/rails/rails.git'
-gem 'active_record_deprecated_finders', :git => 'git://github.com/rails/active_record_deprecated_finders.git'
+gem 'rails'
 
 gem 'mysql2'
-gem 'jquery-rails', :git => 'git://github.com/rails/jquery-rails.git'
-gem 'cancan', :git => 'git://github.com/ryanb/cancan.git'
+gem 'jquery-rails'
+gem 'cancan'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', :git => 'git://github.com/rails/sass-rails.git'
-  gem 'bootstrap-sass', :git => 'git://github.com/thomas-mcdonald/bootstrap-sass.git'
-  gem 'coffee-rails', :git => 'git://github.com/rails/coffee-rails.git'
-  gem 'jquery-ui-rails', :git => 'git://github.com/joliss/jquery-ui-rails.git'
+  gem 'sass-rails'
+  gem 'bootstrap-sass'
+  gem 'coffee-rails'
+  gem 'jquery-ui-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', :git => 'git://github.com/lautis/uglifier.git'
+  gem 'uglifier'
 end
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
