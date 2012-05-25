@@ -2,8 +2,12 @@ source 'https://rubygems.org'
 
 gem 'rails'
 gem 'mysql2'
-gem 'jquery-rails'
+
+# To use ActiveModel has_secure_password
+gem 'bcrypt-ruby'
+
 gem 'cancan'
+gem 'jquery-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -28,9 +32,6 @@ group :cucumber do
   gem 'spork'
   gem 'launchy'
 end
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

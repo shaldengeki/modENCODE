@@ -1,4 +1,5 @@
 class SourcesController < ApplicationController
+  load_and_authorize_resource
   # GET /sources
   # GET /sources.json
   def index

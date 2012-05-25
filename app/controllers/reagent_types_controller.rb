@@ -1,4 +1,5 @@
 class ReagentTypesController < ApplicationController
+  load_and_authorize_resource
   # GET /reagent_types
   # GET /reagent_types.json
   def index

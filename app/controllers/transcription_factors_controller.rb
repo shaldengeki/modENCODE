@@ -1,4 +1,5 @@
 class TranscriptionFactorsController < ApplicationController
+  load_and_authorize_resource
   # GET /transcription_factors
   # GET /transcription_factors.json
   def index
