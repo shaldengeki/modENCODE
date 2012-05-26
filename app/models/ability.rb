@@ -6,10 +6,17 @@ class Ability
     can :read, :all
     if user.role? :normal
       can :update, User, :id => user.id
+
       can :update, Reagent
+
+      can :create, StatusUpdate
+      can :update, StatusUpdate do |statusupdate|
+        statusupdate.reagent.source_id == user.source_id
+      end
+      can :destroy, StatusUpdate, :user_id => user.id
     end
     if user.role? :admin
-      can :manage, [Reagent, Source, User, ReagentType, TranscriptionFactor]
+      can :manage, [Reagent, Source, User, ReagentType, TranscriptionFactor, Status, StatusUpdate]
     end
     # Define abilities for the passed in user here. For example:
     #

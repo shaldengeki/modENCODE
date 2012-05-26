@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
     ROLES.index(base_role.to_s) <= ROLES.index(role)
   end
   belongs_to :source
+  has_and_belongs_to_many :reagent
+  has_many :status_update
   attr_accessible :email, :name, :password, :password_confirmation, :source_id
   has_secure_password
 
@@ -14,7 +16,8 @@ class User < ActiveRecord::Base
   before_save :create_remember_token
 
   validates :name, presence: true,
-                    length: {maximum: 50}
+                    length: {maximum: 50},
+                    uniqueness: {case_sensitive: false}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence:   true,
                     format:     { with: VALID_EMAIL_REGEX },
@@ -24,9 +27,8 @@ class User < ActiveRecord::Base
                        :if => :validate_password?
   validates :password_confirmation, :presence => true,
                                     :if => :validate_password?
-  validates_inclusion_of :role, :in => ROLES, :message => "Invalid role.",
-                                :allow_nil => false,
-                                :allow_blank => false
+  validates :role, :presence => true,
+                    :inclusion => {:in => ROLES}
   def validate_password?
     password.present? || password_confirmation.present?
   end

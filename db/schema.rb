@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120525172905) do
+ActiveRecord::Schema.define(:version => 20120526042438) do
 
   create_table "reagent_types", :force => true do |t|
     t.string   "name"
@@ -34,12 +34,46 @@ ActiveRecord::Schema.define(:version => 20120525172905) do
   add_index "reagents", ["source_id"], :name => "index_reagents_on_source_id"
   add_index "reagents", ["transcription_factor_id"], :name => "index_reagents_on_transcription_factor_id"
 
+  create_table "reagents_users", :id => false, :force => true do |t|
+    t.integer "reagent_id", :null => false
+    t.integer "user_id",    :null => false
+  end
+
+  add_index "reagents_users", ["reagent_id"], :name => "index_reagents_users_on_reagent_id", :unique => true
+  add_index "reagents_users", ["user_id"], :name => "index_reagents_users_on_user_id", :unique => true
+
   create_table "sources", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "status_updates", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "status_id"
+    t.integer  "reagent_id"
+    t.datetime "time"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "status_updates", ["reagent_id"], :name => "index_status_updates_on_reagent_id"
+  add_index "status_updates", ["status_id"], :name => "index_status_updates_on_status_id"
+  add_index "status_updates", ["user_id"], :name => "index_status_updates_on_user_id"
+
+  create_table "statuses", :force => true do |t|
+    t.string   "name"
+    t.integer  "reagent_id"
+    t.boolean  "start"
+    t.boolean  "end"
+    t.integer  "position"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "statuses", ["reagent_id"], :name => "index_statuses_on_reagent_id"
 
   create_table "transcription_factors", :force => true do |t|
     t.string   "name"

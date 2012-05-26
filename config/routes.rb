@@ -1,5 +1,9 @@
 ModENCODE::Application.routes.draw do
 
+  resources :status_updates
+
+  resources :statuses
+
   resources :reagents
   resources :transcription_factors
   resources :reagent_types

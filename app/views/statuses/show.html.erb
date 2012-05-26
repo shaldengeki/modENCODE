@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @status.name %>
+</p>
+
+<p>
+  <b>Reagent:</b>
+  <%= @status.reagent %>
+</p>
+
+<p>
+  <b>Start:</b>
+  <%= @status.start %>
+</p>
+
+<p>
+  <b>End:</b>
+  <%= @status.end %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%= @status.position %>
+</p>
+
+
+<%= link_to 'Edit', edit_status_path(@status) %> |
+<%= link_to 'Back', statuses_path %>
