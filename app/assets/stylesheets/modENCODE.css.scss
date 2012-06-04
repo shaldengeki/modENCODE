@@ -1,3 +1,5 @@
+@import "bootswatch/journal/variables";
+
 @import "bootstrap";
 
 body {
@@ -5,3 +7,5 @@ body {
 }
 
 @import "bootstrap-responsive";
+
+@import "bootswatch/journal/bootswatch";

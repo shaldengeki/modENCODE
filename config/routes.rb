@@ -1,20 +1,25 @@
 ModENCODE::Application.routes.draw do
-
-  resources :status_updates
-
-  resources :statuses
-
-  resources :reagents
-  resources :transcription_factors
+  resources :attempts
+  resources :isoforms
+  resources :pipelines
   resources :reagent_types
+  resources :reagents
+  resources :sessions, only: [:create, :destroy]
   resources :sources
+  resources :statuses
+  resources :steps
+  resources :tags
+  resources :transcription_factors
   resources :users
-  resources :sessions, only: [:new, :create, :destroy]
 
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
-  
+  match '/feed', to: 'statuses#index'
+  get "pages/dashboard"
+  get "pages/contact"
+  get "pages/completionProgress"
+
   root :to => 'transcription_factors#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.

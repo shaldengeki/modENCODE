@@ -1,10 +1,10 @@
 class Status < ActiveRecord::Base
-  belongs_to :reagent
-  has_many :status_update
-  attr_accessible :end, :name, :position, :start, :reagent_id
+  belongs_to :attempt
+  belongs_to :user
+  belongs_to :step
+  attr_accessible :start, :end, :description, :attempt_id, :user_id, :step_id
 
-  validates :name, :presence => true,
-            :uniqueness => {:case_sensitive => false}
+  validates :description, :presence => true
   validates :start, :presence => true,
             :inclusion => {:in => [true, false]}
   validates :end, :presence => true,

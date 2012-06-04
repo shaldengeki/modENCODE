@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @isoform.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @isoform.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_isoform_path(@isoform) %> |
+<%= link_to 'Back', isoforms_path %>

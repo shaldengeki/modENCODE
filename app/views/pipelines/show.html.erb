@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @pipeline.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @pipeline.description %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%= @pipeline.source %>
+</p>
+
+<p>
+  <b>Reagent type:</b>
+  <%= @pipeline.reagent_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_pipeline_path(@pipeline) %> |
+<%= link_to 'Back', pipelines_path %>

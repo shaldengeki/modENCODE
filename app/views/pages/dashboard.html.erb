@@ -1,0 +1,176 @@
+<h1>Dashboard</h1>
+<div class="row">
+  <div class="span6">
+    <div id="progressPieChart"></div>​
+  </div>
+  <div class="span6">
+    <div class="row">
+      <div class="span1"><%= link_to 'White Lab', '#'  %></div><div class="progress progress-info span4"><div class="bar" style="width: 62%"></div></div><div class="span1">62%</div>
+    </div>
+    <div class="row">
+      <div class="span1"><%= link_to 'Fly Trap', '#' %></div><div class="progress progress-danger span4"><div class="bar" style="width: 35%"></div></div><div class="span1">35%</div>
+    </div>
+    <div class="row">
+      <div class="span1"><%= link_to 'MIMiC', '#' %></div><div class="progress progress-success span4"><div class="bar" style="width: 88%"></div></div><div class="span1">88%</div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="span6">
+    <h2>Recently Updated</h2>
+    <ul id="myTFRecentlyUpdated">
+      <li class="feedItem">
+        <em class="pull-right" time="0">5h</em>
+        <div class="feedText">
+          <%= link_to '#' do %><h5>Reagent 2: Recombineering in progress</h5><% end %>
+          Charles Guo started doing this thing to this factor.
+        </div>
+      </li>
+      <li class="feedItem">
+        <em class="pull-right" time="0">7h</em>
+        <div class="feedText">
+          <%= link_to '#' do %><h5>Reagent 1: Recombineering complete</h5><% end %>
+          Someone has completed recombineering.
+        </div>
+      </li>
+      <li class="feedItem">
+        <em class="pull-right" time="0">12h</em>
+        <div class="feedText">
+          <%= link_to '#' do %><h5>Reagent 3: Screening in progress</h5><% end %>
+          Someone else is now screening Reagent 3.
+        </div>
+      </li>
+      <%= link_to '#' do %><em>More...</em> <% end %>
+    </ul>
+  </div>
+  <div class="span6">
+    <h2>Nearing Completion</h2>
+    <ul id="myTFNearingCompletion">
+      <li class="feedItem">
+        <em class="pull-right" time="0">12h</em>
+        <div class="feedText">
+          <%= link_to '#' do %><h5>Reagent 3: Screening in progress</h5><% end %>
+          Someone else is now screening Reagent 3.
+        </div>
+      </li>
+      <%= link_to '#' do %><em>More...</em> <% end %>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="span6">
+    <h2>All Sources</h2>
+    <ul id="allSources">
+      <li class="feedItem">
+        <em class="pull-right" time="0">15m</em>
+        <div class="feedText">
+          <%= link_to '#' do %><h5>Fly Trap: Reagent 4</h5><% end %>
+          Another person is now screening Reagent 4.
+        </div>
+      </li>
+      <li class="feedItem">
+        <em class="pull-right" time="0">1h</em>
+        <div class="feedText">
+          <%= link_to '#' do %><h5>MIMiC: Reagent 6</h5><% end %>
+          This guy is sending Reagent 6 for injection.
+        </div>
+      </li>
+      <li class="feedItem">
+        <em class="pull-right" time="0">5h</em>
+        <div class="feedText">
+          <%= link_to '#' do %><h5>White Lab: Reagent 2</h5><% end %>
+          Charles Guo has started recombineering.
+        </div>
+      </li>
+      <%= link_to '#' do %><em>More...</em> <% end %>
+    </ul>
+  </div>
+</div>
+<script type="text/javascript">
+var data = <%= @pieChartData %>,
+    labels = ["Inactive", "In-Progress", "Completed"];
+
+var w = 350,
+    h = 300,
+    r = Math.min(w, h) / 2,
+    tweenDuration = 750,
+    colors = ['#DD514C', '#FAA732', '#1DB338'],
+    color = d3.scale.category10(),
+    donut = d3.layout.pie().sort(null),
+    arc = d3.svg.arc().innerRadius(r - 100).outerRadius(r);
+
+// ---------------------------------------------------------------------
+var svg = d3.select("#progressPieChart").append("svg:svg")
+    .attr("width", w).attr("height", h);
+
+var arc_grp = svg.append("svg:g")
+    .attr("class", "arcGrp")
+    .attr("transform", "translate(" + (w / 2) + "," + (h / 2) + ")");
+
+var label_group = svg.append("svg:g")
+    .attr("class", "lblGroup")
+    .attr("transform", "translate(" + (w / 2) + "," + (h / 2) + ")");
+
+// GROUP FOR CENTER TEXT
+var center_group = svg.append("svg:g")
+    .attr("class", "ctrGroup")
+    .attr("transform", "translate(" + (w / 2) + "," + (h / 2) + ")");
+
+// CENTER LABEL
+var pieLabel = center_group.append("svg:text")
+    .attr("dy", ".35em").attr("class", "chartLabel")
+    .attr("text-anchor", "middle")
+    .text("Total Progress");
+
+// DRAW ARC PATHS
+var arcs = arc_grp.selectAll("path")
+    .data(donut(data));
+arcs.enter().append("svg:path")
+    .attr("stroke", "white")
+    .attr("stroke-width", 0.5)
+    .attr("fill", function(d, i) {return colors[i];})
+    .attr("d", arc)
+    .each(function(d) {this._current = d});
+
+// DRAW SLICE LABELS
+var sliceLabel = label_group.selectAll("text")
+    .data(donut(data));
+sliceLabel.enter().append("svg:text")
+    .attr("class", "arcLabel")
+    .attr("transform", function(d) {return "translate(" + arc.centroid(d) + ")"; })
+    .attr("text-anchor", "middle")
+    .text(function(d, i) {return labels[i] + ": " + data[i] + "%"; });
+
+// --------- "PAY NO ATTENTION TO THE MAN BEHIND THE CURTAIN" ---------
+
+// Store the currently-displayed angles in this._current.
+// Then, interpolate from this._current to the new angles.
+function arcTween(a) {
+    var i = d3.interpolate(this._current, a);
+    this._current = i(0);
+    return function(t) {
+        return arc(i(t));
+    };
+}
+
+// update chart
+function updateChart(data) {
+  $.getJSON("/pages/completionProgress", function(data) {
+    arcs.data(donut(data)); // recompute angles, rebind data
+    arcs.transition().ease("elastic").duration(tweenDuration).attrTween("d", arcTween);
+
+    sliceLabel.data(donut(data));
+    sliceLabel.transition().ease("elastic").duration(tweenDuration)
+        .attr("transform", function(d) {return "translate(" + arc.centroid(d) + ")"; })
+        .style("fill-opacity", function(d) {return d.value==0 ? 1e-6 : 1;});
+    timeout = setTimeout(updateChart, 60000);
+  } );
+}
+
+// click handler
+$(document).ready(function() {
+  $.getJSON("/pages/completionProgress", function(data) {
+    updateChart(data);
+  } );
+});
+</script>

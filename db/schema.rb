@@ -11,7 +11,55 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526042438) do
+ActiveRecord::Schema.define(:version => 20120601191432) do
+
+  create_table "attempts", :force => true do |t|
+    t.integer  "pipeline_id"
+    t.integer  "reagent_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "attempts", ["pipeline_id"], :name => "index_attempts_on_pipeline_id"
+  add_index "attempts", ["reagent_id"], :name => "index_attempts_on_reagent_id"
+
+  create_table "attempts_users", :id => false, :force => true do |t|
+    t.integer "attempt_id", :null => false
+    t.integer "user_id",    :null => false
+  end
+
+  add_index "attempts_users", ["attempt_id", "user_id"], :name => "index_attempts_users_on_attempt_id_and_user_id", :unique => true
+  add_index "attempts_users", ["user_id"], :name => "index_attempts_users_on_user_id"
+
+  create_table "isoforms", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.integer  "transcription_factor_id"
+  end
+
+  add_index "isoforms", ["transcription_factor_id"], :name => "index_isoforms_on_transcription_factor_id"
+
+  create_table "isoforms_reagents", :id => false, :force => true do |t|
+    t.integer "isoform_id", :null => false
+    t.integer "reagent_id", :null => false
+  end
+
+  add_index "isoforms_reagents", ["isoform_id", "reagent_id"], :name => "index_isoforms_reagents_on_isoform_id_and_reagent_id", :unique => true
+  add_index "isoforms_reagents", ["reagent_id"], :name => "index_isoforms_reagents_on_reagent_id"
+
+  create_table "pipelines", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "source_id"
+    t.integer  "reagent_type_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "pipelines", ["reagent_type_id"], :name => "index_pipelines_on_reagent_type_id"
+  add_index "pipelines", ["source_id"], :name => "index_pipelines_on_source_id"
 
   create_table "reagent_types", :force => true do |t|
     t.string   "name"
@@ -23,16 +71,16 @@ ActiveRecord::Schema.define(:version => 20120526042438) do
   create_table "reagents", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.integer  "transcription_factor_id"
     t.integer  "source_id"
     t.integer  "reagent_type_id"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "tag_id"
   end
 
   add_index "reagents", ["reagent_type_id"], :name => "index_reagents_on_reagent_type_id"
   add_index "reagents", ["source_id"], :name => "index_reagents_on_source_id"
-  add_index "reagents", ["transcription_factor_id"], :name => "index_reagents_on_transcription_factor_id"
+  add_index "reagents", ["tag_id"], :name => "index_reagents_on_tag_id"
 
   create_table "reagents_users", :id => false, :force => true do |t|
     t.integer "reagent_id", :null => false
@@ -65,15 +113,39 @@ ActiveRecord::Schema.define(:version => 20120526042438) do
 
   create_table "statuses", :force => true do |t|
     t.string   "name"
-    t.integer  "reagent_id"
     t.boolean  "start"
     t.boolean  "end"
     t.integer  "position"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.integer  "attempt_id"
+    t.integer  "step_id"
   end
 
-  add_index "statuses", ["reagent_id"], :name => "index_statuses_on_reagent_id"
+  add_index "statuses", ["attempt_id"], :name => "index_statuses_on_attempt_id"
+  add_index "statuses", ["step_id"], :name => "index_statuses_on_step_id"
+  add_index "statuses", ["user_id"], :name => "index_statuses_on_user_id"
+
+  create_table "steps", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "pipeline_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.boolean  "start"
+    t.boolean  "end"
+    t.integer  "position"
+  end
+
+  add_index "steps", ["pipeline_id"], :name => "index_steps_on_pipeline_id"
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "transcription_factors", :force => true do |t|
     t.string   "name"

@@ -1,7 +1,7 @@
 class TranscriptionFactor < ActiveRecord::Base
   attr_accessible :cg_id, :flybase_id, :name, :refseq_id
-  has_many :reagent
-  validates :name, :uniqueness => { :case_sensitive => false },
+  has_many :isoforms
+  validates :name, :uniqueness => { :case_sensitive => true },
                     :presence => true
   validates :cg_id, :uniqueness => { :case_sensitive => false },
                     :allow_blank => true

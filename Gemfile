@@ -8,12 +8,14 @@ gem 'bcrypt-ruby'
 
 gem 'cancan'
 gem 'jquery-rails'
+gem 'd3-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails'
   gem 'bootstrap-sass'
+  gem 'bootswatch-rails'
   gem 'coffee-rails'
   gem 'jquery-ui-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes

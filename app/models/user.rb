@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
     ROLES.index(base_role.to_s) <= ROLES.index(role)
   end
   belongs_to :source
-  has_and_belongs_to_many :reagent
-  has_many :status_update
+  has_and_belongs_to_many :attempts
+  has_many :statuses
   attr_accessible :email, :name, :password, :password_confirmation, :source_id
   has_secure_password
 

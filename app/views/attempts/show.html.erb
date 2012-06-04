@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Pipeline:</b>
+  <%= @attempt.pipeline %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @attempt.status %>
+</p>
+
+<p>
+  <b>Reagent:</b>
+  <%= @attempt.reagent %>
+</p>
+
+
+<%= link_to 'Edit', edit_attempt_path(@attempt) %> |
+<%= link_to 'Back', attempts_path %>

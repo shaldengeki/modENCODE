@@ -1,0 +1,30 @@
+#progressPieChart {
+  font: 10px sans-serif;
+  height: 300px;
+  text-shadow: none;
+  width: 100%;
+  text-align: center;
+  /*svg {
+    border: 1px solid gray;
+  }*/
+  .total, .label, .value {
+    font-weight: bold;
+  }
+  .units, .label, .value {
+    font-size: 12px;
+  }
+  .total {
+    font-size: 18px;
+  }
+  .units {
+    fill: gray;
+  }
+  .label {
+    fill: #CCC;
+  }
+}
+
+.feedItem {
+    padding: 10px 0px;
+    border-bottom: 1px solid gray;
+}

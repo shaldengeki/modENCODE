@@ -17,7 +17,7 @@
 
 <p>
   <b>Works for:</b>
-  <%= @user.source.name %>
+  <%= @user.source.nil? ? '' : @user.source.name %>
 </p>
 
 
