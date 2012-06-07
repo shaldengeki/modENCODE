@@ -1,4 +1,5 @@
 class IsoformsController < ApplicationController
+  load_and_authorize_resource
   # GET /isoforms
   # GET /isoforms.json
   def index

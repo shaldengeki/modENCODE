@@ -4,9 +4,9 @@
   <tr>
     <th>Name</th>
     <th>Description</th>
-    <th>Transcription factor</th>
+    <th>Isoform(s)</th>
+    <th>Type</th>
     <th>Source</th>
-    <th>Reagent type</th>
     <th></th>
     <th></th>
     <th></th>
@@ -16,9 +16,9 @@
   <tr>
     <td><%= reagent.name %></td>
     <td><%= reagent.description %></td>
-    <td><%= reagent.transcription_factor %></td>
+    <td><%= reagent.isoforms %></td>
+    <td><%= reagent.reagent_type.name %></td>
     <td><%= reagent.source %></td>
-    <td><%= reagent.reagent_type %></td>
     <td><%= link_to 'Show', reagent %></td>
     <td><%= link_to 'Edit', edit_reagent_path(reagent) %></td>
     <td><%= link_to 'Destroy', reagent, confirm: 'Are you sure?', method: :delete %></td>

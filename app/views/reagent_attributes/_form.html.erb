@@ -1,0 +1,25 @@
+<%= form_for(@reagent_attribute) do |f| %>
+  <% if @reagent_attribute.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reagent_attribute.errors.count, "error") %> prohibited this reagent_attribute from being saved:</h2>
+
+      <ul>
+      <% @reagent_attribute.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :reagent_type %><br />
+    <%= f.text_field :reagent_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

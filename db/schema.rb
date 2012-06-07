@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120601191432) do
+ActiveRecord::Schema.define(:version => 20120606203636) do
 
   create_table "attempts", :force => true do |t|
     t.integer  "pipeline_id"
@@ -61,12 +61,31 @@ ActiveRecord::Schema.define(:version => 20120601191432) do
   add_index "pipelines", ["reagent_type_id"], :name => "index_pipelines_on_reagent_type_id"
   add_index "pipelines", ["source_id"], :name => "index_pipelines_on_source_id"
 
+  create_table "reagent_attributes", :force => true do |t|
+    t.string   "name"
+    t.integer  "reagent_type_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "reagent_attributes", ["reagent_type_id"], :name => "index_reagent_attributes_on_reagent_type_id"
+
   create_table "reagent_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "reagent_values", :force => true do |t|
+    t.string   "value"
+    t.integer  "reagent_attribute_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "reagent_id"
+  end
+
+  add_index "reagent_values", ["reagent_attribute_id"], :name => "index_reagent_values_on_reagent_attribute_id"
 
   create_table "reagents", :force => true do |t|
     t.string   "name"
@@ -133,8 +152,6 @@ ActiveRecord::Schema.define(:version => 20120601191432) do
     t.integer  "pipeline_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.boolean  "start"
-    t.boolean  "end"
     t.integer  "position"
   end
 

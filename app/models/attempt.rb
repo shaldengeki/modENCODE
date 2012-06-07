@@ -4,4 +4,7 @@ class Attempt < ActiveRecord::Base
   belongs_to :pipeline
   has_many :statuses
   attr_accessible :reagent_id, :pipeline_id, :statuses
+
+  validates :reagent, :presence => true
+  validates :pipeline, :presence => true
 end

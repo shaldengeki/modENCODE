@@ -10,7 +10,10 @@ class Status < ActiveRecord::Base
   validates :end, :presence => true,
             :inclusion => {:in => [true, false]}
 
-  validates :position, :presence => true,
-                        :numericality => {:only_integer => true,
-                                          :greater_than => 0}
+  validates :position, :presence => true
+  validates_numericality_of :position, :only_integer => true,
+                                        :greater_than => 0
+  validates :attempt, :presence => true
+  validates :user, :presence => true
+  validates :step, :presence => true
 end

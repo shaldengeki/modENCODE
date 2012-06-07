@@ -9,14 +9,22 @@ class Ability
 
       can :update, Reagent
 
-      can :create, StatusUpdate
-      can :update, StatusUpdate do |statusupdate|
-        statusupdate.reagent.source_id == user.source_id
+      can :create, Attempt
+      can :update, Attempt do |attempt|
+        attempt.reagent.source_id == user.source_id
       end
-      can :destroy, StatusUpdate, :user_id => user.id
+      can :destroy, Attempt do |attempt|
+        attempt.user_ids.include? user.id
+      end
+
+      can :create, Status
+      can :update, Status do |status|
+        status.attempt.reagent.source_id == user.source_id
+      end
+      can :destroy, Status, :user_id => user.id
     end
     if user.role? :admin
-      can :manage, [Reagent, Source, User, ReagentType, TranscriptionFactor, Status, StatusUpdate]
+      can :manage, [TranscriptionFactor, Isoform, Reagent, Tag, Source, User, Attempt, Status, ReagentType, Pipeline, Step]
     end
     # Define abilities for the passed in user here. For example:
     #

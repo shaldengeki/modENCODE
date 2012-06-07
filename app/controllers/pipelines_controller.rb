@@ -1,4 +1,5 @@
 class PipelinesController < ApplicationController
+  load_and_authorize_resource
   # GET /pipelines
   # GET /pipelines.json
   def index
@@ -25,6 +26,7 @@ class PipelinesController < ApplicationController
   # GET /pipelines/new.json
   def new
     @pipeline = Pipeline.new
+    3.times { @pipeline.steps.build }
 
     respond_to do |format|
       format.html # new.html.erb

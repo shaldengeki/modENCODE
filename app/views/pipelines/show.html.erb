@@ -6,20 +6,34 @@
 </p>
 
 <p>
-  <b>Description:</b>
-  <%= @pipeline.description %>
+  <b>Description:</b><br />
+  <blockquote>
+    <%= @pipeline.description %>
+  </blockquote>
 </p>
 
 <p>
   <b>Source:</b>
-  <%= @pipeline.source %>
+  <%= @pipeline.source.nil? ? "None" : @pipeline.source.name %>
 </p>
 
 <p>
   <b>Reagent type:</b>
-  <%= @pipeline.reagent_type %>
+  <%= @pipeline.reagent_type.nil? ? "None" : @pipeline.reagent_type.name %>
 </p>
 
+<p>
+  <b>Steps:</b><br />
+  <% if @pipeline.steps.nil? %>
+  <%= "None" %>
+  <% else %>
+    <ol>
+      <% @pipeline.steps.each do |step| %>
+      <li><%= step.name %></li>
+      <% end %>
+    </ol>
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_pipeline_path(@pipeline) %> |
 <%= link_to 'Back', pipelines_path %>

@@ -9,3 +9,7 @@ body {
 @import "bootstrap-responsive";
 
 @import "bootswatch/journal/bootswatch";
+
+label {
+  display: inline;
+}

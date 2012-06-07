@@ -16,3 +16,4 @@
 //= require_tree .
 //= require bootstrap
 //= require d3
+//= require autocomplete-rails

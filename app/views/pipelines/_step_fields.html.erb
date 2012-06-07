@@ -1,0 +1,8 @@
+<%=  content_tag :li, :class => "fields" do %>
+  <%=  f.hidden_field :id %>
+  <!--TODO: live search on type for step name. -->
+  <%=  f.text_field :name %>
+  <%=  f.hidden_field :position %>
+  <span class="handle">[drag]</span>
+  <%=  link_to "x", "#", :class => "remove_fields" %>
+<% end %>

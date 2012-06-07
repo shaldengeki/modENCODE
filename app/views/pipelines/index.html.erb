@@ -6,6 +6,7 @@
     <th>Description</th>
     <th>Source</th>
     <th>Reagent type</th>
+    <th>Steps</th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,8 +16,9 @@
   <tr>
     <td><%= pipeline.name %></td>
     <td><%= pipeline.description %></td>
-    <td><%= pipeline.source %></td>
-    <td><%= pipeline.reagent_type %></td>
+    <td><%= pipeline.source.nil? ? "None" : pipeline.source.name %></td>
+    <td><%= pipeline.reagent_type.nil? ? "None" : pipeline.reagent_type.name %></td>
+    <td><%= pipeline.steps.nil? ? "0" : pipeline.steps.count %></td>
     <td><%= link_to 'Show', pipeline %></td>
     <td><%= link_to 'Edit', edit_pipeline_path(pipeline) %></td>
     <td><%= link_to 'Destroy', pipeline, confirm: 'Are you sure?', method: :delete %></td>

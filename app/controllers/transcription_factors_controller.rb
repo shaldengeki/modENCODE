@@ -1,9 +1,10 @@
 class TranscriptionFactorsController < ApplicationController
   load_and_authorize_resource
+  autocomplete :transcription_factor, :name
   # GET /transcription_factors
   # GET /transcription_factors.json
   def index
-    @transcription_factors = TranscriptionFactor.all
+    @transcription_factors = TranscriptionFactor.order(:name).all
 
     respond_to do |format|
       format.html # index.html.erb

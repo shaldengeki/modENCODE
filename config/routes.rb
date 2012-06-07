@@ -1,4 +1,8 @@
 ModENCODE::Application.routes.draw do
+  resources :reagent_values
+
+  resources :reagent_attributes
+
   resources :attempts
   resources :isoforms
   resources :pipelines
@@ -9,7 +13,10 @@ ModENCODE::Application.routes.draw do
   resources :statuses
   resources :steps
   resources :tags
-  resources :transcription_factors
+  resources :transcription_factors do
+    get :autocomplete_transcription_factor_name, :on => :collection
+  end
+
   resources :users
 
   match '/signup',  to: 'users#new'

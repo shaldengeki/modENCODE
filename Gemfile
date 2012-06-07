@@ -8,7 +8,9 @@ gem 'bcrypt-ruby'
 
 gem 'cancan'
 gem 'jquery-rails'
+gem 'rails3-jquery-autocomplete'
 gem 'd3-rails'
+gem 'acts_as_list'
 
 # Gems used only for assets and not required
 # in production environments by default.

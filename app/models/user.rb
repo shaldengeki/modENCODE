@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
                                     :if => :validate_password?
   validates :role, :presence => true,
                     :inclusion => {:in => ROLES}
+  validates :source, :presence => true
   def validate_password?
     password.present? || password_confirmation.present?
   end
