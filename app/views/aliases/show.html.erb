@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @alias.name %>
+</p>
+
+<p>
+  <b>Transcription factor:</b>
+  <%= @alias.transcription_factor %>
+</p>
+
+
+<%= link_to 'Edit', edit_alias_path(@alias) %> |
+<%= link_to 'Back', aliases_path %>

@@ -1,18 +1,21 @@
 ModENCODE::Application.routes.draw do
   resources :reagent_values
-
   resources :reagent_attributes
-
   resources :attempts
   resources :isoforms
   resources :pipelines
   resources :reagent_types
-  resources :reagents
+  resources :reagents do
+    get :autocomplete_reagent_name, :on => :collection
+  end
   resources :sessions, only: [:create, :destroy]
   resources :sources
   resources :statuses
   resources :steps
   resources :tags
+  resources :aliases do
+    get :autocomplete_alias_name, :on => :collection
+  end
   resources :transcription_factors do
     get :autocomplete_transcription_factor_name, :on => :collection
   end
@@ -24,7 +27,9 @@ ModENCODE::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
   match '/feed', to: 'statuses#index'
   get "pages/dashboard"
+  match '/dashboard', :to => 'pages#dashboard'
   get "pages/contact"
+  match '/contact', :to => 'pages#contact'
   get "pages/completionProgress"
 
   root :to => 'transcription_factors#index'

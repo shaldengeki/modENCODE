@@ -1,18 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Reagent:</b>
+  <%= @attempt.reagent.nil? ? "None" : @attempt.reagent.name %>
+</p>
+
+<p>
   <b>Pipeline:</b>
-  <%= @attempt.pipeline %>
+  <%= @attempt.pipeline.nil? ? "None" : @attempt.pipeline.name %>
 </p>
 
 <p>
   <b>Status:</b>
-  <%= @attempt.status %>
+  <%= @attempt.statuses.nil? ? "Planning" : @attempt.statuses.last.description %>
 </p>
 
 <p>
-  <b>Reagent:</b>
-  <%= @attempt.reagent %>
+  <b>Last updated:</b>
+  <%= @attempt.statuses.nil? ? "Never" : @attempt.statuses.last.updated_at %>
 </p>
 
 

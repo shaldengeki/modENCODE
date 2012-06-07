@@ -3,8 +3,11 @@
 <table>
   <tr>
     <th>Pipeline</th>
-    <th>Status</th>
     <th>Reagent</th>
+    <th>Users</th>
+    <th>Status</th>
+    <th>Started on</th>
+    <th>Last updated on</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,9 +15,12 @@
 
 <% @attempts.each do |attempt| %>
   <tr>
-    <td><%= attempt.pipeline %></td>
-    <td><%= attempt.status %></td>
-    <td><%= attempt.reagent %></td>
+    <td><%= attempt.pipeline.nil? ? "None" : attempt.pipeline.name %></td>
+    <td><%= attempt.reagent.nil? ? "None" : attempt.reagent.name %></td>
+    <td><%= attempt.users.nil? ? "None" : "Users here" %></td>
+    <td><%= attempt.statuses.nil? ? "Planning" : attempt.statuses.order('updated_at DESC').first %></td>
+    <td><%= attempt.created_at %></td>
+    <td><%= attempt.updated_at %></td>
     <td><%= link_to 'Show', attempt %></td>
     <td><%= link_to 'Edit', edit_attempt_path(attempt) %></td>
     <td><%= link_to 'Destroy', attempt, confirm: 'Are you sure?', method: :delete %></td>

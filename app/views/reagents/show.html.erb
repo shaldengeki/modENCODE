@@ -11,18 +11,18 @@
 </p>
 
 <p>
-  <b>Transcription factor:</b>
-  <%= @reagent.transcription_factor %>
-</p>
-
-<p>
   <b>Source:</b>
-  <%= @reagent.source %>
+  <%= @reagent.source.nil? ? "None" : @reagent.source.name %>
 </p>
 
 <p>
   <b>Reagent type:</b>
-  <%= @reagent.reagent_type %>
+  <%= @reagent.reagent_type.nil? ? "None" : @reagent.reagent_type.name %>
+</p>
+
+<p>
+  <b>Tag:</b>
+  <%= @reagent.tag.nil? ? "None" : @reagent.tag.name %>
 </p>
 
 

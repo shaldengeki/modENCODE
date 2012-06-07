@@ -1,8 +1,8 @@
-<%= form_for(@attempt) do |f| %>
+<!--TODO: add "new reagent" partial here.-->
+<%= form_for @attempt, :html => { :class => "form-horizontal" } do |f| %>
   <% if @attempt.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@attempt.errors.count, "error") %> prohibited this attempt from being saved:</h2>
-
       <ul>
       <% @attempt.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -10,20 +10,40 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :pipeline %><br />
-    <%= f.text_field :pipeline %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br />
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :reagent %><br />
-    <%= f.text_field :reagent %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :reagent_name, :class => "control-label" %>
+      <div class="controls">
+        <%= autocomplete_field_tag 'Reagent name', '', autocomplete_reagent_name_reagents_path, :update_elements =>  {:id => "#attempt-reagent-id", :reagent_type_id => "#attempt-reagent-type" }, :class => "search-query span2", :placeholder => "Search" %>
+        <%= f.hidden_field :reagent_id, :id => "attempt-reagent-id" %>
+        <input type="hidden" id="attempt-reagent-type" />
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :pipeline, :class => "control-label" %>
+      <div class="controls">
+        <%= f.grouped_collection_select :pipeline_id, ReagentType.all, :pipelines, :id, :id, :name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :current_step, :class => "control-label" %>
+      <div class="controls">
+        <%= f.fields_for :statuses do |builder| %>
+          <%= builder.grouped_collection_select :step_id, Pipeline.all, :steps, :name, :id, :name %><br />
+          <%= builder.text_area :description, :size => "100x3", :value => "Started attempt." %><br />
+          <%= builder.hidden_field :position, :value => 1 %>
+          End of attempt? <%= builder.check_box :end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :date_started, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :created_at, :id => 'timepicker' %>
+      </div>
+    </div>
+    <div class="form-actions">
+      <%= f.submit "Start Attempt", :id => "create_attempt", :class => "btn btn-primary" %>
+    </div>
+  </fieldset>
 <% end %>

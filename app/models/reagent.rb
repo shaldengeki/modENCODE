@@ -5,7 +5,7 @@ class Reagent < ActiveRecord::Base
   belongs_to :reagent_type
   has_many :attempts
   has_many :reagent_values
-  attr_accessible :description, :name, :tag, :source, :reagent_type
+  attr_accessible :description, :name, :tag_id, :source_id, :reagent_type_id
 
   validates :name, :presence => true,
                     :uniqueness => {:case_sensitive => false}

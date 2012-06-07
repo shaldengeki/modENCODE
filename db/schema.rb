@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120606203636) do
+ActiveRecord::Schema.define(:version => 20120607195658) do
+
+  create_table "aliases", :force => true do |t|
+    t.string   "name"
+    t.integer  "transcription_factor_id"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "aliases", ["name"], :name => "index_aliases_on_name"
+  add_index "aliases", ["transcription_factor_id"], :name => "index_aliases_on_transcription_factor_id"
 
   create_table "attempts", :force => true do |t|
     t.integer  "pipeline_id"
@@ -131,12 +141,12 @@ ActiveRecord::Schema.define(:version => 20120606203636) do
   add_index "status_updates", ["user_id"], :name => "index_status_updates_on_user_id"
 
   create_table "statuses", :force => true do |t|
-    t.string   "name"
+    t.string   "description"
     t.boolean  "start"
     t.boolean  "end"
     t.integer  "position"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "user_id"
     t.integer  "attempt_id"
     t.integer  "step_id"
@@ -155,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20120606203636) do
     t.integer  "position"
   end
 
+  add_index "steps", ["name"], :name => "index_steps_on_name"
   add_index "steps", ["pipeline_id"], :name => "index_steps_on_pipeline_id"
 
   create_table "tags", :force => true do |t|

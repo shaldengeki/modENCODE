@@ -17,7 +17,7 @@
           <span class="icon-bar"></span>
         </a>
         <% if signed_in? %>
-        <%= link_to "modENCODE", '/pages/dashboard', :class => "brand" %>
+        <%= link_to "modENCODE", dashboard_path, :class => "brand" %>
         <% else %>
         <%= link_to "modENCODE", root_path, :class => "brand" %>
         <% end %>
@@ -42,7 +42,7 @@
               <% else %>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <%= render :partial => '/sessions/form' %>
+                <%= render :partial => 'sessions/form' %>
               </ul>
               <% end %>
             </li>
@@ -69,10 +69,11 @@
       </div>
       <% end %>
     </div>
-    <hr></hr>
+    <hr />
     <footer>
-      <p><%= link_to "Contact", '/pages/contact'%> </p>
+      <p><%= link_to "Contact", contact_path %> </p>
     </footer>
   </div>
+ </div>
 </body>
 </html>

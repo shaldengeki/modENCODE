@@ -1,5 +1,6 @@
 class ReagentsController < ApplicationController
   load_and_authorize_resource
+  autocomplete :reagent, :name, :extra_data => [:reagent_type_id]
   # GET /reagents
   # GET /reagents.json
   def index

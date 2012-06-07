@@ -8,7 +8,7 @@ gem 'bcrypt-ruby'
 
 gem 'cancan'
 gem 'jquery-rails'
-gem 'rails3-jquery-autocomplete'
+gem 'rails3-jquery-autocomplete', :git => 'git@github.com:shaldengeki/rails3-jquery-autocomplete.git'
 gem 'd3-rails'
 gem 'acts_as_list'
 

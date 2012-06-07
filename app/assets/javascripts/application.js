@@ -17,3 +17,4 @@
 //= require bootstrap
 //= require d3
 //= require autocomplete-rails
+//= require vendor
