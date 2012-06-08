@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Name</th>
+    <th>Status</th>
     <th>Reagent</th>
     <th>Start</th>
     <th>End</th>
@@ -14,8 +14,8 @@
 
 <% @statuses.each do |status| %>
   <tr>
-    <td><%= status.name %></td>
-    <td><%= status.reagent %></td>
+    <td><%= status.description %></td>
+    <td><%= status.attempt.nil? ? "None" : status.attempt.reagent.name %></td>
     <td><%= status.start %></td>
     <td><%= status.end %></td>
     <td><%= status.position %></td>

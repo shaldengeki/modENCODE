@@ -17,8 +17,8 @@
   <tr>
     <td><%= attempt.pipeline.nil? ? "None" : attempt.pipeline.name %></td>
     <td><%= attempt.reagent.nil? ? "None" : attempt.reagent.name %></td>
-    <td><%= attempt.users.nil? ? "None" : "Users here" %></td>
-    <td><%= attempt.statuses.nil? ? "Planning" : attempt.statuses.order('updated_at DESC').first %></td>
+    <td><%= attempt.users.nil? ? "None" : attempt.users.map(&:name).join(", ") %></td>
+    <td><%= attempt.statuses.nil? ? "Planning" : attempt.statuses.order('updated_at DESC').first.description %></td>
     <td><%= attempt.created_at %></td>
     <td><%= attempt.updated_at %></td>
     <td><%= link_to 'Show', attempt %></td>

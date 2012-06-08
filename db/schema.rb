@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607195658) do
+ActiveRecord::Schema.define(:version => 20120608191000) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -150,6 +150,8 @@ ActiveRecord::Schema.define(:version => 20120607195658) do
     t.integer  "user_id"
     t.integer  "attempt_id"
     t.integer  "step_id"
+    t.boolean  "success"
+    t.boolean  "failure"
   end
 
   add_index "statuses", ["attempt_id"], :name => "index_statuses_on_attempt_id"

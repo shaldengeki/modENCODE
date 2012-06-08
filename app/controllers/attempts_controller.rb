@@ -3,7 +3,7 @@ class AttemptsController < ApplicationController
   # GET /attempts
   # GET /attempts.json
   def index
-    @attempts = Attempt.order('updated_at').all
+    @attempts = Attempt.order('updated_at DESC').all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -43,6 +43,7 @@ class AttemptsController < ApplicationController
   # POST /attempts.json
   def create
     @attempt = Attempt.new(params[:attempt])
+    @attempt.users.append(current_user)
     @attempt.statuses.each do |status|
       status[:start] = 1
       status[:user_id] = current_user.id

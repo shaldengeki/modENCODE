@@ -3,7 +3,7 @@ class Pipeline < ActiveRecord::Base
   has_many :attempts
   belongs_to :reagent_type
 
-  has_many :steps, :order => "position"
+  has_many :steps, :order => "position", :dependent => :destroy
   accepts_nested_attributes_for :steps, :reject_if => lambda { |a| a[:name].blank? }, :allow_destroy => true
 
   attr_accessible :description, :name, :source_id, :reagent_type_id, :steps_attributes
