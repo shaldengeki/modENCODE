@@ -16,10 +16,21 @@ class AliasesController < ApplicationController
   # GET /aliases/1.json
   def show
     @alias = Alias.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { redirect_to @alias.transcription_factor }
       format.json { render json: @alias }
+    end
+  end
+  def findTF
+    @alias = Alias.find_by_name(params[:alias])
+    respond_to do |format|
+      if !@alias.nil?
+        format.html { redirect_to @alias.transcription_factor }
+        format.json { render json: @alias.transcription_factor }
+      else
+        format.html { redirect_to dashboard_path }
+        format.json { render json: @alias.errors, status: :unprocessable_entity }
+      end
     end
   end
 

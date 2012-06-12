@@ -4,10 +4,10 @@ updateAttemptFields = (pipelines, steps) ->
     options = $(pipelines).filter("optgroup[label='#{reagent_type}']").html()
     if options
       $('#attempt_pipeline_id').html(options)
-      $('#attempt_pipeline_id').parent().show()
+      $('#attempt_pipeline_id').show()
     else
       $('#attempt_pipeline_id').empty()
-      $('#attempt_pipeline_id').parent().hide()
+      $('#attempt_pipeline_id').hide()
     pipeline = $('#attempt_pipeline_id :selected').text()
     options = $(steps).filter("optgroup[label='#{pipeline}']").html()
     if options
@@ -18,9 +18,9 @@ updateAttemptFields = (pipelines, steps) ->
       $('#attempt_statuses_attributes_0_step_id').parent().hide()
 
 jQuery ->
-  $('#timepicker').datetimepicker()
+  $('#attemptTime').datetimepicker()
 
-  $('#attempt_pipeline_id').parent().hide()
+  $('#attempt_pipeline_id').hide()
   $('#attempt_statuses_attributes_0_step_id').parent().hide()
   pipelines = $('#attempt_pipeline_id').html()
   steps = $('#attempt_statuses_attributes_0_step_id').html()

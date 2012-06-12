@@ -4,6 +4,10 @@ class PagesController < ApplicationController
     getCompletionProgress()
     @attempt = Attempt.new
     @attempt.statuses.build
+    @status = Status.new
+    @transcriptionFactors = TranscriptionFactor.all
+    @latestUpdatedTFs = TranscriptionFactor.joins(:isoforms => {:reagents => {:attempts => :statuses}}).order("statuses.updated_at DESC").group("transcription_factors.id").limit(5).all
+    @latestStatuses = Status.order("updated_at DESC").limit(5)
   end
 
   def completionProgress

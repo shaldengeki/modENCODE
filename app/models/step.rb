@@ -9,5 +9,5 @@ class Step < ActiveRecord::Base
   validates :name, :presence => true
   validates_numericality_of :position, :only_integer => true,
                                         :greater_than => 0
-  validates :position, :uniqueness => {:scope => :pipeline_id}
+  # validates :position, :uniqueness => {:scope => :pipeline_id}
 end

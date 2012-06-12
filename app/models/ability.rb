@@ -4,10 +4,16 @@ class Ability
   def initialize(user)
     user ||= User.new
     can :read, :all
+    can :autocomplete_alias_name, Alias
+    can :autocomplete_transcription_factor_name, TranscriptionFactor
+
     if user.role? :normal
       can :update, User, :id => user.id
 
+      can :create, Alias
       can :update, Reagent
+      can :manage, ReagentValue
+      can :manage, ReagentAttribute
 
       can :create, Attempt
       can :update, Attempt do |attempt|
@@ -16,7 +22,6 @@ class Ability
       can :destroy, Attempt do |attempt|
         attempt.user_ids.include? user.id
       end
-
       can :create, Status
       can :update, Status do |status|
         status.attempt.reagent.source_id == user.source_id
@@ -24,7 +29,7 @@ class Ability
       can :destroy, Status, :user_id => user.id
     end
     if user.role? :admin
-      can :manage, [TranscriptionFactor, Isoform, Reagent, Tag, Source, User, Attempt, Status, ReagentType, Pipeline, Step]
+      can :manage, [TranscriptionFactor, Isoform, Reagent, Tag, Source, User, Attempt, Status, ReagentType, ReagentAttribute, ReagentValue, Pipeline, Step, Alias]
     end
     # Define abilities for the passed in user here. For example:
     #

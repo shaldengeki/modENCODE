@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     if user and user.authenticate(params[:session][:password])
       sign_in user
       flash[:success] = "Welcome, " + user.name + "."
-      redirect_to :controller => 'pages', :action => 'dashboard'
+      redirect_to root_path
     else
       flash[:error] = 'Invalid email/password combination.'
       redirect_to root_path

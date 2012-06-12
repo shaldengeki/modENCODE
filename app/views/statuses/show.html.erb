@@ -1,30 +1,23 @@
-<p id="notice"><%= notice %></p>
-
 <p>
-  <b>Reagent:</b>
-  <%= @status.attempt.reagent.name %>
+  <strong>Attempt for:</strong> <%= @status.attempt.reagent.nil? ? "no reagent" : @status.attempt.reagent.name %><br />
+  <strong>Started on:</strong> <%= @status.created_at %><br />
+  <strong>Last updated on:</strong> <%= @status.updated_at %><br />
 </p>
 
 <p>
-  <b>Notes:</b>
+  This step <%= @status.success || @status.failure ? raw("was " + (@status.success ? "a " + content_tag(:strong, "success") : "a " + content_tag(:strong, "failure") + ".")) : "has not been completed yet." %>
+</p>
+
+<p>
+  <b>Notes:</b><br />
   <%= @status.description %>
 </p>
 
+<% if @status.start || @status.end %>
 <p>
-  <b>Start:</b>
-  <%= @status.start %>
+  This marks the <%= @status.start ? "start" : "end" %> of this attempt.
 </p>
-
-<p>
-  <b>End:</b>
-  <%= @status.end %>
-</p>
-
-<p>
-  <b>Position:</b>
-  <%= @status.position %>
-</p>
-
+<% end %>
 
 <%= link_to 'Edit', edit_status_path(@status) %> |
 <%= link_to 'Back', statuses_path %>

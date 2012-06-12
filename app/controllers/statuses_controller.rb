@@ -43,6 +43,7 @@ class StatusesController < ApplicationController
   def create
     @status = Status.new(params[:status])
     @status.start = 0
+    # TODO: allow user to specify the position.
     @status.position = @status.next_position
     @status.user_id = current_user.id
 

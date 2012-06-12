@@ -16,6 +16,8 @@ ModENCODE::Application.routes.draw do
   resources :aliases do
     get :autocomplete_alias_name, :on => :collection
   end
+  match '/aliases/findTF' => 'aliases#findTF', :as => 'find_tfs'
+
   resources :transcription_factors do
     get :autocomplete_transcription_factor_name, :on => :collection
   end
@@ -32,7 +34,7 @@ ModENCODE::Application.routes.draw do
   match '/contact', :to => 'pages#contact'
   get "pages/completionProgress"
 
-  root :to => 'transcription_factors#index'
+  root :to => 'pages#dashboard'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

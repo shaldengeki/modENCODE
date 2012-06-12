@@ -16,7 +16,7 @@
       <%= f.label :reagent_name, :class => "control-label" %>
       <div class="controls">
         <%= autocomplete_field_tag 'Reagent name', '', autocomplete_reagent_name_reagents_path, :update_elements =>  {:id => "#status-attempt-reagent-id" }, :class => "search-query span2", :placeholder => "Search", :value => (@status.attempt.reagent.name if (!@status.attempt.nil? && !@status.attempt.reagent.nil?)) %>
-        <input type="hidden" id="attempt-reagent-id" value="<%= @status.attempt.nil? || @status.attempt.reagent.nil? ? "" : @status.attempt.reagent.id %>"/>
+        <input type="hidden" id="status-attempt-reagent-id" value="<%= @status.attempt.nil? || @status.attempt.reagent.nil? ? "" : @status.attempt.reagent.id %>"/>
       </div>
     </div>
     <div class="control-group">
@@ -28,7 +28,7 @@
     <div class="control-group">
       <%= f.label :step, :class => "control-label" %>
       <div class="controls">
-        <%= f.grouped_collection_select :step_id, Pipeline.all, :steps, :name, :id, :name %><br />
+        <%= f.grouped_collection_select :step_id, Attempt.all, :steps, :updated_at, :id, :name %><br />
         <%= f.hidden_field :position, :value => 2 %>
       </div>
     </div>
@@ -43,7 +43,7 @@
     <div class="control-group">
       <%= f.label :date_started, :class => "control-label" %>
       <div class="controls">
-        <%= f.text_field :updated_at, :id => 'timepicker' %>
+        <%= f.text_field :updated_at, :id => 'statusTime' %>
       </div>
     </div>
     <div class="form-actions">

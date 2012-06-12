@@ -1,8 +1,7 @@
-<%= form_for(@reagent) do |f| %>
+<%= form_for @reagent, :html => { :class => "form-horizontal" } do |f| %>
   <% if @reagent.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@reagent.errors.count, "error") %> prohibited this reagent from being saved:</h2>
-
       <ul>
       <% @reagent.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -10,28 +9,48 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :source_id %><br />
-    <%= f.text_field :source_id %>
-  </div>
-  <div class="field">
-    <%= f.label :reagent_type_id %><br />
-    <%= f.text_field :reagent_type_id %>
-  </div>
-  <div class="field">
-    <%= f.label :tag_id %><br />
-    <%= f.text_field :tag_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :gene_name, :class => "control-label" %>
+      <div class="controls">
+        <%= autocomplete_field_tag 'Gene name', '', autocomplete_alias_name_aliases_path, :update_elements => {:transcription_factor_id => "#reagent-tf-id", :transcription_factor_name => "#reagent-tf-name" }, :class => "search-query span2", :placeholder => "Search" %>
+        <input type="hidden" id="reagent-tf-id" />
+        <input type="hidden" id="reagent-tf-name" />
+      </div>
+    </div>
+    <%= render :partial => "isoforms" %>
+    <div class="control-group">
+      <%= f.label :name, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :description, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :description %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :source_id, :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :source_id, Source.all, :id, :name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :reagent_type_id, :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :reagent_type_id, ReagentType.all, :id, :name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :tag_id, :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :tag_id, Tag.all, :id, :name %>
+      </div>
+    </div>
+    <div class="form-actions">
+      <%= f.submit "Create Reagent", :id => "create_reagent", :class => "btn btn-primary" %>
+    </div>
+  </fieldset>
 <% end %>

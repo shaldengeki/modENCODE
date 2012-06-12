@@ -21,4 +21,11 @@ class Attempt < ActiveRecord::Base
   def next_position
     last_position + 1
   end
+  def steps
+    if pipeline.nil?
+      nil
+    else
+      pipeline.steps
+    end
+  end
 end
