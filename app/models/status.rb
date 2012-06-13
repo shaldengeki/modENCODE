@@ -2,7 +2,7 @@ class Status < ActiveRecord::Base
   belongs_to :attempt
   belongs_to :user
   belongs_to :step
-  attr_accessible :start, :end, :description, :position, :attempt_id, :user_id, :step_id, :created_at, :updated_at, :success, :failure
+  attr_accessible :start, :end, :position, :description, :attempt_id, :user_id, :step_id, :started_at, :success, :failure
 
   validates :description, :presence => true
   validates :start, :inclusion => {:in => [true, false]}
@@ -15,6 +15,8 @@ class Status < ActiveRecord::Base
                                         :greater_than => 0
   validates :user, :presence => true
   validates :step, :presence => true
+  # validates :started_at, :presence => true
+  # validate :started_at_is_valid_datetime
 
   # gets the last-available position for the current status.
   def last_position
@@ -28,4 +30,7 @@ class Status < ActiveRecord::Base
   def next_position
     last_position + 1
   end
+  # def started_at_is_valid_datetime
+  #   errors.add(:started_at, 'must be a valid datetime') if ((DateTime.parse(started_at) rescue ArgumentError) == ArgumentError)
+  # end
 end

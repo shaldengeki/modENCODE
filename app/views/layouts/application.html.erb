@@ -24,13 +24,13 @@
         <div class="nav-collapse">
           <ul class="nav">
             <li><%= link_to "Feed", feed_path %></li>
-            <li><%= link_to "Factors", transcription_factors_path %></li>
+            <li><%= link_to "Genes", transcription_factors_path %></li>
             <li><%= link_to "Reagents", reagents_path %></li>
             <li><%= link_to "People", users_path %></li>
           </ul>
           <ul class="nav pull-right">
             <li><%= form_tag 'aliases/findTF', :class => "navbar-search pull-left" do |f|
-                autocomplete_field_tag 'alias', '', autocomplete_alias_name_aliases_path, :class => "search-query span2", :placeholder => "Search Genes", :"data-delimiter" => ' '
+                autocomplete_field_tag 'name', '', autocomplete_alias_name_aliases_path, :class => "search-query span2", :placeholder => "Search Genes", :"data-delimiter" => ' '
               end %></li>
             <li class="dropdown">
               <% if signed_in? %>
@@ -70,6 +70,7 @@
       <% end %>
     </div>
     <hr />
+    <%= debug(params) if Rails.env.development? %>
     <footer>
       <p><%= link_to "Contact", contact_path %> </p>
     </footer>

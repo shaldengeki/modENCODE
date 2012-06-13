@@ -1,5 +1,0 @@
-<%= hidden_field_tag "reagent[isoform_ids][]", nil %>
-<% Isoform.all.each do |isoform| %>
-  <%= check_box_tag "reagent[isoform_ids][]", isoform.id, @reagent.isoform_ids.include?(isoform.id), id: dom_id(isoform) %>
-  <%= label_tag dom_id(isoform), isoform.name %><br>
-<% end %>

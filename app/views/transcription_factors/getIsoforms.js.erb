@@ -1,0 +1,1 @@
+$('#isoform-list > .controls').html("<%= escape_javascript(render(:partial => 'reagents/get_isoforms', :locals => {:isoforms => @transcription_factor.isoforms})) %>");

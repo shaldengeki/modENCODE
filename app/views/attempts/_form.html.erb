@@ -32,14 +32,15 @@
           <%= builder.grouped_collection_select :step_id, Pipeline.all, :steps, :name, :id, :name %><br /><br />
           <%= builder.text_area :description, :size => "100x3", :value => "Started attempt." %><br />
           <%= builder.hidden_field :position, :value => 1 %>
-          End of attempt? <%= builder.check_box :end %>
+          <%= builder.check_box :success %> Success <%= builder.check_box :failure %> Failure
+          <%= builder.check_box :end %> End of attempt
         <% end %>
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :date_started, :class => "control-label" %>
+      <%= f.label "Date started", :class => "control-label" %>
       <div class="controls">
-        <%= f.text_field :updated_at, :id => 'attemptTime' %>
+        <%= f.text_field :started_at, :id => 'attemptTime' %>
       </div>
     </div>
     <div class="form-actions">

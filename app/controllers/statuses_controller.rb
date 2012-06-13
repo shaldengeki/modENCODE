@@ -41,7 +41,7 @@ class StatusesController < ApplicationController
   # POST /statuses
   # POST /statuses.json
   def create
-    @status = Status.new(params[:status])
+    @status = Status.new(params[:status].except(:position))
     @status.start = 0
     # TODO: allow user to specify the position.
     @status.position = @status.next_position

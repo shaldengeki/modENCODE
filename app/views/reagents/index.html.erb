@@ -16,9 +16,9 @@
   <tr>
     <td><%= reagent.name %></td>
     <td><%= reagent.description %></td>
-    <td><%= reagent.isoforms %></td>
+    <td><%= reagent.isoforms.nil? or reagent.isoforms.empty? ? "None" : reagent.isoforms.map {|isoform| isoform.name }.join(',') %></td>
     <td><%= reagent.reagent_type.name %></td>
-    <td><%= reagent.source %></td>
+    <td><%= reagent.source.nil? ? "None" : reagent.source.name %></td>
     <td><%= link_to 'Show', reagent %></td>
     <td><%= link_to 'Edit', edit_reagent_path(reagent) %></td>
     <td><%= link_to 'Destroy', reagent, confirm: 'Are you sure?', method: :delete %></td>

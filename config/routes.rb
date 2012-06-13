@@ -16,8 +16,8 @@ ModENCODE::Application.routes.draw do
   resources :aliases do
     get :autocomplete_alias_name, :on => :collection
   end
-  match '/aliases/findTF' => 'aliases#findTF', :as => 'find_tfs'
-
+  match 'aliases/findTF' => 'aliases#findTF', :as => 'find_tfs'
+  match 'transcription_factors/getIsoforms' => 'transcription_factors#getIsoforms', :as => 'get_isoforms'
   resources :transcription_factors do
     get :autocomplete_transcription_factor_name, :on => :collection
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608191000) do
+ActiveRecord::Schema.define(:version => 20120613203714) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -28,10 +28,12 @@ ActiveRecord::Schema.define(:version => 20120608191000) do
     t.integer  "reagent_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.datetime "started_at"
   end
 
   add_index "attempts", ["pipeline_id"], :name => "index_attempts_on_pipeline_id"
   add_index "attempts", ["reagent_id"], :name => "index_attempts_on_reagent_id"
+  add_index "attempts", ["started_at"], :name => "index_attempts_on_started_at"
 
   create_table "attempts_users", :id => false, :force => true do |t|
     t.integer "attempt_id", :null => false
@@ -152,9 +154,11 @@ ActiveRecord::Schema.define(:version => 20120608191000) do
     t.integer  "step_id"
     t.boolean  "success"
     t.boolean  "failure"
+    t.datetime "started_at"
   end
 
   add_index "statuses", ["attempt_id"], :name => "index_statuses_on_attempt_id"
+  add_index "statuses", ["started_at"], :name => "index_statuses_on_started_at"
   add_index "statuses", ["step_id"], :name => "index_statuses_on_step_id"
   add_index "statuses", ["user_id"], :name => "index_statuses_on_user_id"
 

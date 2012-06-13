@@ -1,6 +1,6 @@
 class AliasesController < ApplicationController
   load_and_authorize_resource
-  autocomplete :alias, :name
+  autocomplete :alias, :name, :extra_data => [:transcription_factor_id]
   # GET /aliases
   # GET /aliases.json
   def index
@@ -22,7 +22,7 @@ class AliasesController < ApplicationController
     end
   end
   def findTF
-    @alias = Alias.find_by_name(params[:alias])
+    @alias = Alias.find_by_name(params[:name])
     respond_to do |format|
       if !@alias.nil?
         format.html { redirect_to @alias.transcription_factor }

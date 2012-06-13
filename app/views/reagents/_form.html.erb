@@ -13,12 +13,26 @@
     <div class="control-group">
       <%= f.label :gene_name, :class => "control-label" %>
       <div class="controls">
-        <%= autocomplete_field_tag 'Gene name', '', autocomplete_alias_name_aliases_path, :update_elements => {:transcription_factor_id => "#reagent-tf-id", :transcription_factor_name => "#reagent-tf-name" }, :class => "search-query span2", :placeholder => "Search" %>
-        <input type="hidden" id="reagent-tf-id" />
-        <input type="hidden" id="reagent-tf-name" />
+        <%= autocomplete_field_tag 'Gene name', '', autocomplete_alias_name_aliases_path, :update_elements => { :transcription_factor_id => "#tf-id" }, :class => "search-query span2", :placeholder => "Search" %>
+        <input type="hidden" id="tf-id" />
+        <script type="text/javascript">
+          $('#tf-id').change(function() {
+            transcription_factor = parseInt($('#tf-id').attr('value'));
+            if (transcription_factor > 0) {
+              $.get("<%= get_isoforms_url %>", { id: transcription_factor }, function(html) {
+                $("#borrower_netid_message").html(html);
+              });
+            }
+          });
+        </script>
       </div>
     </div>
-    <%= render :partial => "isoforms" %>
+    <div id="isoform-list" class="control-group">
+      <%= f.label :isoforms, :class => "control-label" %>
+      <div class="controls">
+        <%= render :partial => "get_isoforms", :locals => {:isoforms => []} %>
+      </div>
+    </div>
     <div class="control-group">
       <%= f.label :name, :class => "control-label" %>
       <div class="controls">

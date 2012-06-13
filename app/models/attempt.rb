@@ -6,7 +6,7 @@ class Attempt < ActiveRecord::Base
   has_many :statuses, :order => "updated_at ASC", :dependent => :destroy
   accepts_nested_attributes_for :statuses, :reject_if => lambda { |a| a[:step_id].blank? }, :allow_destroy => true
 
-  attr_accessible :reagent_id, :pipeline_id, :statuses, :created_at, :updated_at, :statuses_attributes
+  attr_accessible :reagent_id, :pipeline_id, :statuses, :created_at, :started_at, :statuses_attributes
 
   validates :reagent, :presence => true
   validates :pipeline, :presence => true

@@ -47,6 +47,7 @@ class AttemptsController < ApplicationController
     @attempt.statuses.each do |status|
       status[:start] = 1
       status[:user_id] = current_user.id
+      status[:started_at] = DateTime.now
     end
     respond_to do |format|
       if @attempt.save

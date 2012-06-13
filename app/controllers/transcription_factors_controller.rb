@@ -23,6 +23,14 @@ class TranscriptionFactorsController < ApplicationController
     end
   end
 
+  def getIsoforms
+    @transcription_factor = TranscriptionFactor.find(params[:id])
+    @reagent = Reagent.new
+    respond_to do |format|
+      format.js
+    end
+  end
+
   # GET /transcription_factors/new
   # GET /transcription_factors/new.json
   def new

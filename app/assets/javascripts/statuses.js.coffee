@@ -5,22 +5,25 @@ updateStatusFields = (attempts, steps) ->
     if options
       $('#status_attempt_id').html(options)
       $('#status_attempt_id').show()
+      attempt = $('#status_attempt_id :selected').text()
+      options = $(steps).filter("optgroup[label='#{attempt}']").html()
+      if options
+        $('#status_step_id').html(options)
+        $('#status_step_id').show()
+        $('#status_description').parent().show()
+      else
+        $('#status_step_id').empty()
+        $('#status_step_id').hide()
+        $('#status_description').parent().hide()
     else
       $('#status_attempt_id').empty()
       $('#status_attempt_id').hide()
-    attempt = $('#status_attempt_id :selected').text()
-    options = $(steps).filter("optgroup[label='#{attempt}']").html()
-    if options
-      $('#status_step_id').html(options)
-      $('#status_step_id').show()
-      $('#status_description').parent().show()
-    else
       $('#status_step_id').empty()
       $('#status_step_id').hide()
       $('#status_description').parent().hide()
 
 jQuery ->
-  $('#statusTime').datetimepicker()
+  $('#statusTime').datetimepicker({dateFormat: "yy-mm-dd", timeFormat: "hh:mm:ss"})
   $('#status_attempt_id').hide()
   $('#status_step_id').hide()
   $('#status_description').parent().hide()

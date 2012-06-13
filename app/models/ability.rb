@@ -5,8 +5,9 @@ class Ability
     user ||= User.new
     can :read, :all
     can :autocomplete_alias_name, Alias
+    can :findTF, Alias
     can :autocomplete_transcription_factor_name, TranscriptionFactor
-
+    can :getIsoforms, TranscriptionFactor
     if user.role? :normal
       can :update, User, :id => user.id
 
