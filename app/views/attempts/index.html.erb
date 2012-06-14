@@ -1,31 +1,28 @@
-<h1>Listing attempts</h1>
+<h1>Attempts</h1>
 
-<table>
-  <tr>
-    <th>Pipeline</th>
-    <th>Reagent</th>
-    <th>Users</th>
-    <th>Status</th>
-    <th>Started on</th>
-    <th>Last updated on</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Pipeline</th>
+      <th>Reagent</th>
+      <th>Users</th>
+      <th>Status</th>
+      <th>Started on</th>
+      <th>Last updated on</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @attempts.each do |attempt| %>
-  <tr>
-    <td><%= attempt.pipeline.nil? ? "None" : attempt.pipeline.name %></td>
-    <td><%= attempt.reagent.nil? ? "None" : attempt.reagent.name %></td>
-    <td><%= attempt.users.nil? ? "None" : attempt.users.map(&:name).join(", ") %></td>
-    <td><%= attempt.statuses.nil? ? "Planning" : attempt.statuses.order('updated_at DESC').first.description %></td>
-    <td><%= attempt.created_at %></td>
-    <td><%= attempt.updated_at %></td>
-    <td><%= link_to 'Show', attempt %></td>
-    <td><%= link_to 'Edit', edit_attempt_path(attempt) %></td>
-    <td><%= link_to 'Destroy', attempt, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= attempt.pipeline.nil? ? "None" : link_to(attempt.pipeline.name, attempt) %></td>
+      <td><%= attempt.reagent.nil? ? "None" : attempt.reagent.name %></td>
+      <td><%= attempt.users.nil? ? "None" : attempt.users.map(&:name).join(", ") %></td>
+      <td><%= attempt.statuses.nil? ? "Planning" : attempt.statuses.order('updated_at DESC').first.description %></td>
+      <td><%= attempt.created_at %></td>
+      <td><%= attempt.updated_at %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

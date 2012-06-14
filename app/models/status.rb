@@ -10,7 +10,7 @@ class Status < ActiveRecord::Base
   validates :success, :inclusion => {:in => [true, false]}
   validates :failure, :inclusion => {:in => [true, false]}
 
-  validates :position, :presence => true, :uniqueness => {:scope => :attempt_id}
+  validates :position, :presence => true# , :uniqueness => {:scope => :attempt_id}
   validates_numericality_of :position, :only_integer => true,
                                         :greater_than => 0
   validates :user, :presence => true

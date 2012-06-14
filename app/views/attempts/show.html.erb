@@ -23,6 +23,6 @@
   <%= @attempt.statuses.nil? ? "Never" : @attempt.statuses.last.updated_at %>
 </p>
 
-
 <%= link_to 'Edit', edit_attempt_path(@attempt) %> |
+<%= link_to 'Destroy', @attempt, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', attempts_path %>

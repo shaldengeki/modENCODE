@@ -12,4 +12,5 @@
 
 
 <%= link_to 'Edit', edit_isoform_path(@isoform) %> |
+<%= link_to 'Destroy', @isoform, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', isoforms_path %>

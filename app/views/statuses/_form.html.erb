@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :attempt, :class => "control-label" %>
+      <%= f.label "Attempt date", :class => "control-label" %>
       <div class="controls">
         <%= f.grouped_collection_select :attempt_id, Reagent.all, :attempts, :id, :id, :updated_at %>
       </div>
@@ -29,7 +29,7 @@
       <%= f.label :step, :class => "control-label" %>
       <div class="controls">
         <%= f.grouped_collection_select :step_id, Attempt.all, :steps, :updated_at, :id, :name %><br />
-        <%= f.hidden_field :position, :value => 2 %>
+        <%= f.hidden_field :position, :value => 1 %>
       </div>
     </div>
     <div class="control-group">

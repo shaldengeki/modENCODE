@@ -27,4 +27,5 @@
 
 
 <%= link_to 'Edit', edit_reagent_path(@reagent) %> |
+<%= link_to 'Destroy', @reagent, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', reagents_path %>

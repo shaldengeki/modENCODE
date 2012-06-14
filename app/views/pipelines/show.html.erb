@@ -36,4 +36,5 @@
 </p>
 
 <%= link_to 'Edit', edit_pipeline_path(@pipeline) %> |
+<%= link_to 'Destroy', @pipeline, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', pipelines_path %>

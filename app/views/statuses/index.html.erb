@@ -1,29 +1,28 @@
-<h1>Listing statuses</h1>
+<h1>Latest updates</h1>
 
-<table>
-  <tr>
-    <th>Status</th>
-    <th>Reagent</th>
-    <th>Start</th>
-    <th>End</th>
-    <th>Position</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Gene(s)</th>
+      <th>Reagent</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Position</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @statuses.each do |status| %>
-  <tr>
-    <td><%= status.description %></td>
-    <td><%= status.attempt.nil? ? "None" : status.attempt.reagent.name %></td>
-    <td><%= status.start %></td>
-    <td><%= status.end %></td>
-    <td><%= status.position %></td>
-    <td><%= link_to 'Show', status %></td>
-    <td><%= link_to 'Edit', edit_status_path(status) %></td>
-    <td><%= link_to 'Destroy', status, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= link_to status.description, status %></td>
+      <td><%= status.attempt.nil? ? "None" : raw((status.attempt.reagent.isoforms.map{ |isoform| link_to(isoform.transcription_factor.name, isoform.transcription_factor) }).join(", ")) %></td>
+      <td><%= status.attempt.nil? ? "None" : link_to(status.attempt.reagent.name, status.attempt.reagent) %></td>
+      <td><%= status.start %></td>
+      <td><%= status.end %></td>
+      <td><%= status.step.position %> / <%= status.attempt.steps.count %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

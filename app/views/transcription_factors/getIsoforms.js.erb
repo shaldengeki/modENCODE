@@ -1,1 +1,1 @@
-$('#isoform-list > .controls').html("<%= escape_javascript(render(:partial => 'reagents/get_isoforms', :locals => {:isoforms => @transcription_factor.isoforms})) %>");
+$('#isoform-list > .controls').html("<%= escape_javascript(render(:partial => 'reagents/show_isoform_checkboxes', :locals => {:isoforms => @transcription_factor.isoforms})) %>");

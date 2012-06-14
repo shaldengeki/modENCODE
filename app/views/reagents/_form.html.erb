@@ -16,21 +16,14 @@
         <%= autocomplete_field_tag 'Gene name', '', autocomplete_alias_name_aliases_path, :update_elements => { :transcription_factor_id => "#tf-id" }, :class => "search-query span2", :placeholder => "Search" %>
         <input type="hidden" id="tf-id" />
         <script type="text/javascript">
-          $('#tf-id').change(function() {
-            transcription_factor = parseInt($('#tf-id').attr('value'));
-            if (transcription_factor > 0) {
-              $.get("<%= get_isoforms_url %>", { id: transcription_factor }, function(html) {
-                $("#borrower_netid_message").html(html);
-              });
-            }
-          });
+          <%= render :partial => "watch_tf_load_isoforms", :formats => [:js] %>
         </script>
       </div>
     </div>
     <div id="isoform-list" class="control-group">
       <%= f.label :isoforms, :class => "control-label" %>
       <div class="controls">
-        <%= render :partial => "get_isoforms", :locals => {:isoforms => []} %>
+        <%= render :partial => "show_isoform_checkboxes", :locals => {:isoforms => []} %>
       </div>
     </div>
     <div class="control-group">

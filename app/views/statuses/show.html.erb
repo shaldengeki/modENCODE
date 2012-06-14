@@ -1,11 +1,14 @@
+<h1>Status</h1>
+<dl class="dl-horizontal">
+  <dt>Attempt for:</dt>
+  <dd><%= @status.attempt.reagent.nil? ? "no reagent" : @status.attempt.reagent.name %></dd>
+  <dt>Started:</dt>
+  <dd><%= @status.started_at %></dd>
+  <dt>Last updated:</dt>
+  <dd><%= @status.updated_at %></dd>
+</dl>
 <p>
-  <strong>Attempt for:</strong> <%= @status.attempt.reagent.nil? ? "no reagent" : @status.attempt.reagent.name %><br />
-  <strong>Started on:</strong> <%= @status.started_at %><br />
-  <strong>Last updated on:</strong> <%= @status.updated_at %><br />
-</p>
-
-<p>
-  This step <%= @status.success || @status.failure ? raw("was " + (@status.success ? "a " + content_tag(:strong, "success") : "a " + content_tag(:strong, "failure") + ".")) : "has not been completed yet." %>
+  This step <%= @status.success || @status.failure ? raw("was " + (@status.success ? "a " + content_tag(:strong, "success") : "a " + content_tag(:strong, "failure"))) : "has not been completed yet" %>.
 </p>
 
 <p>
@@ -17,6 +20,37 @@
 <p>
   This marks the <%= @status.start ? "start" : "end" %> of this attempt.
 </p>
+<% end %>
+
+<h2>Attempt history</h2>
+<% if @status.attempt.nil? %>
+<p>This status is not part of an attempt.</p>
+<% else %>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Time</th>
+      <th>Step</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Position</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% i = 1 %>
+  <% @status.attempt.statuses.order("position ASC").each do |status| %>
+    <tr>
+      <td><%= i %></td>
+      <td><%= status.started_at %></td>
+      <td><%= link_to status.step.name, status %></td>
+      <td><%= status.description %></td>
+      <td><%= status.success ? "Success" : status.failure ? "Failed" : "In-progress" %></td>
+      <td><%= status.step.position %>/<%= status.attempt.steps.count %></td>
+    <% i += 1 %>
+  <% end %>
+  </tbody>
+</table>
 <% end %>
 
 <%= link_to 'Edit', edit_status_path(@status) %> |

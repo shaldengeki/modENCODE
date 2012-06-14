@@ -1,29 +1,26 @@
 <h1>Reagents</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Isoform(s)</th>
-    <th>Type</th>
-    <th>Source</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Isoform(s)</th>
+      <th>Type</th>
+      <th>Source</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @reagents.each do |reagent| %>
-  <tr>
-    <td><%= reagent.name %></td>
-    <td><%= reagent.description %></td>
-    <td><%= reagent.isoforms.nil? or reagent.isoforms.empty? ? "None" : reagent.isoforms.map {|isoform| isoform.name }.join(',') %></td>
-    <td><%= reagent.reagent_type.name %></td>
-    <td><%= reagent.source.nil? ? "None" : reagent.source.name %></td>
-    <td><%= link_to 'Show', reagent %></td>
-    <td><%= link_to 'Edit', edit_reagent_path(reagent) %></td>
-    <td><%= link_to 'Destroy', reagent, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= link_to reagent.name, reagent %></td>
+      <td><%= reagent.description %></td>
+      <td><%= reagent.isoforms.nil? or reagent.isoforms.empty? ? "None" : raw(reagent.isoforms.map {|isoform| link_to(isoform.name, isoform) }.join(',')) %></td>
+      <td><%= reagent.reagent_type.name %></td>
+      <td><%= reagent.source.nil? ? "None" : link_to(reagent.source.name, reagent.source) %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

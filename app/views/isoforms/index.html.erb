@@ -4,18 +4,14 @@
   <tr>
     <th>Name</th>
     <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Gene</th>
   </tr>
 
 <% @isoforms.each do |isoform| %>
   <tr>
-    <td><%= isoform.name %></td>
+    <td><%= link_to isoform.name, isoform %></td>
     <td><%= isoform.description %></td>
-    <td><%= link_to 'Show', isoform %></td>
-    <td><%= link_to 'Edit', edit_isoform_path(isoform) %></td>
-    <td><%= link_to 'Destroy', isoform, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to isoform.transcription_factor.name, isoform.transcription_factor %></td>
   </tr>
 <% end %>
 </table>

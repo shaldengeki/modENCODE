@@ -1,27 +1,24 @@
 <h1>Genes</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Flybase ID</th>
-    <th>CG ID</th>
-    <th>Refseq ID</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<table id="tf-list" class="display table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Flybase ID</th>
+      <th>CG ID</th>
+      <th>Refseq ID</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @transcription_factors.each do |transcription_factor| %>
-  <tr>
-    <td><%= transcription_factor.name %></td>
-    <td><%= link_to transcription_factor.flybase_id, 'http://flybase.org/reports/' + transcription_factor.flybase_id + '.html', :target => '_blank' %></td>
-    <td><%= transcription_factor.cg_id %></td>
-    <td><%= transcription_factor.refseq_id %></td>
-    <td><%= link_to 'Show', transcription_factor %></td>
-    <td><%= link_to 'Edit', edit_transcription_factor_path(transcription_factor) %></td>
-    <td><%= link_to 'Destroy', transcription_factor, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= link_to transcription_factor.name, transcription_factor %></td>
+      <td><%= link_to transcription_factor.flybase_id, 'http://flybase.org/reports/' + transcription_factor.flybase_id + '.html', :target => '_blank' %></td>
+      <td><%= transcription_factor.cg_id %></td>
+      <td><%= transcription_factor.refseq_id %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

@@ -20,6 +20,7 @@ group :assets do
   gem 'bootswatch-rails'
   gem 'coffee-rails'
   gem 'jquery-ui-rails'
+  gem 'jquery-datatables-rails', :github => "rweng/jquery-datatables-rails"
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'execjs'
   gem 'therubyracer', :platform => :ruby
