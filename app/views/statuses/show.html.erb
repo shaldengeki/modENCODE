@@ -1,20 +1,17 @@
 <h1>Status</h1>
 <dl class="dl-horizontal">
-  <dt>Attempt for:</dt>
-  <dd><%= @status.attempt.reagent.nil? ? "no reagent" : @status.attempt.reagent.name %></dd>
-  <dt>Started:</dt>
+  <dt>Attempt for</dt>
+  <dd><%= @status.attempt.reagent.nil? ? "no reagent" : link_to(@status.attempt.reagent.name, @status.attempt.reagent) %></dd>
+  <dt>Status</dt>
+  <dd><%= @status.success ? "Success" : @status.failure ? "Failure" : "In-progress" %></dd>
+  <dt>Started</dt>
   <dd><%= @status.started_at %></dd>
-  <dt>Last updated:</dt>
+  <dt>Last updated</dt>
   <dd><%= @status.updated_at %></dd>
 </dl>
-<p>
-  This step <%= @status.success || @status.failure ? raw("was " + (@status.success ? "a " + content_tag(:strong, "success") : "a " + content_tag(:strong, "failure"))) : "has not been completed yet" %>.
-</p>
 
-<p>
-  <b>Notes:</b><br />
-  <%= @status.description %>
-</p>
+<h3>Notes</h3>
+<blockquote><%= @status.description %></blockquote>
 
 <% if @status.start || @status.end %>
 <p>
@@ -22,7 +19,7 @@
 </p>
 <% end %>
 
-<h2>Attempt history</h2>
+<h3>Attempt history</h3>
 <% if @status.attempt.nil? %>
 <p>This status is not part of an attempt.</p>
 <% else %>
@@ -31,6 +28,7 @@
     <tr>
       <th>#</th>
       <th>Time</th>
+      <th>Person</th>
       <th>Step</th>
       <th>Description</th>
       <th>Status</th>
@@ -43,10 +41,11 @@
     <tr>
       <td><%= i %></td>
       <td><%= status.started_at %></td>
-      <td><%= link_to status.step.name, status %></td>
+      <td><%= link_to status.user.name, status.user %></td>
+      <td><%= link_to status.step.name, status.step %></td>
       <td><%= status.description %></td>
-      <td><%= status.success ? "Success" : status.failure ? "Failed" : "In-progress" %></td>
-      <td><%= status.step.position %>/<%= status.attempt.steps.count %></td>
+      <td><%= link_to status.success ? "Success" : status.failure ? "Failed" : "In-progress", status %></td>
+      <td><%= link_to status.step.position.to_s + "/" + status.attempt.steps.count.to_s, status.step.pipeline %></td>
     <% i += 1 %>
   <% end %>
   </tbody>

@@ -35,6 +35,10 @@
 </div>
 <div class="row">
   <div class="span6">
+    <h2>Create Reagent</h2>
+    <%= render :partial => 'reagents/form' %>
+  </div>
+  <div class="span6">
     <h2>All Sources</h2>
     <ul id="allSources">
       <li class="feedItem">
@@ -60,17 +64,6 @@
       </li>
       <%= link_to '#' do %><em>More...</em> <% end %>
     </ul>
-  </div>
-  <div class="span6">
-    <div class="row">
-      <div class="span1"><%= link_to 'White Lab', '#'  %></div><div class="progress progress-info span4"><div class="bar" style="width: 62%"></div></div><div class="span1">62%</div>
-    </div>
-    <div class="row">
-      <div class="span1"><%= link_to 'Fly Trap', '#' %></div><div class="progress progress-danger span4"><div class="bar" style="width: 35%"></div></div><div class="span1">35%</div>
-    </div>
-    <div class="row">
-      <div class="span1"><%= link_to 'MIMiC', '#' %></div><div class="progress progress-success span4"><div class="bar" style="width: 88%"></div></div><div class="span1">88%</div>
-    </div>
   </div>
 </div>
 <script type="text/javascript">

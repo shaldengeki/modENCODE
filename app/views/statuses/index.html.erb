@@ -3,23 +3,23 @@
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
+      <th>Time</th>
       <th>Status</th>
       <th>Gene(s)</th>
       <th>Reagent</th>
-      <th>Start</th>
-      <th>End</th>
+      <th>Status</th>
       <th>Position</th>
     </tr>
   </thead>
   <tbody>
 <% @statuses.each do |status| %>
     <tr>
-      <td><%= link_to status.description, status %></td>
+      <td><%= link_to status.started_at, status %></td>
+      <td><%= status.description %></td>
       <td><%= status.attempt.nil? ? "None" : raw((status.attempt.reagent.isoforms.map{ |isoform| link_to(isoform.transcription_factor.name, isoform.transcription_factor) }).join(", ")) %></td>
       <td><%= status.attempt.nil? ? "None" : link_to(status.attempt.reagent.name, status.attempt.reagent) %></td>
-      <td><%= status.start %></td>
-      <td><%= status.end %></td>
-      <td><%= status.step.position %> / <%= status.attempt.steps.count %></td>
+      <td><%= status.success ? "Success" : status.failure ? "Failure" : "In-progress" %></td>
+      <td><%= status.step.position %>/<%= status.step.pipeline.steps.count %></td>
     </tr>
 <% end %>
   </tbody>

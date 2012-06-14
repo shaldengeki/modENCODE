@@ -1,38 +1,47 @@
 ModENCODE::Application.routes.draw do
-  resources :reagent_values
-  resources :reagent_attributes
-  resources :attempts
-  resources :isoforms
-  resources :pipelines
-  resources :reagent_types
-  resources :reagents do
-    get :autocomplete_reagent_name, :on => :collection
-  end
-  resources :sessions, only: [:create, :destroy]
-  resources :sources
-  resources :statuses
-  resources :steps
-  resources :tags
   resources :aliases do
     get :autocomplete_alias_name, :on => :collection
   end
   match 'aliases/findTF' => 'aliases#findTF', :as => 'find_tfs'
+
+  resources :attempts
+  resources :isoforms
+
+  get "pages/dashboard"
+  match '/dashboard', :to => 'pages#dashboard'
+  get "pages/contact"
+  match '/contact', :to => 'pages#contact'
+  get "pages/completionProgress"
+
+  resources :pipelines
+
+  resources :reagent_attributes
+  resources :reagent_types
+  resources :reagent_values
+
+  resources :reagents do
+    get :autocomplete_reagent_name, :on => :collection
+  end
+
+  resources :sessions, only: [:create, :destroy]
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
+
+  resources :sources
+
+  resources :statuses
+  match '/feed', to: 'statuses#index'
+
+  resources :steps
+  resources :tags
+
   match 'transcription_factors/getIsoforms' => 'transcription_factors#getIsoforms', :as => 'get_isoforms'
   resources :transcription_factors do
     get :autocomplete_transcription_factor_name, :on => :collection
   end
 
   resources :users
-
   match '/signup',  to: 'users#new'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
-  match '/feed', to: 'statuses#index'
-  get "pages/dashboard"
-  match '/dashboard', :to => 'pages#dashboard'
-  get "pages/contact"
-  match '/contact', :to => 'pages#contact'
-  get "pages/completionProgress"
 
   root :to => 'pages#dashboard'
   # The priority is based upon order of creation:

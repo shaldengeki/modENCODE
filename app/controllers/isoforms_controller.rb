@@ -1,9 +1,11 @@
 class IsoformsController < ApplicationController
   load_and_authorize_resource
+  before_filter :generate_new_isoform, :only => [:index, :show, :new]
   # GET /isoforms
   # GET /isoforms.json
   def index
     @isoforms = Isoform.all
+
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,8 +27,6 @@ class IsoformsController < ApplicationController
   # GET /isoforms/new
   # GET /isoforms/new.json
   def new
-    @isoform = Isoform.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @isoform }
@@ -81,4 +81,8 @@ class IsoformsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+    def generate_new_isoform
+      @isoform = Isoform.new
+    end
 end

@@ -5,6 +5,7 @@ class PagesController < ApplicationController
     @attempt = Attempt.new
     @attempt.statuses.build
     @status = Status.new
+    @reagent = Reagent.new
     @transcriptionFactors = TranscriptionFactor.all
     @latestUpdatedTFs = TranscriptionFactor.joins(:isoforms => {:reagents => {:attempts => :statuses}}).order("statuses.id DESC").group("transcription_factors.id").limit(5).all
     @latestStatuses = Status.order("id DESC").limit(5)

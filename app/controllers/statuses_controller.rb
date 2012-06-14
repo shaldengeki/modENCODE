@@ -1,5 +1,6 @@
 class StatusesController < ApplicationController
   load_and_authorize_resource
+  before_filter :generate_new_status, :only => [:index, :show, :new]
   # GET /statuses
   # GET /statuses.json
   def index
@@ -25,8 +26,6 @@ class StatusesController < ApplicationController
   # GET /statuses/new
   # GET /statuses/new.json
   def new
-    @status = Status.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @status }
@@ -85,4 +84,8 @@ class StatusesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+    def generate_new_status
+      @status = Status.new
+    end
 end

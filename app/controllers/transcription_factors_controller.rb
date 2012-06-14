@@ -1,6 +1,7 @@
 class TranscriptionFactorsController < ApplicationController
   load_and_authorize_resource
   autocomplete :transcription_factor, :name
+  before_filter :generate_new_transcription_factor, :only => [:index, :show, :new]
   # GET /transcription_factors
   # GET /transcription_factors.json
   def index
@@ -34,8 +35,6 @@ class TranscriptionFactorsController < ApplicationController
   # GET /transcription_factors/new
   # GET /transcription_factors/new.json
   def new
-    @transcription_factor = TranscriptionFactor.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @transcription_factor }
@@ -90,4 +89,8 @@ class TranscriptionFactorsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+    def generate_new_transcription_factor
+      @transcription_factor = TranscriptionFactor.new
+    end
 end

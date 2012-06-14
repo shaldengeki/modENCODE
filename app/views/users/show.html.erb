@@ -1,25 +1,37 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @user.name %></h1>
+<dl class="dl-horizontal">
+  <dt>Email</dt>
+  <dd><%= @user.email %></dd>
+  <dt>Role</dt>
+  <dd><%= @user.role.humanize %></dd>
+  <dt>Works for</dt>
+  <dd><%= @user.source.nil? ? 'Nowhere' : link_to(@user.source.name, @user.source) %></dd>
+</dl>
+<h2>Latest updates</h2>
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Time</th>
+    <th>Reagent</th>
+    <th>Step</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Position</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @user.statuses.order("updated_at DESC").each do |status| %>
+    <tr>
+      <td><%= link_to status.started_at, status %></td>
+      <td><%= link_to status.attempt.reagent.name, status.attempt.reagent %></td>
+      <td><%= link_to status.step.name, status.step %></td>
+      <td><%= status.description %></td>
+      <td><%= status.success ? "Success" : status.failure ? "Failure" : "In-progress" %></td>
+      <td><%= link_to (status.step.position.to_s + "/" + status.step.pipeline.steps.count.to_s), status.step.pipeline %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 
-<p>
-  <b>Name:</b>
-  <%= @user.name %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
-
-<p>
-  <b>Role:</b>
-  <%= @user.role.humanize %>
-</p>
-
-<p>
-  <b>Works for:</b>
-  <%= @user.source.nil? ? '' : @user.source.name %>
-</p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

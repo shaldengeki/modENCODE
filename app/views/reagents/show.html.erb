@@ -1,31 +1,31 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @reagent.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @reagent.description %>
-</p>
-
-<p>
-  <b>Source:</b>
-  <%= @reagent.source.nil? ? "None" : @reagent.source.name %>
-</p>
-
-<p>
-  <b>Reagent type:</b>
-  <%= @reagent.reagent_type.nil? ? "None" : @reagent.reagent_type.name %>
-</p>
-
-<p>
-  <b>Tag:</b>
-  <%= @reagent.tag.nil? ? "None" : @reagent.tag.name %>
-</p>
-
-
+<h1><%= @reagent.name %></h1>
+<dl class="dl-horizontal">
+  <dt>Source</dt>
+  <dd><%= @reagent.source.name %></dd>
+  <dt>Type</dt>
+  <dd><%= @reagent.reagent_type.name %></dd>
+  <dt>Tag</dt>
+  <dd><%= @reagent.tag.name %></dd>
+  <dt>Description</dt>
+  <dd><%= @reagent.description %></dd>
+</dl>
+<h3>Isoforms in this reagent:</h3>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Isoform</th>
+      <th>Gene</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @reagent.isoforms.each do |isoform| %>
+    <tr>
+      <td><%= link_to isoform.name, isoform %></td>
+      <td><%= link_to isoform.transcription_factor.name, isoform.transcription_factor %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 <%= link_to 'Edit', edit_reagent_path(@reagent) %> |
 <%= link_to 'Destroy', @reagent, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', reagents_path %>

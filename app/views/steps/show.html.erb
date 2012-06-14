@@ -1,20 +1,35 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @step.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @step.description %>
-</p>
-
-<p>
-  <b>Pipeline:</b>
-  <%= @step.pipeline %>
-</p>
-
-
+<h1><%= @step.name %></h1>
+<dl class="dl-horizontal">
+  <dt>Pipeline</dt>
+  <dd><%= @step.pipeline.nil? ? "None" : link_to(@step.pipeline.name, @step.pipeline) %></dd>
+  <dt>Position</dt>
+  <dd><%= @step.position %>/<%= @step.pipeline.steps.count %></dd>
+  <dt>Description</dt>
+  <dd><%= @step.description.nil? ? "None" : @step.description %></dd>
+  <dt>Success rate</dt>
+  <dd><%= ((@status_successes.count * 1.0)/(@status_failures.count + @status_successes.count) * 100).round(2) %>%</dd>
+</dl>
+<h3>Attempt history</h3>
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Time</th>
+    <th>Person</th>
+    <th>Description</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @step.statuses.each do |status| %>
+    <tr>
+      <td><%= status.started_at %></td>
+      <td><%= link_to status.user.name, status.user %></td>
+      <td><%= status.description %></td>
+      <td><%= status.success ? "Success" : status.failure ? "Failure" : "In-progress" %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 <%= link_to 'Edit', edit_step_path(@step) %> |
+<%= link_to 'Destroy', @step, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', steps_path %>

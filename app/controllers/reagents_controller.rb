@@ -1,6 +1,7 @@
 class ReagentsController < ApplicationController
   load_and_authorize_resource
   autocomplete :reagent, :name, :extra_data => [:reagent_type_id]
+  before_filter :generate_new_reagent, :only => [:index, :show, :new]
   # GET /reagents
   # GET /reagents.json
   def index
@@ -26,8 +27,6 @@ class ReagentsController < ApplicationController
   # GET /reagents/new
   # GET /reagents/new.json
   def new
-    @reagent = Reagent.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @reagent }
@@ -82,4 +81,8 @@ class ReagentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+    def generate_new_reagent
+      @reagent = Reagent.new
+    end
 end

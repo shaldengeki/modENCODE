@@ -1,25 +1,22 @@
 <h1>Listing steps</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Pipeline</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Pipeline</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @steps.each do |step| %>
-  <tr>
-    <td><%= step.name %></td>
-    <td><%= step.description %></td>
-    <td><%= step.pipeline %></td>
-    <td><%= link_to 'Show', step %></td>
-    <td><%= link_to 'Edit', edit_step_path(step) %></td>
-    <td><%= link_to 'Destroy', step, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= link_to step.name, step %></td>
+      <td><%= step.description %></td>
+      <td><%= step.pipeline.nil? ? "None" : link_to(step.pipeline.name, step.pipeline) %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

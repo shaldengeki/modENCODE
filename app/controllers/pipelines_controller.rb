@@ -1,5 +1,6 @@
 class PipelinesController < ApplicationController
   load_and_authorize_resource
+  before_filter :generate_new_pipeline, :only => [:index, :show, :new]
   # GET /pipelines
   # GET /pipelines.json
   def index
@@ -25,7 +26,6 @@ class PipelinesController < ApplicationController
   # GET /pipelines/new
   # GET /pipelines/new.json
   def new
-    @pipeline = Pipeline.new
     3.times { @pipeline.steps.build }
 
     respond_to do |format|
@@ -82,4 +82,8 @@ class PipelinesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+    def generate_new_pipeline
+      @pipeline = Pipeline.new
+    end
 end

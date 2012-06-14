@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
   load_and_authorize_resource
+  before_filter :generate_new_tag, :only => [:index, :show, :new]
   # GET /tags
   # GET /tags.json
   def index
@@ -25,8 +26,6 @@ class TagsController < ApplicationController
   # GET /tags/new
   # GET /tags/new.json
   def new
-    @tag = Tag.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @tag }
@@ -81,4 +80,8 @@ class TagsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+    def generate_new_tag
+      @tag = Tag.new
+    end
 end

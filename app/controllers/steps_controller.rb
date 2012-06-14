@@ -1,5 +1,6 @@
 class StepsController < ApplicationController
   load_and_authorize_resource
+  before_filter :generate_new_step, :only => [:index, :show, :new]
   # GET /steps
   # GET /steps.json
   def index
@@ -15,6 +16,8 @@ class StepsController < ApplicationController
   # GET /steps/1.json
   def show
     @step = Step.find(params[:id])
+    @status_successes = @step.statuses.where(:success => true)
+    @status_failures = @step.statuses.where(:failure => true)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,8 +28,6 @@ class StepsController < ApplicationController
   # GET /steps/new
   # GET /steps/new.json
   def new
-    @step = Step.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @step }
@@ -81,4 +82,8 @@ class StepsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+    def generate_new_step
+      @step = Step.new
+    end
 end

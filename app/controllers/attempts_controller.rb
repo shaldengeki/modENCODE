@@ -1,5 +1,6 @@
 class AttemptsController < ApplicationController
   load_and_authorize_resource
+  before_filter :generate_new_attempt, :only => [:index, :show, :new]
   # GET /attempts
   # GET /attempts.json
   def index
@@ -25,7 +26,6 @@ class AttemptsController < ApplicationController
   # GET /attempts/new
   # GET /attempts/new.json
   def new
-    @attempt = Attempt.new
     @attempt.statuses.build
 
     respond_to do |format|
@@ -87,4 +87,9 @@ class AttemptsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    def generate_new_attempt
+      @attempt = Attempt.new
+    end
 end
