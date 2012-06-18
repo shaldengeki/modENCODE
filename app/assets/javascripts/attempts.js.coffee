@@ -1,5 +1,5 @@
 updateAttemptFields = (pipelines, steps) ->
-  reagent_type = parseInt($('#attempt-reagent-type').attr('value'))
+  reagent_type = parseInt($('#isoform-search-reagent-type').attr('value'))
   if reagent_type != 0
     options = $(pipelines).filter("optgroup[label='#{reagent_type}']").html()
     if options
@@ -28,4 +28,4 @@ jQuery ->
   steps = $('#attempt_statuses_attributes_0_step_id').html()
 
   updateAttemptFields(pipelines, steps)
-  $('#attempt-reagent-type').change -> updateAttemptFields(pipelines, steps)
+  $('#isoform-search-reagent-type').change -> updateAttemptFields(pipelines, steps)

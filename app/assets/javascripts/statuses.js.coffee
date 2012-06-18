@@ -1,5 +1,5 @@
 updateStatusFields = (attempts, steps) ->
-  reagent_id = parseInt($('#status-attempt-reagent-id').attr('value'))
+  reagent_id = parseInt($('#isoform-search-reagent-id').attr('value'))
   if reagent_id != 0
     options = $(attempts).filter("optgroup[label='#{reagent_id}']").html()
     if options
@@ -31,4 +31,4 @@ jQuery ->
   steps = $('#status_step_id').html()
 
   updateStatusFields(attempts, steps)
-  $('#status-attempt-reagent-id').change -> updateStatusFields(attempts, steps)
+  $('#isoform-search-reagent-id').change -> updateStatusFields(attempts, steps)

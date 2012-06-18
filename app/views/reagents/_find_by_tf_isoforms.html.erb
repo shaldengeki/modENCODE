@@ -24,3 +24,5 @@
 
   </div>
 </div>
+<input type="hidden" id="isoform-search-reagent-id" value="<%= @attempt.nil? || @attempt.reagent.nil? ? "" : @attempt.reagent.id %>"/>
+<input type="hidden" id="isoform-search-reagent-type" value="<%= @attempt.nil? || @attempt.reagent.nil? ? "" : @attempt.reagent.reagent_type_id %>"/>

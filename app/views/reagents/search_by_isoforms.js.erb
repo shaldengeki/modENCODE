@@ -1,11 +1,15 @@
 <% if @reagents.empty? %>
   $('#reagents-search-by-isoforms > div.controls').html("No reagents found.");
 <% else %>
-$('#reagents-search-by-isoforms > div.controls').html("<%= escape_javascript(collection_select(Reagent, :reagent, @reagents, :id, :name)) %>");
-$('#status-attempt-reagent-id').val($('#reagents-search-by-isoforms > div.controls > select').val());
-$('#status-attempt-reagent-id').trigger('change');
+$('#reagents-search-by-isoforms > div.controls').html("<%= escape_javascript(select(Reagent, :reagent, @reagents.map {|reagent| [reagent.name, reagent.id, {:'reagent-type' => reagent.reagent_type.id}]})) %>");
+$('#isoform-search-reagent-id').val($('#reagents-search-by-isoforms > div.controls > select').val());
+$('#isoform-search-reagent-id').trigger('change');
+$('#isoform-search-reagent-type').val($('#reagents-search-by-isoforms > div.controls > select').find(":selected").attr('reagent-type'));
+$('#isoform-search-reagent-type').trigger('change');
 $('#reagents-search-by-isoforms > div.controls > select').change(function() {
-  $('#status-attempt-reagent-id').val($(this).val());
-  $('#status-attempt-reagent-id').trigger('change');
+  $('#isoform-search-reagent-id').val($(this).val());
+  $('#isoform-search-reagent-id').trigger('change');
+  $('#isoform-search-reagent-type').val($(this).find(":selected").attr('reagent-type'));
+  $('#isoform-search-reagent-type').trigger('change');
 });
 <% end %>
