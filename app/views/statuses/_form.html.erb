@@ -12,13 +12,8 @@
   <% end %>
 
   <fieldset>
-    <div class="control-group">
-      <%= f.label :reagent_name, :class => "control-label" %>
-      <div class="controls">
-        <%= autocomplete_field_tag 'Reagent name', '', autocomplete_reagent_name_reagents_path, :update_elements =>  {:id => "#status-attempt-reagent-id" }, :class => "search-query span2", :placeholder => "Search", :value => (@status.attempt.reagent.name if (!@status.attempt.nil? && !@status.attempt.reagent.nil?)) %>
-        <input type="hidden" id="status-attempt-reagent-id" value="<%= @status.attempt.nil? || @status.attempt.reagent.nil? ? "" : @status.attempt.reagent.id %>"/>
-      </div>
-    </div>
+    <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f} %>
+    <input type="hidden" id="status-attempt-reagent-id" value="<%= @status.attempt.nil? || @status.attempt.reagent.nil? ? "" : @status.attempt.reagent.id %>"/>
     <div class="control-group">
       <%= f.label "Attempt date", :class => "control-label" %>
       <div class="controls">

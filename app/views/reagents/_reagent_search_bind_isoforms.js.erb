@@ -1,0 +1,6 @@
+$("input[name=isoforms_json]").change(function() {
+  isoforms = $("input[name=isoforms_json]").val();
+  if (isoforms.length > 2) {
+    $.get("<%= search_reagents_by_isoforms_url %>", { isoforms: isoforms });
+  }
+});

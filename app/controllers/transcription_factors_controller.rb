@@ -24,7 +24,7 @@ class TranscriptionFactorsController < ApplicationController
     end
   end
 
-  def getIsoforms
+  def get_isoforms
     @transcription_factor = TranscriptionFactor.find(params[:id])
     @reagent = Reagent.new
     respond_to do |format|

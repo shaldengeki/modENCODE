@@ -1,0 +1,11 @@
+<% if @reagents.empty? %>
+  $('#reagents-search-by-isoforms > div.controls').html("No reagents found.");
+<% else %>
+$('#reagents-search-by-isoforms > div.controls').html("<%= escape_javascript(collection_select(Reagent, :reagent, @reagents, :id, :name)) %>");
+$('#status-attempt-reagent-id').val($('#reagents-search-by-isoforms > div.controls > select').val());
+$('#status-attempt-reagent-id').trigger('change');
+$('#reagents-search-by-isoforms > div.controls > select').change(function() {
+  $('#status-attempt-reagent-id').val($(this).val());
+  $('#status-attempt-reagent-id').trigger('change');
+});
+<% end %>

@@ -24,6 +24,17 @@ class ReagentsController < ApplicationController
     end
   end
 
+  def search_by_isoforms
+    isoforms = ActiveSupport::JSON.decode(params[:isoforms])
+    @reagents = Isoform.find(isoforms.first).reagents
+    isoforms.each do |isoform|
+      @reagents = @reagents & Isoform.find(isoform).reagents
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
   # GET /reagents/new
   # GET /reagents/new.json
   def new

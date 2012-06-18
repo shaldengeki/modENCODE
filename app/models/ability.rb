@@ -7,7 +7,7 @@ class Ability
     can :autocomplete_alias_name, Alias
     can :findTF, Alias
     can :autocomplete_transcription_factor_name, TranscriptionFactor
-    can :getIsoforms, TranscriptionFactor
+    can :get_isoforms, TranscriptionFactor
     if user.role? :normal
       can :update, User, :id => user.id
 

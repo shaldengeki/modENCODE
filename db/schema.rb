@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120613203714) do
+ActiveRecord::Schema.define(:version => 20120614203823) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20120613203714) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
     t.integer  "transcription_factor_id"
+    t.string   "flybase_id"
+    t.string   "refseq_id"
   end
 
   add_index "isoforms", ["transcription_factor_id"], :name => "index_isoforms_on_transcription_factor_id"
@@ -186,8 +188,9 @@ ActiveRecord::Schema.define(:version => 20120613203714) do
     t.string   "flybase_id"
     t.string   "cg_id"
     t.string   "refseq_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "isoform_image_path"
   end
 
   create_table "users", :force => true do |t|

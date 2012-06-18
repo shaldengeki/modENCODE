@@ -2,6 +2,7 @@ class Status < ActiveRecord::Base
   belongs_to :attempt
   belongs_to :user
   belongs_to :step
+  has_one :reagent, :through => :attempt
   attr_accessible :start, :end, :position, :description, :attempt_id, :user_id, :step_id, :started_at, :success, :failure
 
   validates :description, :presence => true

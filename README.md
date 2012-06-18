@@ -1,4 +1,4 @@
 modENCODE
 =========
 
-Rails app to keep track of modENCODE transcription factors.
+Rails app to track progress towards sequencing modENCODE transcription factor binding sites.

@@ -68,13 +68,12 @@
 </div>
 <script type="text/javascript">
 var data = <%= @pieChartData %>,
-    labels = ["Inactive", "In-Progress", "Completed"];
-
-var w = 350,
+    w = 350,
     h = 300,
     r = Math.min(w, h) / 2,
     tweenDuration = 750,
-    colors = ['#DD514C', '#FAA732', '#1DB338'],
+    labels = ["Inactive", "In-Progress", "Completed"],
+    colors = ['#8C8C8C', '#FAA732', '#1DB338'],
     color = d3.scale.category10(),
     donut = d3.layout.pie().sort(null),
     arc = d3.svg.arc().innerRadius(r - 100).outerRadius(r);
