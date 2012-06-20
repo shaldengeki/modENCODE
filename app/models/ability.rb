@@ -6,6 +6,9 @@ class Ability
     can :read, :all
     can :autocomplete_alias_name, Alias
     can :findTF, Alias
+    can :search_by_isoforms, Reagent
+    can :get_attributes, ReagentType
+
     can :autocomplete_transcription_factor_name, TranscriptionFactor
     can :get_isoforms, TranscriptionFactor
     if user.role? :normal
