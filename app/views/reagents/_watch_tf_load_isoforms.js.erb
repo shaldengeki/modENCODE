@@ -1,6 +1,6 @@
 $('#tf-id').change(function() {
   transcription_factor = parseInt($('#tf-id').attr('value'));
   if (transcription_factor > 0) {
-    $.get("<%= get_isoforms_url %>", { id: transcription_factor });
+    $.get("<%= get_tf_isoforms_url %>", { id: transcription_factor });
   }
 });

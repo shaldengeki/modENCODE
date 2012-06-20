@@ -1,0 +1,19 @@
+<% if reagent_attributes.nil? or reagent_attributes.empty? %>
+  No reagent attributes found.
+<% else %>
+  <div class="form-horizontal">
+    <fieldset>
+    <% i = 0 %>
+    <% reagent_attributes.each do |reagent_attribute| %>
+        <div class="control-group">
+          <%= label_tag "reagent[reagent_values_attributes][" + i.to_s  + "][reagent_attribute_id]", reagent_attribute.name, :class => "control-label" %>
+          <div class="controls">
+            <%=  hidden_field_tag "reagent[reagent_values_attributes][" + i.to_s  + "][reagent_attribute_id]", reagent_attribute.id %>
+            <%=  text_field_tag "reagent[reagent_values_attributes][" + i.to_s  + "][value]", ((@reagent.reagent_values.map{|value| value.reagent_attribute_id}).include? reagent_attribute.id) ? @reagent.reagent_values.select{|value| value.reagent_attribute_id == reagent_attribute.id}.first.value : "" %>
+          </div>
+        </div>
+        <% i += 1 %>
+    <% end %>
+    </fieldset>
+  </div>
+<% end %>

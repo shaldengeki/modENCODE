@@ -4,19 +4,13 @@
   <tr>
     <th>Name</th>
     <th>Reagent type</th>
-    <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @reagent_attributes.each do |reagent_attribute| %>
   <tr>
-    <td><%= reagent_attribute.name %></td>
+    <td><%= link_to reagent_attribute.name, reagent_attribute %></td>
     <td><%= reagent_attribute.reagent_type %></td>
-    <td><%= link_to 'Show', reagent_attribute %></td>
-    <td><%= link_to 'Edit', edit_reagent_attribute_path(reagent_attribute) %></td>
-    <td><%= link_to 'Destroy', reagent_attribute, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
 <% end %>
 </table>
 

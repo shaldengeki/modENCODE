@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :reagent_type %><br />
-    <%= f.text_field :reagent_type %>
+    <%= f.collection_select :reagent_type_id, ReagentType.all, :id, :name %>
   </div>
   <div class="actions">
     <%= f.submit %>

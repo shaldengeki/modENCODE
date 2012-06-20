@@ -9,7 +9,24 @@
   <dt>Description</dt>
   <dd><%= @reagent.description %></dd>
 </dl>
-<h3>Isoforms in this reagent:</h3>
+<h3>Attributes</h3>
+<table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>Attribute</th>
+    <th>Value</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @reagent.reagent_values.order("created_at DESC").group("reagent_attribute_id").order("id ASC").all.each do |reagent_value| %>
+    <tr>
+      <td><%= reagent_value.reagent_attribute.name %></td>
+      <td><%= reagent_value.value %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<h3>Isoforms</h3>
 <table class="table table-striped table-bordered">
   <thead>
     <tr>

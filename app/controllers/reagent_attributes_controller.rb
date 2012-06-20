@@ -1,4 +1,5 @@
 class ReagentAttributesController < ApplicationController
+  load_and_authorize_resource
   # GET /reagent_attributes
   # GET /reagent_attributes.json
   def index

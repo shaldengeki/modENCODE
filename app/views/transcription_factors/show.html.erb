@@ -1,37 +1,18 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @transcription_factor.name %>
-</p>
-
-<p>
-  <b>Also known as:</b>
-  <%= @transcription_factor.aliases.empty? ? "None" : (@transcription_factor.aliases.map {|aliasname| aliasname.name} ).join(", ") %>
-
-</p>
-
-<p>
-  <b>Flybase ID:</b>
-  <%= link_to @transcription_factor.flybase_id, 'http://flybase.org/reports/' + @transcription_factor.flybase_id + '.html', :target => '_blank' %>
-</p>
-
-<p>
-  <b>CG ID:</b>
-  <%= @transcription_factor.cg_id %>
-</p>
-
-<p>
-  <b>Refseq ID:</b>
-  <%= @transcription_factor.refseq_id %>
-</p>
-
-<p>
-  <b>Isoforms:</b><br />
-  <%= image_tag "isoforms/" + @transcription_factor.isoform_image_path %><br />
-  <%= render :partial => 'isoforms/tf_table', :locals => {:transcription_factor => @transcription_factor} %>
-</p>
-
+<dl class="dl-horizontal">
+  <dt>Name</dt>
+  <dd><%= @transcription_factor.name %></dd>
+  <dt>Also known as</dt>
+  <dd><%= @transcription_factor.aliases.empty? ? "None" : (@transcription_factor.aliases.map {|aliasname| aliasname.name} ).join(", ") %></dd>
+  <dt>Flybase ID</dt>
+  <dd><%= link_to @transcription_factor.flybase_id, 'http://flybase.org/reports/' + @transcription_factor.flybase_id + '.html', :target => '_blank' %></dd>
+  <dt>CG ID</dt>
+  <dd><%= @transcription_factor.cg_id %></dd>
+  <dt>Refseq ID</dt>
+  <dd><%= @transcription_factor.refseq_id %></dd>
+</dl>
+<h3>Isoforms</h3>
+<%= image_tag "isoforms/" + @transcription_factor.isoform_image_path %><br />
+<%= render :partial => 'isoforms/tf_table', :locals => {:transcription_factor => @transcription_factor} %>
 
 <%= link_to 'Edit', edit_transcription_factor_path(@transcription_factor) %> |
 <%= link_to 'Back', transcription_factors_path %>

@@ -16,6 +16,7 @@ ModENCODE::Application.routes.draw do
   resources :pipelines
 
   resources :reagent_attributes
+  match 'reagent_types/get_attributes' => 'reagent_types#get_attributes', :as => 'get_reagent_types_reagent_attributes'
   resources :reagent_types
   resources :reagent_values
 
@@ -36,7 +37,7 @@ ModENCODE::Application.routes.draw do
   resources :steps
   resources :tags
 
-  match 'transcription_factors/get_isoforms' => 'transcription_factors#get_isoforms', :as => 'get_isoforms'
+  match 'transcription_factors/get_isoforms' => 'transcription_factors#get_isoforms', :as => 'get_tf_isoforms'
   resources :transcription_factors do
     get :autocomplete_transcription_factor_name, :on => :collection
   end

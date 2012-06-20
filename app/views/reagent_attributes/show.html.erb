@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Name:</b>
   <%= @reagent_attribute.name %>
@@ -7,9 +5,10 @@
 
 <p>
   <b>Reagent type:</b>
-  <%= @reagent_attribute.reagent_type %>
+  <%= @reagent_attribute.reagent_type.name %>
 </p>
 
 
 <%= link_to 'Edit', edit_reagent_attribute_path(@reagent_attribute) %> |
+<%= link_to 'Destroy', @reagent_attribute, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', reagent_attributes_path %>

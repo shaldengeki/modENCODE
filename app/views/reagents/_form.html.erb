@@ -23,7 +23,7 @@
     <div id="isoform-list" class="control-group">
       <%= f.label :isoforms, :class => "control-label" %>
       <div class="controls">
-        <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:isoforms => []} %>
+        <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:isoforms => @reagent.isoforms} %>
       </div>
     </div>
     <div class="control-group">
@@ -48,6 +48,13 @@
       <%= f.label :reagent_type_id, :class => "control-label" %>
       <div class="controls">
         <%= f.collection_select :reagent_type_id, ReagentType.all, :id, :name %>
+      </div>
+        <%= render :partial => "reagents/watch_reagent_type_load_reagent_attributes", :locals => {:reagent => @reagent} %>
+    </div>
+    <div id="reagent-attributes-list" class="control-group">
+      <%= f.label :reagent_attributes, :class => "control-label" %>
+      <div class="controls">
+        No attributes found.
       </div>
     </div>
     <div class="control-group">

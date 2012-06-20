@@ -1,15 +1,17 @@
-<p id="notice"><%= notice %></p>
+<dl class="dl-horizontal">
+  <dt>Name</dt>
+  <dd><%= @reagent_type.name %></dd>
+  <dt>Description</dt>
+  <dd><%= @reagent_type.description.nil? ? "None" : @reagent_type.description %></dd>
+</dl>
 
-<p>
-  <b>Name:</b>
-  <%= @reagent_type.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @reagent_type.description %>
-</p>
-
+<h3>Attributes</h3>
+<ul id="reagent-attribute-list">
+  <% @reagent_type.reagent_attributes.each do |reagent_attribute| %>
+    <li><%= link_to reagent_attribute.name, reagent_attribute %></li>
+  <% end %>
+</ul>
 
 <%= link_to 'Edit', edit_reagent_type_path(@reagent_type) %> |
+<%= link_to 'Destroy', @reagent_type, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', reagent_types_path %>

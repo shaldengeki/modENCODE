@@ -22,6 +22,15 @@ class ReagentTypesController < ApplicationController
     end
   end
 
+  def get_attributes
+    @reagent = Reagent.find(params[:reagent])
+    @reagent_attributes = ReagentAttribute.where(:reagent_type_id => params[:reagent_type]).all
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
   # GET /reagent_types/new
   # GET /reagent_types/new.json
   def new

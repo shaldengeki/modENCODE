@@ -1,16 +1,11 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @isoform.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @isoform.description %>
-</p>
-
-
+<dl class="dl-horizontal">
+  <dt>Name</dt>
+  <dd><%= @isoform.name %></dd>
+  <dt>Description</dt>
+  <dd><%= @isoform.description.nil? ? "None" : @isoform.description %></dd>
+  <dt>Gene</dt>
+  <dd><%= link_to @isoform.transcription_factor.name, @isoform.transcription_factor %></dd>
+</dl>
 <%= link_to 'Edit', edit_isoform_path(@isoform) %> |
 <%= link_to 'Destroy', @isoform, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', isoforms_path %>
