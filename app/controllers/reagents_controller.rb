@@ -26,7 +26,7 @@ class ReagentsController < ApplicationController
 
   def search
     values = params["reagent"]
-    if values.nil? or values.length < 1
+    if values.nil? or values.length < 1 or values[:reagent_values_attributes].nil?
       @reagents = []
     else
       values = Array(values["reagent_values_attributes"]).select{|value| !value[:value].blank? }
