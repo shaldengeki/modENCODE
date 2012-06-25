@@ -1,1 +1,1 @@
-$('#reagent-attributes-list > div.controls').html("<%= escape_javascript(render(:partial => 'reagents/show_reagent_attribute_fields', :locals => {:reagent_attributes => @reagent_attributes})) %>");
+$('#reagent-attributes-list > div.controls').html("<%= escape_javascript(render(:partial => 'reagents/show_reagent_attribute_fields', :locals => {:reagent => @reagent, :reagent_attributes => @reagent_attributes})) %>");

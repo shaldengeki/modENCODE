@@ -23,6 +23,10 @@ class ReagentTypesController < ApplicationController
   end
 
   def get_attributes
+    @reagent = Reagent.find_by_id(params[:reagent])
+    if @reagent.nil?
+      @reagent = Reagent.new
+    end
     @reagent_attributes = ReagentAttribute.where(:reagent_type_id => params[:reagent_type]).all
     respond_to do |format|
       format.js
