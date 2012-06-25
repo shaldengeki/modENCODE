@@ -21,6 +21,7 @@ ModENCODE::Application.routes.draw do
   resources :reagent_values
 
   get "reagents/search"
+  post "reagents/search"
   match 'reagents/search_by_isoforms' => 'reagents#search_by_isoforms', :as => 'search_reagents_by_isoforms'
   resources :reagents do
     get :autocomplete_reagent_name, :on => :collection

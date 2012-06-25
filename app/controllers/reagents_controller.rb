@@ -25,13 +25,14 @@ class ReagentsController < ApplicationController
   end
 
   def search
-    values = Array(params[:reagent_values])
-    if values.length < 1
-      @reagents = ReagentValue.group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
+    values = params["reagent"]
+    if values.nil? or values.length < 1
+      @reagents = []
     else
-      @reagents = ReagentValue.where(:reagent_attribute_id => values.first[:id].to_i, :value => values.first[:value].to_s).group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
+      values = Array(values["reagent_values_attributes"]).select{|value| !value[:value].blank? }
+      @reagents = ReagentValue.where(:reagent_attribute_id => values.first[:reagent_attribute_id].to_i, :value => values.first[:value].to_s).group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
       values.drop(1).each do |value|
-        @reagents = @reagents & ReagentValue.where(:reagent_attribute_id => value[:id].to_i, :value => value[:value].to_s).group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
+        @reagents = @reagents & ReagentValue.where(:reagent_attribute_id => value[:reagent_attribute_id].to_i, :value => value[:value].to_s).group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
       end
     end
     @reagents = @reagents.map{|reagent| Reagent.find(reagent)}
