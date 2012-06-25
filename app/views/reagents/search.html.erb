@@ -33,9 +33,11 @@
   </thead>
   <tbody>
   <% @reagents.each do |reagent| %>
-    <td><%= link_to reagent.name, reagent %></td>
-    <td><%= link_to reagent.reagent_type.name, reagent.reagent_type %></td>
-    <td><%= link_to reagent.isoforms.empty? || reagent.isoforms.blank? ? "None" : raw((reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}).join(",")) %></td>
+    <tr>
+      <td><%= link_to reagent.name, reagent %></td>
+      <td><%= link_to reagent.reagent_type.name, reagent.reagent_type %></td>
+      <td><%= link_to reagent.isoforms.empty? || reagent.isoforms.blank? ? "None" : raw((reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}).join(",")) %></td>
+    </tr>
   <% end %>
   </tbody>
 </table>
