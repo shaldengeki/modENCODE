@@ -8,10 +8,10 @@ ModENCODE::Application.routes.draw do
   resources :isoforms
 
   get "pages/dashboard"
-  match '/dashboard', :to => 'pages#dashboard'
-  get "pages/contact"
-  match '/contact', :to => 'pages#contact'
   get "pages/completionProgress"
+  get "pages/contact"
+  match '/dashboard', :to => 'pages#dashboard'
+  match '/contact', :to => 'pages#contact'
 
   resources :pipelines
 

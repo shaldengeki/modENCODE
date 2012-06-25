@@ -13,7 +13,7 @@
 <% @transcription_factors.each do |transcription_factor| %>
     <tr>
       <td><%= link_to transcription_factor.name, transcription_factor %></td>
-      <td><%= link_to transcription_factor.flybase_id, 'http://flybase.org/reports/' + transcription_factor.flybase_id + '.html', :target => '_blank' %></td>
+      <td><%= link_to transcription_factor.flybase_id.to_s, 'http://flybase.org/reports/' + transcription_factor.flybase_id.to_s + '.html', :target => '_blank' %></td>
       <td><%= transcription_factor.cg_id %></td>
       <td><%= transcription_factor.refseq_id %></td>
     </tr>

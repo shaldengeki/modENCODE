@@ -12,7 +12,7 @@
   <tr>
     <td><%= link_to isoform.name, isoform %></td>
     <td><%= isoform.description %></td>
-    <td><%= link_to isoform.transcription_factor.name, isoform.transcription_factor %></td>
+    <td><%= isoform.transcription_factor.nil? ? "None" : link_to(isoform.transcription_factor.name, isoform.transcription_factor) %></td>
   </tr>
 <% end %>
   </tbody>
