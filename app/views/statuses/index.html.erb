@@ -14,7 +14,7 @@
   <tbody>
 <% @statuses.each do |status| %>
     <tr>
-      <td><%= link_to status.started_at, status %></td>
+      <td><%= link_to I18n.localize(status.started_at, :format => :short), status %></td>
       <td><%= status.description %></td>
       <td><%= status.attempt.nil? ? "None" : raw((status.attempt.reagent.isoforms.map{ |isoform| link_to(isoform.transcription_factor.name, isoform.transcription_factor) }).join(", ")) %></td>
       <td><%= status.attempt.nil? ? "None" : link_to(status.attempt.reagent.name, status.attempt.reagent) %></td>

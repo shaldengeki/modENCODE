@@ -11,11 +11,26 @@
 <% if @pipeline.steps.nil? %>
 <%= "None" %>
 <% else %>
-  <ol>
-    <% @pipeline.steps.each do |step| %>
-    <li><%= step.name %></li>
-    <% end %>
-  </ol>
+  <% i = 1 %>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Success rate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @pipeline.steps.order("position ASC").each do |step| %>
+    <tr>
+      <td><%= i %></td>
+      <td><%= link_to step.name, step %></td>
+      <td><%= (Float(step.statuses.select{|status| status.success}.length == 0 ? 1 : step.statuses.select{|status| status.success}.length) / (step.statuses.select{|status| status.success || status.failure}.length == 0 ? 1 : step.statuses.select{|status| status.success || status.failure}.length)*100).round %>%</td>
+    </tr>
+    <% i += 1 %>
+  <% end %>
+    </tbody>
+  </table>
 <% end %>
 
 <%= link_to 'Edit', edit_pipeline_path(@pipeline) %> |

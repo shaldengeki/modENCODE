@@ -4,12 +4,11 @@
     <div id="progressPieChart"></div>​
   </div>
   <div class="span6">
-    <h2>Recently Updated</h2>
+    <h2><%= link_to "Recently Updated", :controller => :statuses, :action => :index %></h2>
     <ul id="myTFRecentlyUpdated">
       <% @latestStatuses.each do |status| %>
         <%= content_tag :li, raw(display_status_feed_item(status)), :class => "feedItem" %>
       <% end %>
-      <%= link_to '#' do %><em>More...</em> <% end %>
     </ul>
   </div>
 </div>
@@ -17,26 +16,6 @@
   <div class="span6">
     <h2>Update status</h2>
     <%= render :partial => "statuses/form" %>
-  </div>
-  <div class="span6">
-    <h2>Start a new attempt</h2>
-    <%= render :partial => "attempts/form" %>
-    <!--<ul id="myTFNearingCompletion">
-      <li class="feedItem">
-        <em class="pull-right" time="0">12h</em>
-        <div class="feedText">
-          <%= link_to '#' do %><h5>Reagent 3: Screening in progress</h5><% end %>
-          Someone else is now screening Reagent 3.
-        </div>
-      </li>
-      <%= link_to '#' do %><em>More...</em> <% end %>
-    </ul>-->
-  </div>
-</div>
-<div class="row">
-  <div class="span6">
-    <h2>Create Reagent</h2>
-    <%= render :partial => 'reagents/form' %>
   </div>
   <div class="span6">
     <h2>All Sources</h2>

@@ -1,12 +1,13 @@
-<h1>Listing isoforms</h1>
-
-<table>
+<h1>Isoforms</h1>
+<table id="isoform-table" class="display table table-bordered table-striped">
+  <thead>
   <tr>
     <th>Name</th>
     <th>Description</th>
-    <th>Gene</th>
+    <th>Gene name</th>
   </tr>
-
+  </thead>
+  <tbody>
 <% @isoforms.each do |isoform| %>
   <tr>
     <td><%= link_to isoform.name, isoform %></td>
@@ -14,6 +15,7 @@
     <td><%= link_to isoform.transcription_factor.name, isoform.transcription_factor %></td>
   </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

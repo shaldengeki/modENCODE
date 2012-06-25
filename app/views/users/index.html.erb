@@ -1,27 +1,24 @@
 <h1>Users</h1>
 
-<table>
+<table class="table table-bordered table-striped">
+  <thead>
   <tr>
     <th>Name</th>
     <th>Email</th>
     <th>Role</th>
     <th>Source</th>
-    <th></th>
-    <th></th>
-    <th></th>
   </tr>
-
+  </thead>
+  <tbody>
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.name %></td>
+    <td><%= link_to user.name, user %></td>
     <td><%= user.email %></td>
-    <td><%= user.role %></td>
-    <td><%= user.source %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= user.role.humanize %></td>
+    <td><%= user.source.nil? ? "None" : user.source.name %></td>
   </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

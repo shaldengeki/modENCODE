@@ -24,10 +24,27 @@ class ReagentsController < ApplicationController
     end
   end
 
+  def search
+    values = Array(params[:reagent_values])
+    if values.length < 1
+      @reagents = ReagentValue.group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
+    else
+      @reagents = ReagentValue.where(:reagent_attribute_id => values.first[:id].to_i, :value => values.first[:value].to_s).group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
+      values.drop(1).each do |value|
+        @reagents = @reagents & ReagentValue.where(:reagent_attribute_id => value[:id].to_i, :value => value[:value].to_s).group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
+      end
+    end
+    @reagents = @reagents.map{|reagent| Reagent.find(reagent)}
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def search_by_isoforms
     isoforms = ActiveSupport::JSON.decode(params[:isoforms])
     @reagents = Isoform.find(isoforms.first).reagents
-    isoforms.each do |isoform|
+    isoforms.drop(1).each do |isoform|
       @reagents = @reagents & Isoform.find(isoform).reagents
     end
     respond_to do |format|

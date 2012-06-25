@@ -10,22 +10,8 @@
     </div>
   <% end %>
   <fieldset>
-    <div class="control-group">
-      <%= f.label :gene_name, :class => "control-label" %>
-      <div class="controls">
-        <%= autocomplete_field_tag 'Gene name', '', autocomplete_alias_name_aliases_path, :update_elements => { :transcription_factor_id => "#tf-id" }, :class => "search-query span2", :placeholder => "Search" %>
-        <input type="hidden" id="tf-id" />
-        <script type="text/javascript">
-          <%= render :partial => "reagents/watch_tf_load_isoforms", :formats => [:js] %>
-        </script>
-      </div>
-    </div>
-    <div id="isoform-list" class="control-group">
-      <%= f.label :isoforms, :class => "control-label" %>
-      <div class="controls">
-        <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:isoforms => @reagent.isoforms} %>
-      </div>
-    </div>
+    <%= render :partial => "transcription_factors/search_name", :locals => {:f => f} %>
+    <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:f => f, :isoforms => @reagent.isoforms} %>
     <div class="control-group">
       <%= f.label :name, :class => "control-label" %>
       <div class="controls">

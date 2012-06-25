@@ -1,12 +1,12 @@
 <script type="text/javascript">
   reagent_type = parseInt($('#reagent_reagent_type_id').val());
   if (reagent_type > 0) {
-    $.get("<%= get_reagent_types_reagent_attributes_url %>", { reagent: <%= reagent.id %>, reagent_type: reagent_type });
+    $.get("<%= get_reagent_types_reagent_attributes_url %>", {reagent_type: reagent_type });
   }
   $('#reagent_reagent_type_id').change(function() {
   reagent_type = parseInt($('#reagent_reagent_type_id').val());
   if (reagent_type > 0) {
-    $.get("<%= get_reagent_types_reagent_attributes_url %>", { reagent: <%= reagent.id %>, reagent_type: reagent_type });
+    $.get("<%= get_reagent_types_reagent_attributes_url %>", {reagent_type: reagent_type });
   }
 });
 </script>

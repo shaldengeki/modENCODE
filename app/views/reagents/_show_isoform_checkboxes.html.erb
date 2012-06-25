@@ -1,8 +1,17 @@
-<%= hidden_field_tag "reagent[isoform_ids][]", nil %>
+<div id="isoform-list" class="control-group">
+  <%= label_tag :reagent, :isoforms, :class => "control-label" %>
+  <div class="controls">
+    <%= hidden_field_tag "reagent[isoform_ids][]", nil %>
 <% if isoforms.nil? or isoforms.empty? %>
-  No isoforms found.
+    No isoforms found.
 <% else %>
   <% isoforms.each do |isoform| %>
     <%= check_box_tag "reagent[isoform_ids][]", isoform.id, @reagent.isoform_ids.include?(isoform.id), :id => dom_id(isoform), :class => "isoform_checkbox"  %> <%= isoform.name %><br />
   <% end %>
 <% end %>
+  </div>
+</div>
+<%= hidden_field_tag "isoforms_json", nil %>
+<script type="text/javascript">
+  <%= render :partial => "reagents/reagent_search_bind_isoforms.js.erb", :formats => [:js] %>
+</script>

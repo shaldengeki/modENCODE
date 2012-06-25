@@ -6,6 +6,8 @@
   <dd><%= @user.role.humanize %></dd>
   <dt>Works for</dt>
   <dd><%= @user.source.nil? ? 'Nowhere' : link_to(@user.source.name, @user.source) %></dd>
+  <dt>Success rate</dt>
+  <dd><%= (Float(@user.statuses.select{|status| status.success}.length == 0 ? 1 : @user.statuses.select{|status| status.success}.length) / (@user.statuses.select{|status| status.success || status.failure}.length == 0 ? 1 : @user.statuses.select{|status| status.success || status.failure}.length)*100).round %>%</dd>
 </dl>
 <h2>Latest updates</h2>
 <table class="table table-bordered table-striped">
@@ -34,4 +36,5 @@
 </table>
 
   <%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Destroy', @user, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', users_path %>
