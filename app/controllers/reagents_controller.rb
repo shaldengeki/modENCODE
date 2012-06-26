@@ -46,8 +46,10 @@ class ReagentsController < ApplicationController
         end
       end
       unless reagent_params[:status].nil? or reagent_params[:status].empty?
-        attempts = Attempt.all.select{|attempt| attempt.last_step == reagent_params[:status][:step_id].to_i}
-        @reagents = @reagents & attempts.map{|attempt| attempt.reagent}
+        unless reagent_params[:status][:step_id].nil? or reagent_params[:status][:step_id].blank?
+          attempts = Attempt.all.select{|attempt| attempt.last_step == reagent_params[:status][:step_id].to_i}
+          @reagents = @reagents & attempts.map{|attempt| attempt.reagent}
+        end
       end
     end
     # @reagents = @reagents.map{|reagent| Reagent.find(reagent)}
