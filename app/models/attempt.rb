@@ -3,7 +3,7 @@ class Attempt < ActiveRecord::Base
   belongs_to :reagent
   belongs_to :pipeline
 
-  has_many :statuses, :order => "updated_at ASC", :dependent => :destroy
+  has_many :statuses, :dependent => :destroy
   accepts_nested_attributes_for :statuses, :reject_if => lambda { |a| a[:step_id].blank? }, :allow_destroy => true
 
   attr_accessible :reagent_id, :pipeline_id, :statuses, :created_at, :started_at, :statuses_attributes
@@ -11,6 +11,13 @@ class Attempt < ActiveRecord::Base
   validates :reagent, :presence => true
   validates :pipeline, :presence => true
 
+  def last_step
+    if statuses.empty?
+      nil
+    else
+      statuses.order("position DESC").first.step_id
+    end
+  end
   def last_position
     if statuses.empty?
       nil

@@ -29,16 +29,39 @@
 <h3>Isoforms</h3>
 <table class="table table-striped table-bordered">
   <thead>
-    <tr>
-      <th>Isoform</th>
-      <th>Gene</th>
-    </tr>
+  <tr>
+    <th>Isoform</th>
+    <th>Gene</th>
+  </tr>
   </thead>
   <tbody>
   <% @reagent.isoforms.each do |isoform| %>
     <tr>
       <td><%= link_to isoform.name, isoform %></td>
       <td><%= link_to isoform.transcription_factor.name, isoform.transcription_factor %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<h3>Attempts</h3>
+<table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>Pipeline</th>
+    <th>User</th>
+    <th>Current Step</th>
+    <th>Position</th>
+    <th>Last updated</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @reagent.attempts.each do |attempt| %>
+    <tr>
+      <td><%= link_to attempt.pipeline.name, attempt %></td>
+      <td><%= raw(attempt.users.map{|user| link_to(user.name, user)}.join(",")) %></td>
+      <td><%= link_to attempt.statuses.order("position DESC").first.step.name, attempt.statuses.order("position DESC").first.step %></td>
+      <td><%= link_to attempt.statuses.order("position DESC").first.step.position.to_s + "/" + attempt.steps.count.to_s, attempt.pipeline %></td>
+      <td><%= I18n.localize(attempt.statuses.order("position DESC").first.step.updated_at, :format => :short) %></td>
     </tr>
   <% end %>
   </tbody>

@@ -9,3 +9,7 @@ body {
 @import "bootstrap-responsive";
 
 @import "bootswatch/journal/bootswatch";
+
+.ui-autocomplete-input {
+  width: 100%;
+}

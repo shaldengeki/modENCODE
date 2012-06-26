@@ -1,7 +1,7 @@
 class ReagentsController < ApplicationController
   load_and_authorize_resource
   autocomplete :reagent, :name, :extra_data => [:reagent_type_id]
-  before_filter :generate_new_reagent, :only => [:index, :show, :new]
+  before_filter :generate_new_reagent, :only => [:index, :show, :search, :new]
   # GET /reagents
   # GET /reagents.json
   def index
@@ -25,17 +25,35 @@ class ReagentsController < ApplicationController
   end
 
   def search
-    values = params["reagent"]
-    if values.nil? or values.length < 1 or values[:reagent_values_attributes].nil?
-      @reagents = []
-    else
-      values = Array(values["reagent_values_attributes"]).select{|value| !value[:value].blank? }
-      @reagents = ReagentValue.where(:reagent_attribute_id => values.first[:reagent_attribute_id].to_i, :value => values.first[:value].to_s).group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
-      values.drop(1).each do |value|
-        @reagents = @reagents & ReagentValue.where(:reagent_attribute_id => value[:reagent_attribute_id].to_i, :value => value[:value].to_s).group(:reagent_id).all.map{|reagent_value| reagent_value.reagent_id}
+    reagent_params = params[:reagent]
+    @reagents = []
+    unless reagent_params.nil? or reagent_params.empty?
+      if reagent_params[:reagent_type_id].nil? or reagent_params[:reagent_type_id].blank?
+        @reagents = Reagent.all
+      else
+        @reagents = Reagent.where(:reagent_type_id => reagent_params[:reagent_type_id].to_i)
+      end
+      unless reagent_params[:isoform_ids].nil? or reagent_params[:isoform_ids].empty?
+        isoform_ids = Array(reagent_params[:isoform_ids].select{|value| !value.blank?})
+        isoform_ids.each do |isoform_id|
+          @reagents = @reagents.select{|reagent| reagent.isoforms.map{|isoform| isoform.id}.include? isoform_id.to_i}
+        end
+      end
+      unless reagent_params[:reagent_values_attributes].nil? or reagent_params[:reagent_values_attributes].empty?
+        values = Array(reagent_params[:reagent_values_attributes]).select{|value| !value[:value].blank? }
+        values.each do |value|
+          @reagents = @reagents.select{|reagent| ReagentValue.where(:reagent_id => reagent.id.to_i, :reagent_attribute_id => value[:reagent_attribute_id].to_i, :value => value[:value].to_s).count > 0}
+        end
+      end
+      unless reagent_params[:status].nil? or reagent_params[:status].empty?
+        attempts = Attempt.all.select{|attempt| attempt.last_step == reagent_params[:status][:step_id].to_i}
+        params[:foo] = reagent_params[:status][:step_id]
+        params[:bar] = Attempt.all.map{|attempt| attempt.last_step}
+        params[:attempts] = attempts
+        @reagents = @reagents & attempts.map{|attempt| attempt.reagent}
       end
     end
-    @reagents = @reagents.map{|reagent| Reagent.find(reagent)}
+    # @reagents = @reagents.map{|reagent| Reagent.find(reagent)}
 
     respond_to do |format|
       format.html

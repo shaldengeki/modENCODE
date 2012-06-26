@@ -1,44 +1,59 @@
-<h3>Search for reagents</h3>
-<%= form_tag :controller => "reagents", :action => "search" do %>
-  <fieldset>
-    <div class="control-group">
-      <%= label_tag "reagent_values", "Type", :class => "control-label" %>
-      <div class="controls">
-        <%= collection_select "reagent", :reagent_type_id, ReagentType.all, :id, :name %>
-      </div>
-      <%= render :partial => "reagents/watch_reagent_type_load_reagent_attributes", :locals => {:reagent => @reagent} %>
-    </div>
-    <div id="reagent-attributes-list" class="control-group">
-      <%= label_tag "reagent_values", "Attributes", :class => "control-label" %>
-      <div class="controls">
-        No reagent attributes found.
-      </div>
-    </div>
-    <div class="form-actions">
-      <%= submit_tag "Search", :id => "search_reagent", :class => "btn btn-primary" %>
-    </div>
-  </fieldset>
-<% end %>
-
-<% if @reagents.empty? %>
-  No reagents found.
-<% else %>
-<table class="table table-bordered table-striped">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Type</th>
-    <th>Isoform(s)</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @reagents.each do |reagent| %>
-    <tr>
-      <td><%= link_to reagent.name, reagent %></td>
-      <td><%= link_to reagent.reagent_type.name, reagent.reagent_type %></td>
-      <td><%= link_to reagent.isoforms.empty? || reagent.isoforms.blank? ? "None" : raw((reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}).join(",")) %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-<% end %>
+<!--<div class='row-fluid'>
+  <div class='span7'>-->
+    <h3>Search for reagents</h3>
+    <%= form_for(@reagent, :url => {:action=>"search"}, :html => {:class => 'form-horizontal'}) do |f| %>
+      <fieldset>
+        <%= render :partial => "transcription_factors/search_name", :locals => {:f => f} %>
+        <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:f => f, :transcription_factor => nil, :isoforms => @reagent.isoforms} %>
+        <div class="control-group">
+          <%= label_tag "reagent_values", "Type", :class => "control-label" %>
+          <div class="controls">
+            <%= f.collection_select :reagent_type_id, ReagentType.all, :id, :name, {:include_blank => true, :default => nil}%>
+          </div>
+          <%= render :partial => "reagents/watch_reagent_type_load_reagent_attributes", :locals => {:reagent => @reagent} %>
+        </div>
+        <div id="reagent-attributes-list" class="control-group">
+          <%= label_tag "reagent_values", "Attributes", :class => "control-label" %>
+          <div class="controls">
+            No reagent attributes found.
+          </div>
+        </div>
+        <div id="reagent-current-status" class="control-group">
+          <%= label_tag "reagent[status]", "Current status", :class => "control-label" %>
+          <div class="controls">
+          <%= f.fields_for :status do |builder| %>
+              <%= builder.grouped_collection_select :step_id, Pipeline.all, :steps, :name, :id, :name, {:default => nil, :include_blank => true} %>
+          <% end %>
+          </div>
+        </div>
+        <div class="form-actions">
+          <%= f.submit "Search", :id => "search_reagent", :class => "btn btn-primary" %>
+        </div>
+      </fieldset>
+    <% end %>
+<!--  </div>
+  <div class='span5'>-->
+    <% if @reagents.empty? %>
+      No reagents found.
+    <% else %>
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Isoform(s)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @reagents.each do |reagent| %>
+          <tr>
+            <td><%= link_to reagent.name, reagent %></td>
+            <td><%= link_to reagent.reagent_type.name, reagent.reagent_type %></td>
+            <td><%= link_to reagent.isoforms.empty? || reagent.isoforms.blank? ? "None" : raw((reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}).join(",")) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+<!--  </div>
+</div>-->
