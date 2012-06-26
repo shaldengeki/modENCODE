@@ -7,6 +7,7 @@ class Ability
     can :autocomplete_alias_name, Alias
     can :findTF, Alias
     can :search_by_isoforms, Reagent
+    can :search, Reagent
     can :get_attributes, ReagentType
 
     can :autocomplete_transcription_factor_name, TranscriptionFactor
