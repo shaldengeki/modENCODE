@@ -1,0 +1,24 @@
+# example database.yml for modENCODE.
+# tweak these parameters as fits your stack.
+common: &common
+  host: 127.0.0.1
+  adapter: mysql2
+  encoding: utf8
+  username: username
+  password: password
+  port:     3306
+
+development:
+  <<: *common
+  database: modencode_development
+
+test: &test
+  <<: *common
+  database: modencode_test
+
+production:
+  <<: *common
+  database: modencode_production
+
+cucumber:
+  <<: *test
