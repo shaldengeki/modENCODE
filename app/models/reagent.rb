@@ -14,4 +14,11 @@ class Reagent < ActiveRecord::Base
   validates :tag, :presence => true
   validates :source, :presence => true
   validates :reagent_type, :presence => true
+
+  def last_status
+    most_recent_attempt = attempts.max_by do |attempt|
+      attempt.last_status.nil? ? nil : attempt.last_status.updated_at
+    end
+    most_recent_attempt.nil? ? nil : most_recent_attempt.last_status
+  end
 end

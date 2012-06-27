@@ -3,7 +3,7 @@
   <dt>Attempt for</dt>
   <dd><%= @status.attempt.reagent.nil? ? "no reagent" : link_to(@status.attempt.reagent.name, @status.attempt.reagent) %></dd>
   <dt>Status</dt>
-  <dd><%= @status.success ? "Success" : @status.failure ? "Failure" : "In-progress" %></dd>
+  <dd><%= @status.outcome_text.humanize %></dd>
   <dt>Started</dt>
   <dd><%= @status.started_at %></dd>
   <dt>Last updated</dt>
@@ -40,11 +40,11 @@
   <% @status.attempt.statuses.order("position ASC").each do |status| %>
     <tr>
       <td><%= i %></td>
-      <td><%= status.started_at %></td>
+      <td><%= I18n.localize(status.started_at, :format => :short) %></td>
       <td><%= link_to status.user.name, status.user %></td>
       <td><%= link_to status.step.name, status.step %></td>
       <td><%= status.description %></td>
-      <td><%= link_to status.success ? "Success" : status.failure ? "Failed" : "In-progress", status %></td>
+      <td><%= link_to status.outcome_text.humanize, status %></td>
       <td><%= link_to status.step.position.to_s + "/" + status.attempt.steps.count.to_s, status.step.pipeline %></td>
     <% i += 1 %>
   <% end %>

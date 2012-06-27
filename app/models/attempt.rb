@@ -4,6 +4,7 @@ class Attempt < ActiveRecord::Base
   belongs_to :pipeline
 
   has_many :statuses, :dependent => :destroy
+  has_many :steps, :through => :pipeline
   accepts_nested_attributes_for :statuses, :reject_if => lambda { |a| a[:step_id].blank? }, :allow_destroy => true
 
   attr_accessible :reagent_id, :pipeline_id, :statuses, :created_at, :started_at, :statuses_attributes
@@ -25,14 +26,14 @@ class Attempt < ActiveRecord::Base
       statuses.order("position DESC").first.position
     end
   end
-  def next_position
-    last_position + 1
-  end
-  def steps
-    if pipeline.nil?
+  def last_status
+    if statuses.empty?
       nil
     else
-      pipeline.steps
+      statuses.order("position DESC").first
     end
+  end
+  def next_position
+    last_position + 1
   end
 end

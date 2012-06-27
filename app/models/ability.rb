@@ -22,7 +22,7 @@ class Ability
 
       can :create, Attempt
       can :update, Attempt do |attempt|
-        attempt.reagent.source_id == user.source_id
+        (attempt.reagent.source_id == user.source_id) || attempt.user_ids.include?(user.id)
       end
       can :destroy, Attempt do |attempt|
         attempt.user_ids.include? user.id

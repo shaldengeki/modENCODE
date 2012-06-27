@@ -42,6 +42,8 @@
           <th>Name</th>
           <th>Type</th>
           <th>Isoform(s)</th>
+          <th>Last status</th>
+          <th>Last updated</th>
         </tr>
         </thead>
         <tbody>
@@ -50,6 +52,8 @@
             <td><%= link_to reagent.name, reagent %></td>
             <td><%= link_to reagent.reagent_type.name, reagent.reagent_type %></td>
             <td><%= reagent.isoforms.empty? || reagent.isoforms.blank? ? "None" : raw((reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}).join(",")) %></td>
+            <td><%= reagent.last_status.nil? ? "None" : link_to(reagent.last_status.step.name.to_s + " (" + reagent.last_status.outcome_text + ")", reagent.last_status) %></td>
+            <td><%= reagent.last_status.nil? ? "Never" : link_to(I18n.localize(reagent.last_status.updated_at, :format => :short), reagent.last_status) %></td>
           </tr>
         <% end %>
         </tbody>

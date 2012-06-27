@@ -11,7 +11,7 @@
   <dd><%= @transcription_factor.refseq_id %></dd>
 </dl>
 <h3>Gene Map</h3>
-<%= image_tag "isoforms/" + @transcription_factor.isoform_image_path.to_s %><br />
+<%= image_tag("isoforms/" + @transcription_factor.isoform_image_path.to_s) unless transcription_factor.isoform_image_path.nil? %><br />
 
 <h3>Isoforms</h3>
 <%= render :partial => 'isoforms/tf_table', :locals => {:transcription_factor => @transcription_factor} %>

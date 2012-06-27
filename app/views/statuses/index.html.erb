@@ -7,7 +7,7 @@
       <th>Status</th>
       <th>Gene(s)</th>
       <th>Reagent</th>
-      <th>Status</th>
+      <th>Outcome</th>
       <th>Position</th>
     </tr>
   </thead>
@@ -18,7 +18,7 @@
       <td><%= status.description %></td>
       <td><%= status.attempt.nil? ? "None" : raw((status.attempt.reagent.isoforms.map{ |isoform| link_to(isoform.transcription_factor.name, isoform.transcription_factor) }).join(", ")) %></td>
       <td><%= status.attempt.nil? ? "None" : link_to(status.attempt.reagent.name, status.attempt.reagent) %></td>
-      <td><%= status.success ? "Success" : status.failure ? "Failure" : "In-progress" %></td>
+      <td><%= status.outcome_text.humanize %></td>
       <td><%= status.step.position %>/<%= status.step.pipeline.steps.count %></td>
     </tr>
 <% end %>

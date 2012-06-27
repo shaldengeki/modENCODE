@@ -1,5 +1,5 @@
 <div id="isoform-list" class="control-group">
-  <%= label_tag :reagent, :isoforms, :class => "control-label" %>
+  <%= label_tag :reagent, "Isoforms", :class => "control-label" %>
   <div class="controls">
     <%= hidden_field_tag "reagent[isoform_ids][]", nil %>
 <% if isoforms.nil? or isoforms.empty? %>
@@ -7,7 +7,7 @@
 <% else %>
     <div class='row-fluid'>
   <% if !transcription_factor.nil? and !transcription_factor.isoform_image_path.nil? %>
-       <div class='span9'><%= image_tag "isoforms/" + transcription_factor.isoform_image_path.to_s %></div>
+       <div class='span9'><%= image_tag("isoforms/" + transcription_factor.isoform_image_path.to_s) unless transcription_factor.isoform_image_path.nil? %></div>
   <% end %>
       <div class='span3'>
         <% isoforms.each do |isoform| %>

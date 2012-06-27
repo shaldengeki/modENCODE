@@ -31,6 +31,10 @@ class Status < ActiveRecord::Base
   def next_position
     last_position + 1
   end
+
+  def outcome_text
+    success ? "success" : (failure ? "failed" : "in-progress")
+  end
   # def started_at_is_valid_datetime
   #   errors.add(:started_at, 'must be a valid datetime') if ((DateTime.parse(started_at) rescue ArgumentError) == ArgumentError)
   # end

@@ -6,6 +6,31 @@
   <dt>Gene</dt>
   <dd><%= link_to @isoform.transcription_factor.name, @isoform.transcription_factor %></dd>
 </dl>
+
+<h3>Reagents carrying this isoform:</h3>
+<table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>Reagent</th>
+    <th>Type</th>
+    <th>Isoform(s)</th>
+    <th>Last status</th>
+    <th>Last updated</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @isoform.reagents.each do |reagent| %>
+    <tr>
+      <td><%= link_to reagent.name, reagent %></td>
+      <td><%= link_to reagent.reagent_type.name, reagent.reagent_type %></td>
+      <td><%= reagent.isoforms.empty? || reagent.isoforms.blank? ? "None" : raw((reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}).join(",")) %></td>
+      <td><%= reagent.last_status.nil? ? "None" : link_to(reagent.last_status.step.name.to_s + " (" + reagent.last_status.outcome_text + ")", reagent.last_status) %></td>
+      <td><%= reagent.last_status.nil? ? "Never" : link_to(I18n.localize(reagent.last_status.updated_at, :format => :short), reagent.last_status) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_isoform_path(@isoform) %> |
 <%= link_to 'Destroy', @isoform, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', isoforms_path %>
