@@ -1,4 +1,4 @@
-<!--TODO: add "duplicate pipeline" for the same reagent type-->
+<!--TODO: add "duplicate pipeline"-->
 <%= form_for @pipeline, :html => { :class => "form-horizontal" } do |f| %>
   <% if @pipeline.errors.any? %>
     <div id="error_explanation">
@@ -16,12 +16,6 @@
       <%= f.label :name, :class => "control-label" %>
       <div class="controls">
         <%= f.text_field :name %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :type, :class => "control-label" %>
-      <div class="controls">
-        <%= f.collection_select :reagent_type_id, ReagentType.all, :id, :name %>
       </div>
     </div>
     <div class="control-group">

@@ -37,8 +37,6 @@ ModENCODE::Application.routes.draw do
   match '/feed', to: 'statuses#index'
 
   resources :steps
-  resources :tags
-
   match 'transcription_factors/get_isoforms' => 'transcription_factors#get_isoforms', :as => 'get_tf_isoforms'
   resources :transcription_factors do
     get :autocomplete_transcription_factor_name, :on => :collection

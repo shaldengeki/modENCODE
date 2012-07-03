@@ -3,7 +3,8 @@ class Status < ActiveRecord::Base
   belongs_to :user
   belongs_to :step
   has_one :reagent, :through => :attempt
-  attr_accessible :start, :end, :position, :description, :attempt_id, :user_id, :step_id, :started_at, :success, :failure
+  accepts_nested_attributes_for :attempt, :reject_if => lambda { |a| a[:user_id].blank? }
+  attr_accessible :start, :end, :position, :description, :attempt_id, :user_id, :step_id, :started_at, :success, :failure, :attempt_attributes
 
   validates :description, :presence => true
   validates :start, :inclusion => {:in => [true, false]}

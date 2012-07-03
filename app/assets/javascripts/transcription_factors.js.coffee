@@ -1,4 +1,4 @@
 jQuery ->
   $('#tf-list').dataTable
-    "sDom": "<'row'<'span5'l><'span5'f>r>t<'row'<'span5'i><'span5'p>>"
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
     "sPaginationType": "bootstrap"

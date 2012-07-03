@@ -45,9 +45,13 @@ class StatusesController < ApplicationController
     # TODO: allow user to specify the position.
     @status.position = @status.next_position
     @status.user_id = current_user.id
+    attempt = @status.attempt
+    unless @status.attempt.users.include? current_user
+      attempt.users.append(current_user)
+    end
 
     respond_to do |format|
-      if @status.save
+      if @status.save and attempt.save
         format.html { redirect_to @status, notice: 'Status was successfully created.' }
         format.json { render json: @status, status: :created, location: @status }
       else

@@ -6,7 +6,6 @@
     <th>Name</th>
     <th>Description</th>
     <th>Source</th>
-    <th>Reagent type</th>
     <th>Steps</th>
   </tr>
   </thead>
@@ -16,7 +15,6 @@
     <td><%= link_to pipeline.name, pipeline %></td>
     <td><%= pipeline.description %></td>
     <td><%= pipeline.source.nil? ? "None" : pipeline.source.name %></td>
-    <td><%= pipeline.reagent_type.nil? ? "None" : pipeline.reagent_type.name %></td>
     <td><%= pipeline.steps.nil? ? "0" : pipeline.steps.count %></td>
   </tr>
 <% end %>
