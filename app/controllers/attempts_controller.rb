@@ -27,6 +27,7 @@ class AttemptsController < ApplicationController
   # GET /attempts/new.json
   def new
     @attempt.statuses.build
+    @attempt.attempt_attributes.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -64,7 +65,6 @@ class AttemptsController < ApplicationController
   # PUT /attempts/1.json
   def update
     @attempt = Attempt.find(params[:id])
-
     respond_to do |format|
       if @attempt.update_attributes(params[:attempt])
         format.html { redirect_to @attempt, notice: 'Attempt was successfully updated.' }

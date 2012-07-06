@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @attempt_attribute.name %>
+</p>
+
+<p>
+  <b>Reagent:</b>
+  <%= @attempt_attribute.reagent %>
+</p>
+
+
+<%= link_to 'Edit', edit_attempt_attribute_path(@attempt_attribute) %> |
+<%= link_to 'Back', attempt_attributes_path %>

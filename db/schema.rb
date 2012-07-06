@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120622192227) do
+ActiveRecord::Schema.define(:version => 20120706165251) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -20,8 +20,26 @@ ActiveRecord::Schema.define(:version => 20120622192227) do
     t.datetime "updated_at",              :null => false
   end
 
+  add_index "aliases", ["name", "transcription_factor_id"], :name => "name", :unique => true
   add_index "aliases", ["name"], :name => "index_aliases_on_name"
   add_index "aliases", ["transcription_factor_id"], :name => "index_aliases_on_transcription_factor_id"
+
+  create_table "attempt_attributes", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "attempt_values", :force => true do |t|
+    t.string   "value"
+    t.integer  "attempt_id"
+    t.integer  "attempt_attribute_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "attempt_values", ["attempt_attribute_id"], :name => "index_attempt_values_on_attempt_attribute_id"
+  add_index "attempt_values", ["attempt_id"], :name => "index_attempt_values_on_attempt_id"
 
   create_table "attempts", :force => true do |t|
     t.integer  "pipeline_id"

@@ -12,17 +12,17 @@
   <% end %>
 
   <fieldset>
-    <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f} %>
+    <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f, :model_type => "status"} %>
     <div class="control-group">
       <%= f.label "Attempt date", :class => "control-label" %>
       <div class="controls">
-        <%= f.grouped_collection_select :attempt_id, Reagent.all, :attempts, :id, :id, :updated_at %>
+        <%= f.grouped_collection_select :attempt_id, Reagent.all, :attempts, :id, :id, :updated_at_localized %>
       </div>
     </div>
     <div class="control-group">
       <%= f.label :step, :class => "control-label" %>
       <div class="controls">
-        <%= f.grouped_collection_select :step_id, Attempt.all, :steps, :updated_at, :id, :name %><br />
+        <%= f.grouped_collection_select :step_id, Attempt.all, :steps, :updated_at_localized, :id, :name %><br />
         <%= f.hidden_field :position, :value => 1 %>
       </div>
     </div>

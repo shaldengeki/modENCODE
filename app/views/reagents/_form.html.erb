@@ -11,7 +11,7 @@
   <% end %>
   <fieldset>
     <%= render :partial => "transcription_factors/search_name", :locals => {:f => f} %>
-    <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:f => f, :transcription_factor => nil, :isoforms => @reagent.isoforms} %>
+    <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:f => f, :transcription_factor => nil, :isoforms => @reagent.isoforms, :model_type => "reagent"} %>
     <div class="control-group">
       <%= f.label :name, :class => "control-label" %>
       <div class="controls">

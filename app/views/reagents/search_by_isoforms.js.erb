@@ -1,7 +1,7 @@
 <% if @reagents.empty? %>
   $('#reagents-search-by-isoforms > div.controls').html("No reagents found.");
 <% else %>
-$('#reagents-search-by-isoforms > div.controls').html("<%= escape_javascript(select(Reagent, :reagent, @reagents.map {|reagent| [reagent.name, reagent.id, {:'reagent-type' => reagent.reagent_type.id}]})) %>");
+$('#reagents-search-by-isoforms > div.controls').html("<%= escape_javascript(select(@model_lowercase_name, :reagent_id, @reagents.map {|reagent| [reagent.name, reagent.id, {:'reagent-type' => reagent.reagent_type.id}]})) %>");
 $('#isoform-search-reagent-id').val($('#reagents-search-by-isoforms > div.controls > select').val());
 $('#isoform-search-reagent-id').trigger('change');
 $('#isoform-search-reagent-type').val($('#reagents-search-by-isoforms > div.controls > select').find(":selected").attr('reagent-type'));

@@ -4,7 +4,7 @@
     <%= form_for(@reagent, :url => {:action=>"search"}, :html => {:class => 'form-horizontal'}) do |f| %>
       <fieldset>
         <%= render :partial => "transcription_factors/search_name", :locals => {:f => f} %>
-        <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:f => f, :transcription_factor => nil, :isoforms => @reagent.isoforms} %>
+        <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:f => f, :transcription_factor => nil, :isoforms => @reagent.isoforms, :model_type => "reagent"} %>
         <div class="control-group">
           <%= label_tag "reagent_values", "Type", :class => "control-label" %>
           <div class="controls">
@@ -33,10 +33,7 @@
     <% end %>
 <!--  </div>
   <div class='span5'>-->
-    <% if @reagents.empty? %>
-      No reagents found.
-    <% else %>
-      <table class="table table-bordered table-striped">
+      <table id='reagent-search' class="table table-bordered table-striped">
         <thead>
         <tr>
           <th>Name</th>
@@ -58,6 +55,5 @@
         <% end %>
         </tbody>
       </table>
-    <% end %>
 <!--  </div>
 </div>-->

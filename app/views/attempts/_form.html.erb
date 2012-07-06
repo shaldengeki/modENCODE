@@ -10,7 +10,7 @@
     </div>
   <% end %>
   <fieldset>
-    <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f} %>
+    <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f, :model_type => "attempt"} %>
     <div class="control-group">
       <%= f.label :pipeline, :class => "control-label" %>
       <div class="controls">
@@ -27,6 +27,19 @@
           <%= builder.check_box :success %> Success <%= builder.check_box :failure %> Failure
           <%= builder.check_box :end %> End of attempt
         <% end %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :attempt_values, :class => "control-label" %>
+      <div class="controls">
+        <ol id="attempt_values">
+          <%=  f.fields_for :attempt_values do |builder| %>
+            <% AttemptAttribute.all.each do |attempt_attribute| %>
+            <% render :partial => "attempts/attempt_value_fields", :locals => {:f => builder, :attempt_attribute => attempt_attribute} %>
+            <% end %>
+          <% end %>
+          <%= link_to_add_fields "Add an Attribute", f, :attempt_values %>
+        </ol>
       </div>
     </div>
     <div class="control-group">

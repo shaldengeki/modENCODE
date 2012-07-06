@@ -60,6 +60,8 @@ class ReagentsController < ApplicationController
   end
 
   def search_by_isoforms
+    @model_type = params[:model_type].camelize.constantize
+    @model_lowercase_name = params[:model_type]
     isoforms = ActiveSupport::JSON.decode(params[:isoforms])
     @reagents = Isoform.find(isoforms.first).reagents
     isoforms.drop(1).each do |isoform|

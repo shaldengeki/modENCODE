@@ -1,4 +1,4 @@
-$('#isoform-list').html("<%= escape_javascript(render(:partial => 'reagents/show_isoform_checkboxes', :locals => {:transcription_factor => @transcription_factor, :isoforms => @transcription_factor.isoforms})) %>");
+$('#isoform-list').html("<%= escape_javascript(render(:partial => 'reagents/show_isoform_checkboxes', :locals => {:transcription_factor => @transcription_factor, :isoforms => @transcription_factor.isoforms, :model_type => @model_type})) %>");
 $('.isoform_checkbox').each(function() {
   $(this).click(function() {
     var isoforms = [];

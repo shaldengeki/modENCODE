@@ -5,6 +5,11 @@ ModENCODE::Application.routes.draw do
   match 'aliases/findTF' => 'aliases#findTF', :as => 'find_tfs'
 
   resources :attempts
+  resources :attempt_attributes do
+    get :autocomplete_attempt_attribute_name, :on => :collection
+  end
+  resources :attempt_values
+
   resources :isoforms
 
   get "pages/dashboard"

@@ -1,0 +1,12 @@
+<li>
+  <% if defined? attempt_attribute %>
+    <%= f.label attempt_attribute.name, :class => "control-label" %>
+    <%= f.hidden_field :attempt_attribute_id, :value => attempt_attribute.id %>
+    <%= f.text_field :value, :value => (@attempt.attempt_values.map{|attempt_value| attempt_value.attempt_attribute_id}.include?(attempt_attribute.id) ? @attempt.attempt_values.select{|attempt_value| attempt_value.attempt_attribute_id == attempt_attribute.id}.first.value : '') %>
+  <% else %>
+    <%= f.fields_for "attempt_attributes_attributes" do |builder| %>
+      <%= builder.autocomplete_field :name, autocomplete_attempt_attribute_name_attempt_attributes_path, :class => "search-query", :placeholder => "Attribute name" %>
+    <% end %>
+    <%= f.text_field :value, :placeholder => "Value" %>
+  <% end %>
+</li>

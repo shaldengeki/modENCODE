@@ -1,0 +1,27 @@
+<h1>Listing attempt_values</h1>
+
+<table>
+  <tr>
+    <th>Value</th>
+    <th>Attempt</th>
+    <th>Attempt attribute</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @attempt_values.each do |attempt_value| %>
+  <tr>
+    <td><%= attempt_value.value %></td>
+    <td><%= attempt_value.attempt %></td>
+    <td><%= attempt_value.attempt_attribute %></td>
+    <td><%= link_to 'Show', attempt_value %></td>
+    <td><%= link_to 'Edit', edit_attempt_value_path(attempt_value) %></td>
+    <td><%= link_to 'Destroy', attempt_value, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Attempt value', new_attempt_value_path %>

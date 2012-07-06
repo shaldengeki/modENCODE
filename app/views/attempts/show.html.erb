@@ -9,6 +9,23 @@
   <dt>Current status</dt>
   <dd><%= @attempt.statuses.nil? ? "Planning" : link_to(@attempt.statuses.last.step.name, @attempt.statuses.last) %></dd>
 </dl>
+<h3>Attibutes</h3>
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @attempt.attempt_values.each do |attempt_value| %>
+    <tr>
+      <td><%= attempt_value.attempt_attribute.name %></td>
+      <td><%= attempt_value.value %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 <h3>History</h3>
 <table class="table table-bordered table-striped">
   <thead>
@@ -34,6 +51,7 @@
       <td><%= link_to status.outcome_text.humanize, status %></td>
       <td><%= link_to status.step.position.to_s + "/" + status.attempt.steps.count.to_s, status.step.pipeline %></td>
       <% i += 1 %>
+    </tr>
   <% end %>
   </tbody>
 </table>

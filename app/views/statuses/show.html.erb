@@ -5,9 +5,9 @@
   <dt>Status</dt>
   <dd><%= @status.outcome_text.humanize %></dd>
   <dt>Started</dt>
-  <dd><%= @status.started_at %></dd>
+  <dd><%= I18n.localize(@status.started_at, :format => :short) %></dd>
   <dt>Last updated</dt>
-  <dd><%= @status.updated_at %></dd>
+  <dd><%= I18n.localize(@status.updated_at, :format => :short) %></dd>
 </dl>
 
 <h3>Notes</h3>

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Value:</b>
+  <%= @attempt_value.value %>
+</p>
+
+<p>
+  <b>Attempt:</b>
+  <%= @attempt_value.attempt %>
+</p>
+
+<p>
+  <b>Attempt attribute:</b>
+  <%= @attempt_value.attempt_attribute %>
+</p>
+
+
+<%= link_to 'Edit', edit_attempt_value_path(@attempt_value) %> |
+<%= link_to 'Back', attempt_values_path %>

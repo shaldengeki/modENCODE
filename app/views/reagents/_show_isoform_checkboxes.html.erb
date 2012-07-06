@@ -7,7 +7,7 @@
 <% else %>
     <div class='row-fluid'>
   <% if !transcription_factor.nil? and !transcription_factor.isoform_image_path.nil? %>
-       <div class='span9'><%= image_tag("isoforms/" + transcription_factor.isoform_image_path.to_s) unless transcription_factor.isoform_image_path.nil? %></div>
+       <div class='span9'><%= link_to(image_tag("isoforms/" + transcription_factor.isoform_image_path.to_s), 'http://flybase.org/reports/' + transcription_factor.flybase_id + '.html', :target => "_blank") unless (transcription_factor.flybase_id.nil? || transcription_factor.isoform_image_path.nil?) %></div>
   <% end %>
       <div class='span3'>
         <% isoforms.each do |isoform| %>
@@ -20,5 +20,5 @@
 </div>
 <%= hidden_field_tag "isoforms_json", nil %>
 <script type="text/javascript">
-  <%= render :partial => "reagents/reagent_search_bind_isoforms.js.erb", :formats => [:js] %>
+  <%= render :partial => "reagents/reagent_search_bind_isoforms.js.erb", :formats => [:js], :locals => {:model_type => model_type} %>
 </script>

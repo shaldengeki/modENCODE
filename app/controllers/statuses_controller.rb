@@ -40,19 +40,19 @@ class StatusesController < ApplicationController
   # POST /statuses
   # POST /statuses.json
   def create
+    attempt = Attempt.find(params[:status][:attempt_id])
+    unless attempt.user_ids.include? current_user.id
+      attempt.user_ids = attempt.user_ids.append(current_user.id)
+    end
     @status = Status.new(params[:status].except(:position))
     @status.start = 0
     # TODO: allow user to specify the position.
     @status.position = @status.next_position
     @status.user_id = current_user.id
-    attempt = @status.attempt
-    unless @status.attempt.users.include? current_user
-      attempt.users.append(current_user)
-    end
 
     respond_to do |format|
       if @status.save and attempt.save
-        format.html { redirect_to @status, notice: 'Status was successfully created.' }
+        format.html { redirect_to @status, notice: 'Successfully updated attempt.' }
         format.json { render json: @status, status: :created, location: @status }
       else
         format.html { render action: "new" }

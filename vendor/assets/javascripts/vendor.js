@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains RubyMine.
- * User: Shal
- * Date: 6/7/12
- * Time: 1:50 PM
- * To change this template use File | Settings | File Templates.
- */
 // This is a manifest file that'll be compiled into including all the files listed below.
 // Add new JavaScript/Coffee code in separate files in this directory and they'll automatically
 // be included in the compiled file accessible from http://example.com/assets/application.js
