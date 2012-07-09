@@ -4,6 +4,8 @@ ModENCODE::Application.routes.draw do
   end
   match 'aliases/findTF' => 'aliases#findTF', :as => 'find_tfs'
 
+  get "attempts/search"
+  post "attempts/search"
   resources :attempts
   resources :attempt_attributes do
     get :autocomplete_attempt_attribute_name, :on => :collection

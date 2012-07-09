@@ -10,7 +10,7 @@
     </div>
   <% end %>
   <fieldset>
-    <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f, :model_type => "attempt"} %>
+    <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f, :model_type => "reagent"} %>
     <div class="control-group">
       <%= f.label :pipeline, :class => "control-label" %>
       <div class="controls">
@@ -22,7 +22,7 @@
       <div class="controls">
         <%= f.fields_for :statuses do |builder| %>
           <%= builder.grouped_collection_select :step_id, Pipeline.all, :steps, :name, :id, :name %><br /><br />
-          <%= builder.text_area :description, :size => "100x3", :value => "Started attempt." %><br />
+          <%= builder.text_area :description, :size => "100x3", :placeholder => "Type a description here." %><br />
           <%= builder.hidden_field :position, :value => 1 %>
           <%= builder.check_box :success %> Success <%= builder.check_box :failure %> Failure
           <%= builder.check_box :end %> End of attempt
@@ -32,14 +32,12 @@
     <div class="control-group">
       <%= f.label :attempt_values, :class => "control-label" %>
       <div class="controls">
-        <ol id="attempt_values">
+        <div id="attempt_values" class='form-horizontal'>
           <%=  f.fields_for :attempt_values do |builder| %>
-            <% AttemptAttribute.all.each do |attempt_attribute| %>
-            <% render :partial => "attempts/attempt_value_fields", :locals => {:f => builder, :attempt_attribute => attempt_attribute} %>
-            <% end %>
+            <%= render :partial => "attempts/attempt_value_fields", :locals => {:f => builder} %>
           <% end %>
           <%= link_to_add_fields "Add an Attribute", f, :attempt_values %>
-        </ol>
+        </div>
       </div>
     </div>
     <div class="control-group">

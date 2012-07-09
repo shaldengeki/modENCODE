@@ -39,7 +39,7 @@
                 <li><%= link_to "Isoforms", isoforms_path %></li>
                 <li><%= link_to "Reagents", :controller => :reagents, :action => :search %></li>
                 <li><%= link_to "Pipelines", pipelines_path %></li>
-                <li><%= link_to "Attempts", attempts_path %></li>
+                <li><%= link_to "Attempts", :controller => :attempts, :action => :search %></li>
               </ul>
             </li>
             <li><%= link_to "People", users_path %></li>

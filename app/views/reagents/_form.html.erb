@@ -10,7 +10,7 @@
     </div>
   <% end %>
   <fieldset>
-    <%= render :partial => "transcription_factors/search_name", :locals => {:f => f} %>
+    <%= render :partial => "transcription_factors/search_name", :locals => {:f => f, :model_type => "reagent"} %>
     <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:f => f, :transcription_factor => nil, :isoforms => @reagent.isoforms, :model_type => "reagent"} %>
     <div class="control-group">
       <%= f.label :name, :class => "control-label" %>
@@ -41,12 +41,6 @@
       <%= f.label :reagent_attributes, :class => "control-label" %>
       <div class="controls">
         No attributes found.
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :tag_id, :class => "control-label" %>
-      <div class="controls">
-        <%= f.collection_select :tag_id, Tag.all, :id, :name %>
       </div>
     </div>
     <div class="form-actions">

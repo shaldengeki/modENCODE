@@ -4,5 +4,6 @@ class AttemptAttribute < ActiveRecord::Base
   attr_accessible :name
 
   validates :name, :presence => true,
-                    :uniqueness => true
+                    :uniqueness => {:case_sensitive => false},
+                    :length => {:minimum => 1}
 end

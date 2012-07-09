@@ -1,4 +1,15 @@
 jQuery ->
+  $('form').on 'click', '.remove_fields', (event) ->
+    $(this).prev('input[type=hidden]').val('1')
+    $(this).closest('li').hide()
+    event.preventDefault()
+
+  $('form').on 'click', '.add_fields', (event) ->
+    time = new Date().getTime()
+    regexp = new RegExp($(this).data('id'), 'g')
+    $(this).before($(this).data('fields').replace(regexp, time))
+    event.preventDefault()
+
   $('#reagent-search').dataTable
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
     "sPaginationType": "bootstrap"

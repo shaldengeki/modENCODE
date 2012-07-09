@@ -1,4 +1,4 @@
-<%= render :partial => "transcription_factors/search_name", :locals => {:f => f} %>
+<%= render :partial => "transcription_factors/search_name", :locals => {:f => f, :model_type => model_type} %>
 <%= render :partial => "reagents/show_isoform_checkboxes", :locals => {:f => f, :transcription_factor => nil, :isoforms => [], :model_type => model_type} %>
 <div id="reagents-search-by-isoforms" class="control-group">
   <%= f.label :reagent, :class => "control-label" %>

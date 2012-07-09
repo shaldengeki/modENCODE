@@ -4,7 +4,7 @@
     <%= autocomplete_field_tag 'Gene name', '', autocomplete_alias_name_aliases_path, :update_elements => { :transcription_factor_id => "#tf-id" }, :class => "search-query span6", :placeholder => "Search" %>
     <input type="hidden" id="tf-id" />
     <script type="text/javascript">
-      <%= render :partial => "reagents/watch_tf_load_isoforms", :formats => [:js] %>
+      <%= render :partial => "reagents/watch_tf_load_isoforms", :formats => [:js], :locals => {:model_type => model_type} %>
     </script>
   </div>
 </div>

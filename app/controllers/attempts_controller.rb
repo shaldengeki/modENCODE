@@ -1,6 +1,6 @@
 class AttemptsController < ApplicationController
   load_and_authorize_resource
-  before_filter :generate_new_attempt, :only => [:index, :show, :new]
+  before_filter :generate_new_attempt, :only => [:index, :show, :search, :new]
   # GET /attempts
   # GET /attempts.json
   def index
@@ -20,6 +20,37 @@ class AttemptsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @attempt }
+    end
+  end
+
+  def search
+    attempt_params = params[:attempt]
+    @attempts = []
+    unless attempt_params.nil? or attempt_params.empty?
+      @attempts = Attempt.all
+      unless attempt_params[:isoform_ids].nil? or attempt_params[:isoform_ids].empty?
+        isoform_ids = Array(attempt_params[:isoform_ids].select{|value| !value.blank?})
+        isoform_ids.each do |isoform_id|
+          @attempts = @attempts.select{|attempt| attempt.reagent.isoforms.map{|isoform| isoform.id}.include? isoform_id.to_i}
+        end
+      end
+      unless attempt_params[:attempt_values_attributes].nil? or attempt_params[:attempt_values_attributes].empty?
+        values = Array(attempt_params[:attempt_values_attributes]).select{|value| !value[:value].blank? }
+        values.each do |value|
+          @attempts = @attempts.select{|attempt| AttemptValue.where(:attempt_id => attempt.id.to_i, :attempt_attribute_id => value[:attempt_attribute_id].to_i, :value => value[:value].to_s).count > 0}
+        end
+      end
+      unless attempt_params[:status].nil? or attempt_params[:status].empty?
+        unless attempt_params[:status][:step_id].nil? or attempt_params[:status][:step_id].blank?
+          attempts = Attempt.all.select{|attempt| attempt.last_step == attempt_params[:status][:step_id].to_i}
+          @attempts = @attempts & attempts
+        end
+      end
+    end
+    # @attempts = @attempts.map{|attempt| Attempt.find(attempt)}
+
+    respond_to do |format|
+      format.html
     end
   end
 
@@ -65,8 +96,20 @@ class AttemptsController < ApplicationController
   # PUT /attempts/1.json
   def update
     @attempt = Attempt.find(params[:id])
+    #DIE MONSTER YOU DON"T BELONG IN THIS WORLD"
+    #params[:attempt][:attempt_values_attributes].each do |attempt_value_attribute|
+    #  if attempt_value_attribute[:id] and AttemptAttribute.find(:id => attempt_value_attribute[:id])
+    #    DIE MONSTER YOU DON'T BELONG IN THIS WORLD'
+    #  elsif not attempt_value_attribute[:attempt_attribute_attributes].nil? and not attempt_value_attribute[:attempt_attribute_attributes][:name].nil?
+    #    if AttemptAttribute.find_by_name(attempt_value_attribute[:attempt_attribute_attributes][:name]).nil?
+    #      AttemptAttribute.create
+    #      attempt_value_attribute[:attempt_attribute_attributes]
+    #    else
+    #    end
+    #  end
+    #end unless params[:attempt][:attempt_values_attributes].nil?
     respond_to do |format|
-      if @attempt.update_attributes(params[:attempt])
+      if @attempt.update_attributes(:attempt_values => params[:attempt][:attempt_values_attributes])and @attempt.update_attributes(params[:attempt])
         format.html { redirect_to @attempt, notice: 'Attempt was successfully updated.' }
         format.json { head :no_content }
       else

@@ -1,7 +1,7 @@
 <div id="isoform-list" class="control-group">
   <%= label_tag :reagent, "Isoforms", :class => "control-label" %>
   <div class="controls">
-    <%= hidden_field_tag "reagent[isoform_ids][]", nil %>
+    <%= hidden_field_tag model_type.downcase + "[isoform_ids][]", nil %>
 <% if isoforms.nil? or isoforms.empty? %>
     No isoforms found.
 <% else %>
@@ -11,7 +11,7 @@
   <% end %>
       <div class='span3'>
         <% isoforms.each do |isoform| %>
-          <%= check_box_tag "reagent[isoform_ids][]", isoform.id, @reagent.isoform_ids.include?(isoform.id), :id => dom_id(isoform), :class => "isoform_checkbox"  %> <%= isoform.name %><br />
+          <%= check_box_tag model_type.downcase + "[isoform_ids][]", isoform.id, @reagent.isoform_ids.include?(isoform.id), :id => dom_id(isoform), :class => "isoform_checkbox"  %> <%= isoform.name %><br />
         <% end %>
       </div>
     </div>
