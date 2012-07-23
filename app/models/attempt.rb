@@ -3,7 +3,7 @@ class Attempt < ActiveRecord::Base
   belongs_to :reagent
   belongs_to :pipeline
   has_many :attempt_attributes, :through => :attempt_values
-  has_many :attempt_values, :dependent => :destroy
+  has_many :attempt_values, :dependent => :destroy, :order => :attempt_attribute_id
 
   has_many :statuses, :dependent => :destroy
   has_many :steps, :through => :pipeline, :order => 'position ASC'

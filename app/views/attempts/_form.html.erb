@@ -21,11 +21,11 @@
       <%= f.label :current_step, :class => "control-label" %>
       <div class="controls">
         <%= f.fields_for :statuses do |builder| %>
-          <%= builder.grouped_collection_select :step_id, Pipeline.all, :steps, :name, :id, :name %><br /><br />
+          <%= builder.grouped_collection_select :step_id, Pipeline.all, :steps, :name, :id, :name %><br />
           <%= builder.text_area :description, :size => "100x3", :placeholder => "Type a description here." %><br />
           <%= builder.hidden_field :position, :value => 1 %>
           <%= builder.check_box :success %> Success <%= builder.check_box :failure %> Failure
-          <%= builder.check_box :end %> End of attempt
+          <%= builder.check_box :end %> End of attempt<br /><br />
         <% end %>
       </div>
     </div>

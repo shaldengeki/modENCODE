@@ -108,7 +108,7 @@ class ReagentsController < ApplicationController
     @reagent = Reagent.find(params[:id])
 
     respond_to do |format|
-      if @reagent.update_attributes(params[:reagent])
+      if @reagent.update_attributes(:reagent_values => params[:reagent][:reagent_values_attributes]) and @reagent.update_attributes(params[:reagent].except(:reagent_values_attributes))
         format.html { redirect_to @reagent, notice: 'Reagent was successfully updated.' }
         format.json { head :no_content }
       else

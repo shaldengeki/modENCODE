@@ -1,20 +1,30 @@
 <% if reagent_attributes.nil? or reagent_attributes.empty? %>
   No reagent attributes found.
+  <%= fields_for reagent do |f| %>
+  <%= link_to_add_fields "Add an Attribute", f, :reagent_values %>
+  <% end %>
 <% else %>
+  <%= fields_for reagent do |f| %>
   <div class='form-horizontal'>
     <fieldset>
-    <% reagent_attributes.each do |reagent_attribute| %>
+    <%= f.fields_for :reagent_values do |builder| %>
+      <%
+      reagent_value = builder.object
+      reagent_attribute = reagent_value.reagent_attribute
+      %>
       <div class="control-group">
-        <%= label_tag "reagent[reagent_values_attributes][][reagent_attribute_id]", reagent_attribute.name, :class => "control-label" %>
+        <%= builder.label :reagent_attribute_id, reagent_attribute.name, :class => "control-label" %>
         <div class="controls">
           <% if (@reagent.reagent_values.map{|value| value.reagent_attribute_id}).include? reagent_attribute.id %>
-            <%= hidden_field_tag "reagent[reagent_values_attributes][][id]", (@reagent.reagent_values.select{|value| value.reagent_attribute_id == reagent_attribute.id}).first.id %>
+            <%= builder.hidden_field :id, :value => (reagent.reagent_values.select{|value| value.reagent_attribute_id == reagent_attribute.id}).first.id %>
           <% end %>
-          <%=  hidden_field_tag "reagent[reagent_values_attributes][][reagent_attribute_id]", reagent_attribute.id %>
-          <%=  text_field_tag "reagent[reagent_values_attributes][][value]", ((@reagent.reagent_values.map{|value| value.reagent_attribute_id}).include? reagent_attribute.id) ? @reagent.reagent_values.select{|value| value.reagent_attribute_id == reagent_attribute.id}.first.value : "" %>
+          <%=  builder.hidden_field :reagent_attribute_id, :value => reagent_attribute.id %>
+          <%=  builder.text_field :value, :value => ((reagent.reagent_values.map{|value| value.reagent_attribute_id}).include? reagent_attribute.id) ? @reagent.reagent_values.select{|value| value.reagent_attribute_id == reagent_attribute.id}.first.value : "" %>
         </div>
       </div>
-      <% end %>
+    <% end %>
+    <%= link_to_add_fields "Add an Attribute", f, :reagent_values %>
     </fieldset>
   </div>
+  <% end %>
 <% end %>

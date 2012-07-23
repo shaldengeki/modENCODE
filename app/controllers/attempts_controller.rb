@@ -96,20 +96,8 @@ class AttemptsController < ApplicationController
   # PUT /attempts/1.json
   def update
     @attempt = Attempt.find(params[:id])
-    #DIE MONSTER YOU DON"T BELONG IN THIS WORLD"
-    #params[:attempt][:attempt_values_attributes].each do |attempt_value_attribute|
-    #  if attempt_value_attribute[:id] and AttemptAttribute.find(:id => attempt_value_attribute[:id])
-    #    DIE MONSTER YOU DON'T BELONG IN THIS WORLD'
-    #  elsif not attempt_value_attribute[:attempt_attribute_attributes].nil? and not attempt_value_attribute[:attempt_attribute_attributes][:name].nil?
-    #    if AttemptAttribute.find_by_name(attempt_value_attribute[:attempt_attribute_attributes][:name]).nil?
-    #      AttemptAttribute.create
-    #      attempt_value_attribute[:attempt_attribute_attributes]
-    #    else
-    #    end
-    #  end
-    #end unless params[:attempt][:attempt_values_attributes].nil?
     respond_to do |format|
-      if @attempt.update_attributes(:attempt_values => params[:attempt][:attempt_values_attributes])and @attempt.update_attributes(params[:attempt])
+      if @attempt.update_attributes(:attempt_values => params[:attempt][:attempt_values_attributes]) and @attempt.update_attributes(params[:attempt])
         format.html { redirect_to @attempt, notice: 'Attempt was successfully updated.' }
         format.json { head :no_content }
       else

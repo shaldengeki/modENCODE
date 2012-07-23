@@ -27,7 +27,13 @@ class ReagentTypesController < ApplicationController
     if @reagent.nil?
       @reagent = Reagent.new
     end
-    @reagent_attributes = ReagentAttribute.where(:reagent_type_id => params[:reagent_type]).all
+    reagent_existing_attr_ids = @reagent.reagent_values.map{|val| val.reagent_attribute_id.to_i}
+    @reagent_attributes = ReagentAttribute.where(:reagent_type_id => params[:reagent_type]).where('id NOT IN (?)', reagent_existing_attr_ids).all
+    blank_reagent_values = @reagent_attributes.map{|attr| ReagentValue.new(:reagent_attribute_id => attr.id, :value => "")}
+    blank_reagent_values.each do |val|
+      @reagent.reagent_values.build(:reagent_attribute_id => val.reagent_attribute_id, :value => "")
+    end
+    @reagent.reagent_values.sort!{|a, b| a.reagent_attribute_id <=> b.reagent_attribute_id}
     respond_to do |format|
       format.js
     end
