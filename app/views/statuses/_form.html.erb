@@ -2,7 +2,6 @@
   <% if @status.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h2>
-
       <ul>
       <% @status.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -10,7 +9,6 @@
       </ul>
     </div>
   <% end %>
-
   <fieldset>
     <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f, :model_type => "status"} %>
     <div class="control-group">
@@ -19,29 +17,6 @@
         <%= f.grouped_collection_select :attempt_id, Reagent.all, :attempts, :id, :id, :updated_at_localized %>
       </div>
     </div>
-    <div class="control-group">
-      <%= f.label :step, :class => "control-label" %>
-      <div class="controls">
-        <%= f.grouped_collection_select :step_id, Attempt.all, :steps, :updated_at_localized, :id, :name %><br />
-        <%= f.hidden_field :position, :value => 1 %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :description, :class => "control-label" %>
-      <div class="controls">
-        <%= f.text_area :description, :size => "100x3", :placeholder => "Your notes here!" %><br />
-        <%= f.check_box :success %> Success <%= f.check_box :failure %> Failure<br />
-        <%= f.check_box :end %> End of attempt
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label "Date started", :class => "control-label" %>
-      <div class="controls">
-        <%= f.text_field :started_at, :id => 'statusTime' %>
-      </div>
-    </div>
-    <div class="form-actions">
-      <%= f.submit "Update Status", :id => "update_status", :class => "btn btn-primary" %>
-    </div>
+    <%= render :partial => "statuses/status_fields", :locals => {:f => f} %>
   </fieldset>
 <% end %>

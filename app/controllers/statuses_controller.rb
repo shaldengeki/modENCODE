@@ -40,18 +40,33 @@ class StatusesController < ApplicationController
   # POST /statuses
   # POST /statuses.json
   def create
-    attempt = Attempt.find(params[:status][:attempt_id])
-    unless attempt.user_ids.include? current_user.id
-      attempt.user_ids = attempt.user_ids.append(current_user.id)
+    if params[:status][:attempt_id].kind_of?(Array)
+      final_status = true
+      params[:status][:attempt_id].each do |attempt_id|
+        attempt = Attempt.find(attempt_id)
+        unless attempt.user_ids.include? current_user.id
+          attempt.user_ids = attempt.user_ids.append(current_user.id)
+        end
+        @status = Status.new(params[:status].except(:attempt_id, :position))
+        @status.attempt_id = attempt_id
+        @status.start = 0
+        @status.position = @status.next_position
+        @status.user_id = current_user.id
+        final_status = final_status && @status.save && attempt.save
+      end
+    else
+      attempt = Attempt.find(params[:status][:attempt_id])
+      unless attempt.user_ids.include? current_user.id
+        attempt.user_ids = attempt.user_ids.append(current_user.id)
+      end
+      @status = Status.new(params[:status].except(:position))
+      @status.start = 0
+      @status.position = @status.next_position
+      @status.user_id = current_user.id
+      final_status = @status.save && attempt.save
     end
-    @status = Status.new(params[:status].except(:position))
-    @status.start = 0
-    # TODO: allow user to specify the position.
-    @status.position = @status.next_position
-    @status.user_id = current_user.id
-
     respond_to do |format|
-      if @status.save and attempt.save
+      if final_status
         format.html { redirect_to @status, notice: 'Successfully updated attempt.' }
         format.json { render json: @status, status: :created, location: @status }
       else
@@ -65,9 +80,8 @@ class StatusesController < ApplicationController
   # PUT /statuses/1.json
   def update
     @status = Status.find(params[:id])
-
     respond_to do |format|
-      if @status.update_attributes(params[:status])
+      if @status.update_attributes(params[:status].except(:position, :isoform_ids, :reagent_id))
         format.html { redirect_to @status, notice: 'Status was successfully updated.' }
         format.json { head :no_content }
       else

@@ -1,4 +1,4 @@
-<% if reagent_attributes.nil? or reagent_attributes.empty? %>
+<% if (reagent_attributes.nil? or reagent_attributes.empty?) and (reagent.nil? or reagent.reagent_values.empty?) %>
   No reagent attributes found.
   <%= fields_for reagent do |f| %>
   <%= link_to_add_fields "Add an Attribute", f, :reagent_values %>

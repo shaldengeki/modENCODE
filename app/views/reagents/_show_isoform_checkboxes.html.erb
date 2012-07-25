@@ -1,17 +1,17 @@
 <div id="isoform-list" class="control-group">
   <%= label_tag :reagent, "Isoforms", :class => "control-label" %>
   <div class="controls">
-    <%= hidden_field_tag model_type.downcase + "[isoform_ids][]", nil %>
+    <%= hidden_field_tag "reagent[isoform_ids][]", nil %>
 <% if isoforms.nil? or isoforms.empty? %>
     No isoforms found.
 <% else %>
     <div class='row-fluid'>
   <% if !transcription_factor.nil? and !transcription_factor.isoform_image_path.nil? %>
-       <div class='span9'><%= link_to(image_tag("isoforms/" + transcription_factor.isoform_image_path.to_s), 'http://flybase.org/reports/' + transcription_factor.flybase_id + '.html', :target => "_blank") unless (transcription_factor.flybase_id.nil? || transcription_factor.isoform_image_path.nil?) %></div>
+       <div class='span9'><%= link_to(image_tag("/images/isoforms/" + transcription_factor.isoform_image_path.to_s), 'http://flybase.org/reports/' + transcription_factor.flybase_id + '.html', :target => "_blank") unless (transcription_factor.flybase_id.nil? || transcription_factor.isoform_image_path.nil?) %></div>
   <% end %>
       <div class='span3'>
         <% isoforms.each do |isoform| %>
-          <%= check_box_tag model_type.downcase + "[isoform_ids][]", isoform.id, @reagent.isoform_ids.include?(isoform.id), :id => dom_id(isoform), :class => "isoform_checkbox"  %> <%= isoform.name %><br />
+          <%= check_box_tag "reagent[isoform_ids][]", isoform.id, @reagent.isoform_ids.include?(isoform.id), :id => dom_id(isoform), :class => "isoform_checkbox"  %> <%= isoform.name %><br />
         <% end %>
       </div>
     </div>

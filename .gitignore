@@ -23,4 +23,5 @@ config/database.yml
 nbproject
 Gemfile.lock
 .idea
-app/assets/images/isoforms/*
+app/assets/images/*
+public/images/isoforms/*

@@ -26,9 +26,15 @@ class ReagentTypesController < ApplicationController
     @reagent = Reagent.find_by_id(params[:reagent])
     if @reagent.nil?
       @reagent = Reagent.new
+      @reagent_attributes = ReagentAttribute.where(:reagent_type_id => params[:reagent_type]).all
+    else
+      reagent_existing_attr_ids = @reagent.reagent_values.map{|val| val.reagent_attribute_id.to_i}
+      @reagent_attributes = ReagentAttribute.where(:reagent_type_id => params[:reagent_type])
+      unless @reagent.reagent_values.empty?
+        @reagent_attributes = @reagent_attributes.where('id NOT IN (?)', reagent_existing_attr_ids)
+      end
+      @reagent_attributes = @reagent_attributes.all
     end
-    reagent_existing_attr_ids = @reagent.reagent_values.map{|val| val.reagent_attribute_id.to_i}
-    @reagent_attributes = ReagentAttribute.where(:reagent_type_id => params[:reagent_type]).where('id NOT IN (?)', reagent_existing_attr_ids).all
     blank_reagent_values = @reagent_attributes.map{|attr| ReagentValue.new(:reagent_attribute_id => attr.id, :value => "")}
     blank_reagent_values.each do |val|
       @reagent.reagent_values.build(:reagent_attribute_id => val.reagent_attribute_id, :value => "")

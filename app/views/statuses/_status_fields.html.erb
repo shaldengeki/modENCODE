@@ -1,0 +1,24 @@
+<div class="control-group">
+  <%= f.label :step, :class => "control-label" %>
+  <div class="controls">
+    <%= f.grouped_collection_select :step_id, Attempt.all, :steps, :updated_at_localized, :id, :name %><br />
+    <%= f.hidden_field :position, :value => 1 %>
+  </div>
+</div>
+<div class="control-group">
+  <%= f.label :description, :class => "control-label" %>
+  <div class="controls">
+    <%= f.text_area :description, :size => "100x3", :placeholder => "Your notes here!" %><br />
+    <%= f.check_box :success %> Success <%= f.check_box :failure %> Failure<br />
+    <%= f.check_box :end %> End of attempt
+  </div>
+</div>
+<div class="control-group">
+  <%= f.label "Date started", :class => "control-label" %>
+  <div class="controls">
+    <%= f.text_field :started_at, :id => 'statusTime' %>
+  </div>
+</div>
+<div class="form-actions">
+  <%= f.submit "Update Status", :id => "update_status", :class => "btn btn-primary" %>
+</div>

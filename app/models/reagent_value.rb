@@ -7,5 +7,5 @@ class ReagentValue < ActiveRecord::Base
   validates :value, :presence => true,
                     :length => {:minimum => 1}
   validates :reagent_attribute_id, :presence => true
-  validates :reagent_id, :presence => true
+  # validates :reagent_id, :presence => true
 end

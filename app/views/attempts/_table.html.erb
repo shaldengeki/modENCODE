@@ -1,0 +1,33 @@
+<table id='attempt-search' class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Pipeline</th>
+    <th>Reagent</th>
+    <th>Isoform(s)</th>
+    <th>User(s)</th>
+    <th>Last status</th>
+    <th>Started</th>
+    <th>Last updated</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @attempts.each do |attempt| %>
+    <tr>
+      <td><%= check_box_tag("status[attempt_id][]", attempt.id) %></td>
+      <td><%= link_to attempt.pipeline.name, attempt %></td>
+      <td><%= link_to attempt.reagent.name, attempt.reagent %></td>
+      <td><%= attempt.reagent.isoforms.empty? || attempt.reagent.isoforms.blank? ? "None" : raw((attempt.reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}).join(",")) %></td>
+      <td><%= attempt.users.empty? || attempt.users.blank? ? "None" : raw((attempt.users.map{|user| link_to(user.name, user)}).join(",")) %></td>
+      <td><%= attempt.last_status.nil? ? "None" : link_to(attempt.last_status.step.name.to_s + " (" + attempt.last_status.outcome_text + ")", attempt.last_status) %></td>
+      <td><%= attempt.started_at.nil? ? "Never" : link_to(I18n.localize(attempt.started_at, :format => :short), attempt.first_status) %></td>
+      <td><%= attempt.last_status.nil? ? "Never" : link_to(I18n.localize(attempt.last_status.updated_at, :format => :short), attempt.last_status) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<div class='row-fluid'>
+  <div class='span12'>
+    <i class="icon-circle-arrow-right"></i> Update status for selected
+  </div>
+</div>
