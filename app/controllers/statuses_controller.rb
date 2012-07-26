@@ -40,7 +40,8 @@ class StatusesController < ApplicationController
   # POST /statuses
   # POST /statuses.json
   def create
-    if params[:status][:attempt_id].kind_of?(Array)
+    if not params[:attempt_id].nil? and params[:attempt_id].is_json?
+      params[:status][:attempt_id] = JSON.parse(params[:attempt_id])
       final_status = true
       params[:status][:attempt_id].each do |attempt_id|
         attempt = Attempt.find(attempt_id)

@@ -31,6 +31,10 @@ jQuery ->
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
 
+  $('#update-attempt-status-link').click (event) ->
+    $('#new_status').parent().parent().toggle()
+    event.preventDefault()
+
   $('#attemptTime').datetimepicker({dateFormat: "yy-mm-dd", timeFormat: "hh:mm:ss"})
 
   $('#attempt_pipeline_id').hide()
@@ -41,3 +45,12 @@ jQuery ->
   updateAttemptFields(pipelines, steps)
   $('#isoform-search-reagent-type').change -> updateAttemptFields(pipelines, steps)
   $('#attempt_pipeline_id').change -> updatePipelineSteps(steps)
+
+  $('.attempt_checkbox').each () ->
+    $(this).click () ->
+      attempts = []
+      $('.attempt_checkbox:checked').each () ->
+        attempts.push $(this).val()
+        return
+      $('input[name=attempt_id]').val JSON.stringify(attempts)
+      $('input[name=attempt_id]').trigger 'change'

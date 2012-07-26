@@ -1,6 +1,7 @@
 class AttemptsController < ApplicationController
   load_and_authorize_resource
   before_filter :generate_new_attempt, :only => [:index, :show, :search, :new]
+  before_filter :generate_new_status, :only => [:index, :search]
   # GET /attempts
   # GET /attempts.json
   def index
@@ -122,5 +123,8 @@ class AttemptsController < ApplicationController
   private
     def generate_new_attempt
       @attempt = Attempt.new
+    end
+    def generate_new_status
+      @status = Status.new
     end
 end

@@ -12,21 +12,20 @@ updateStatusFields = (attempts, steps) ->
         $('#status_step_id').show()
         $('#status_description').parent().show()
       else
-        $('#status_step_id').empty()
-        $('#status_step_id').hide()
-        $('#status_description').parent().hide()
+        #$('#status_step_id').empty()
+        #$('#status_step_id').hide()
+        #$('#status_description').parent().hide()
     else
       $('#status_attempt_id').empty()
       $('#status_attempt_id').hide()
-      $('#status_step_id').empty()
-      $('#status_step_id').hide()
-      $('#status_description').parent().hide()
+      #$('#status_step_id').empty()
+      #$('#status_step_id').hide()
+      #$('#status_description').parent().hide()
 
 jQuery ->
   $('#statusTime').datetimepicker({dateFormat: "yy-mm-dd", timeFormat: "hh:mm:ss"})
   $('#status_attempt_id').hide()
-  $('#status_step_id').hide()
-  $('#status_description').parent().hide()
+  #$('#status_step_id').hide()
   attempts = $('#status_attempt_id').html()
   steps = $('#status_step_id').html()
 

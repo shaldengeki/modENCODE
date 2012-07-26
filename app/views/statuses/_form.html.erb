@@ -10,6 +10,10 @@
     </div>
   <% end %>
   <fieldset>
+    <% attempt_ids ||= false
+    if attempt_ids %>
+      <%= hidden_field_tag "attempt_id", "" %>
+    <% else %>
     <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f, :model_type => "status"} %>
     <div class="control-group">
       <%= f.label "Attempt date", :class => "control-label" %>
@@ -17,6 +21,7 @@
         <%= f.grouped_collection_select :attempt_id, Reagent.all, :attempts, :id, :id, :updated_at_localized %>
       </div>
     </div>
-    <%= render :partial => "statuses/status_fields", :locals => {:f => f} %>
+    <% end %>
+    <%= render :partial => "statuses/status_fields", :locals => {:f => f, :attempt_ids => attempt_ids} %>
   </fieldset>
 <% end %>

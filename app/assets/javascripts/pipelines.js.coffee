@@ -22,4 +22,3 @@ jQuery ->
         thisElement.prev('input[type=text]').attr('name', thisElementName + '[name]')
         thisElement.prev('input[type=text]').prev('input[type=hidden]').attr('name', thisElementName + '[id]')
         thisElement.next('input[type=hidden]').attr('name', thisElementName + '[_destroy]')
-jQuery ->

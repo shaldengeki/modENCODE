@@ -1,7 +1,12 @@
 <div class="control-group">
   <%= f.label :step, :class => "control-label" %>
   <div class="controls">
+    <% attempt_ids ||= false
+       if attempt_ids %>
+    <%= f.grouped_collection_select :step_id, Pipeline.all, :steps, :name, :id, :name %>
+    <% else %>
     <%= f.grouped_collection_select :step_id, Attempt.all, :steps, :updated_at_localized, :id, :name %><br />
+    <% end %>
     <%= f.hidden_field :position, :value => 1 %>
   </div>
 </div>
