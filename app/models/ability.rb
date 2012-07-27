@@ -17,7 +17,7 @@ class Ability
       can :update, User, :id => user.id
 
       can :create, Alias
-      
+
       can :create, Reagent
       can :create_by_batch, Reagent
       can :update, Reagent

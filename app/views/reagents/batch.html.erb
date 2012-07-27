@@ -30,12 +30,14 @@
         <thead>
         <th>#</th>
         <th>Gene</th>
+        <th>Also known as</th>
         </thead>
         <tbody>
-        <% TranscriptionFactor.all.each do |transcription_factor| %>
+        <% TranscriptionFactor.order("UPPER(`name`) ASC").all.each do |transcription_factor| %>
           <tr>
             <td><%= number_field_tag "transcription_factors[" + transcription_factor.id.to_s + "]", nil, :min => 0, :step => 1 %></td>
             <td><%= transcription_factor.name %></td>
+            <td><%= transcription_factor.aliases.map{|this_alias| this_alias.name}.join(", ") %></td>
           </tr>
         <% end %>
         </tbody>
