@@ -1,23 +1,22 @@
-<h1>Reagent Groups</h1>
+<h1>Batches</h1>
 
 <table class='dataTable table table-striped table-bordered'>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>User(s)</th>
+      <th># Reagents</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @reagent_groups.each do |reagent_group| %>
-  <tr>
-    <td><%= reagent_group.name %></td>
-    <td><%= link_to 'Show', reagent_group %></td>
-    <td><%= link_to 'Edit', edit_reagent_group_path(reagent_group) %></td>
-    <td><%= link_to 'Destroy', reagent_group, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= link_to reagent_group.name, reagent_group %></td>
+      <td><%= reagent_group.users.map{|user| link_to(user.name, user) }.join(", ") %></td>
+      <td><%= reagent_group.reagents.nil? ? "0" : reagent_group.reagents.count %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
-
-<br />
 
 <%= link_to 'New Reagent group', new_reagent_group_path %>

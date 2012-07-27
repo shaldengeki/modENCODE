@@ -1,25 +1,22 @@
 <h1>Sources</h1>
 
 <table class='dataTable table table-striped table-bordered'>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Number of Users</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Number of Users</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @sources.each do |source| %>
-  <tr>
-    <td><%= source.name %></td>
-    <td><%= source.description %></td>
-    <td><%= source.users.nil? ? "0" : source.users.count.to_s %></td>
-    <td><%= link_to 'Show', source %></td>
-    <td><%= link_to 'Edit', edit_source_path(source) %></td>
-    <td><%= link_to 'Destroy', source, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= link_to source.name, source %></td>
+      <td><%= source.description %></td>
+      <td><%= source.users.nil? ? "0" : source.users.count.to_s %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

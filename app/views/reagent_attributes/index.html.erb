@@ -1,17 +1,20 @@
 <h1>Reagent Attributes</h1>
 
 <table class='dataTable table table-bordered table-striped'>
-  <tr>
-    <th>Name</th>
-    <th>Reagent type</th>
-  </tr>
-
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Reagent type</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @reagent_attributes.each do |reagent_attribute| %>
-  <tr>
-    <td><%= link_to reagent_attribute.name, reagent_attribute %></td>
-    <td><%= reagent_attribute.reagent_type %></td>
+    <tr>
+      <td><%= link_to reagent_attribute.name, reagent_attribute %></td>
+      <td><%= reagent_attribute.reagent_type %></td>
     <tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

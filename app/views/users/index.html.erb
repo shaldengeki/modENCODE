@@ -2,21 +2,21 @@
 
 <table class='dataTable table table-striped table-bordered'>
   <thead>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Role</th>
-    <th>Source</th>
-  </tr>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Source</th>
+    </tr>
   </thead>
   <tbody>
 <% @users.each do |user| %>
-  <tr>
-    <td><%= link_to user.name, user %></td>
-    <td><%= user.email %></td>
-    <td><%= user.role.humanize %></td>
-    <td><%= user.source.nil? ? "None" : user.source.name %></td>
-  </tr>
+    <tr>
+      <td><%= link_to user.name, user %></td>
+      <td><%= user.email %></td>
+      <td><%= user.role.humanize %></td>
+      <td><%= user.source.nil? ? "None" : link_to(user.source.name, user.source) %></td>
+    </tr>
 <% end %>
   </tbody>
 </table>

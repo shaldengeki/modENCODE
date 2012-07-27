@@ -1,23 +1,22 @@
 <h1>Reagent Values</h1>
 
 <table class='dataTable table table-striped table-bordered'>
-  <tr>
-    <th>Reagent attribute</th>
-    <th>Value</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+  <thead>
+    <tr>
+      <th>Reagent</th>
+      <th>Reagent attribute</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @reagent_values.each do |reagent_value| %>
-  <tr>
-    <td><%= reagent_value.reagent_attribute.nil? ? "None" : reagent_value.reagent_attribute.name %></td>
-    <td><%= reagent_value.value %></td>
-    <td><%= link_to 'Show', reagent_value %></td>
-    <td><%= link_to 'Edit', edit_reagent_value_path(reagent_value) %></td>
-    <td><%= link_to 'Destroy', reagent_value, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= reagent_value.reagent.nil? ? "None" : reagent_value.reagent.name %></td>
+      <td><%= reagent_value.reagent_attribute.nil? ? "None" : reagent_value.reagent_attribute.name %></td>
+      <td><%= reagent_value.value %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

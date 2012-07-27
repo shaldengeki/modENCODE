@@ -1,25 +1,21 @@
 <h1>Attempt Attributes</h1>
 
 <table class='dataTable table table-striped table-bordered'>
-  <tr>
-    <th>Name</th>
-    <th>Reagent</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Reagent</th>
+      <th># associated values</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @attempt_attributes.each do |attempt_attribute| %>
-  <tr>
-    <td><%= attempt_attribute.name %></td>
-    <td><%= attempt_attribute.reagent %></td>
-    <td><%= link_to 'Show', attempt_attribute %></td>
-    <td><%= link_to 'Edit', edit_attempt_attribute_path(attempt_attribute) %></td>
-    <td><%= link_to 'Destroy', attempt_attribute, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= link_to attempt_attribute.name, attempt_attribute %></td>
+      <td><%= attempt_attribute.reagent.nil? ? "None" : attempt_attribute.reagent.name %></td>
+      <td><%= attempt_attribute.reagent_values.nil? ? "0" : attempt_attribute.reagent_values.count %></td>
 <% end %>
+  </tbody>
 </table>
-
-<br />
 
 <%= link_to 'New Attempt attribute', new_attempt_attribute_path %>

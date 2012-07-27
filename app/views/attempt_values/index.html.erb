@@ -1,25 +1,22 @@
-<h1>Listing attempt_values</h1>
+<h1>Attempt Values</h1>
 
 <table class='dataTable table table-striped table-bordered'>
-  <tr>
-    <th>Value</th>
-    <th>Attempt</th>
-    <th>Attempt attribute</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+  <thead>
+    <tr>
+      <th>Attempt Date</th>
+      <th>Attempt attribute</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
 <% @attempt_values.each do |attempt_value| %>
-  <tr>
-    <td><%= attempt_value.value %></td>
-    <td><%= attempt_value.attempt %></td>
-    <td><%= attempt_value.attempt_attribute %></td>
-    <td><%= link_to 'Show', attempt_value %></td>
-    <td><%= link_to 'Edit', edit_attempt_value_path(attempt_value) %></td>
-    <td><%= link_to 'Destroy', attempt_value, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <tr>
+      <td><%= link_to I18n.localize(attempt_value.attempt.created_at, :format => :short), attempt_value.attempt %></td>
+      <td><%= attempt_value.attempt_attribute.nil? ? "None" : attempt_value.attempt_attribute.name %></td>
+      <td><%= attempt_value.value %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />
