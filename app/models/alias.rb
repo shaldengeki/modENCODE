@@ -1,5 +1,5 @@
 class Alias < ActiveRecord::Base
-  belongs_to :transcription_factor
+  belongs_to :transcription_factor, :inverse_of => :aliases
   attr_accessible :name
 
   validates_uniqueness_of :name, :scope => :transcription_factor_id

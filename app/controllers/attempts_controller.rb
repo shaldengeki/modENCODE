@@ -26,9 +26,8 @@ class AttemptsController < ApplicationController
 
   def search
     attempt_params = params[:attempt]
-    @attempts = []
+    @attempts = Attempt.all
     unless attempt_params.nil? or attempt_params.empty?
-      @attempts = Attempt.all
       unless attempt_params[:isoform_ids].nil? or attempt_params[:isoform_ids].empty?
         isoform_ids = Array(attempt_params[:isoform_ids].select{|value| !value.blank?})
         isoform_ids.each do |isoform_id|

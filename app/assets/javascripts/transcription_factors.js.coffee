@@ -1,5 +1,0 @@
-jQuery ->
-  $('#tf-list').dataTable
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
-    "sPaginationType": "bootstrap"
-    "oLanguage": {"sEmptyTable": "No genes match your search query.", "sZeroRecords": "No genes match your filter."}

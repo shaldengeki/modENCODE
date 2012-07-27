@@ -10,7 +10,7 @@
   <dd><%= (Float(@user.statuses.select{|status| status.success}.length == 0 ? 1 : @user.statuses.select{|status| status.success}.length) / (@user.statuses.select{|status| status.success || status.failure}.length == 0 ? 1 : @user.statuses.select{|status| status.success || status.failure}.length)*100).round %>%</dd>
 </dl>
 <h2>Latest updates</h2>
-<table class="table table-bordered table-striped">
+<table class='dataTable table table-striped table-bordered'>
   <thead>
   <tr>
     <th>Time</th>

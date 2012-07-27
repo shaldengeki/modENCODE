@@ -1,0 +1,23 @@
+<h1>Reagent Groups</h1>
+
+<table class='dataTable table table-striped table-bordered'>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @reagent_groups.each do |reagent_group| %>
+  <tr>
+    <td><%= reagent_group.name %></td>
+    <td><%= link_to 'Show', reagent_group %></td>
+    <td><%= link_to 'Edit', edit_reagent_group_path(reagent_group) %></td>
+    <td><%= link_to 'Destroy', reagent_group, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Reagent group', new_reagent_group_path %>

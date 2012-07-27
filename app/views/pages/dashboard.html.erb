@@ -6,6 +6,9 @@
   <div class="span6">
     <h2><%= link_to "Recently Updated", :controller => :statuses, :action => :index %></h2>
     <ul id="myTFRecentlyUpdated">
+      <% if @latestStatuses.empty? %>
+        No recent updates.
+      <% end %>
       <% @latestStatuses.each do |status| %>
         <%= content_tag :li, raw(display_status_feed_item(status)), :class => "feedItem" %>
       <% end %>

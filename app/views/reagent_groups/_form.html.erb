@@ -1,0 +1,46 @@
+<%= form_for @reagent_group, :html => { :class => "form-horizontal dataTable-form" } do |f| %>
+  <% if @reagent_group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reagent_group.errors.count, "error") %> prohibited this reagent_group from being saved:</h2>
+
+      <ul>
+      <% @reagent_group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, :class => "input-xlarge" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :reagents, :class => "control-label" %>
+    <div class="controls">
+      <table class='dataTable table table-bordered table-striped' id=''>
+        <thead>
+          <th></th>
+          <th>Reagent</th>
+          <th>Isoforms</th>
+          <th>Created</th>
+        </thead>
+        <tbody>
+          <% Reagent.all.each do |reagent| %>
+          <tr>
+            <td><%= check_box_tag "reagent_group[reagent_ids][]", reagent.id %></td>
+            <td><%= reagent.name %></td>
+            <td><%= raw(reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}.join(",")) %></td>
+            <td><%= I18n.localize(reagent.created_at, :format => :short) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit %>
+  </div>
+<% end %>

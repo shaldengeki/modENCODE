@@ -1,0 +1,31 @@
+<h1><%= @reagent_group.name %></h1>
+<div class='row-fluid'>
+  <dl class='dl-horizontal span12'>
+    <dt>Users</dt>
+    <dd><%= raw(@reagent_group.users.map{|user| link_to(user.name, user)}.join(",")) %></dd>
+    <dt>Created at</dt>
+    <dd><%= I18n.localize(@reagent_group.created_at, :format => :short) %></dd>
+  </dl>
+</div>
+<h2>Reagents:</h2>
+<table class='dataTable table table-bordered table-striped' id=''>
+  <thead>
+  <th>Reagent</th>
+  <th>Isoforms</th>
+  <th>Last status</th>
+  <th>Last updated</th>
+  </thead>
+  <tbody>
+  <% @reagent_group.reagents.each do |reagent| %>
+    <tr>
+      <td><%= link_to reagent.name, reagent %></td>
+      <td><%= raw(reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}.join(",")) %></td>
+      <td><%= reagent.last_status.nil? ? "None" : reagent.last_status.description %></td>
+      <td><%= reagent.last_status.nil? ? "Never" : I18n.localize(reagent.last_status.updated_at, :format => :short) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_reagent_group_path(@reagent_group) %> |
+<%= link_to 'Back', reagent_groups_path %>

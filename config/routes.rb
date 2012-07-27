@@ -1,4 +1,6 @@
 ModENCODE::Application.routes.draw do
+  resources :reagent_groups
+
   resources :aliases do
     get :autocomplete_alias_name, :on => :collection
   end
@@ -27,6 +29,8 @@ ModENCODE::Application.routes.draw do
   resources :reagent_types
   resources :reagent_values
 
+  get "reagents/batch"
+  post "reagents/create_by_batch"
   get "reagents/search"
   post "reagents/search"
   match 'reagents/search_by_isoforms' => 'reagents#search_by_isoforms', :as => 'search_reagents_by_isoforms'

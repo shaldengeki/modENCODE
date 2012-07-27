@@ -1,9 +1,7 @@
 class Step < ActiveRecord::Base
-  belongs_to :pipeline
-  has_many :statuses
-
+  belongs_to :pipeline, :inverse_of => :steps
+  has_many :statuses, :inverse_of => :step
   acts_as_list :scope => :pipeline
-
   attr_accessible :description, :name, :position, :pipeline_id
 
   validates :name, :presence => true

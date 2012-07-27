@@ -1,5 +1,5 @@
 class AttemptAttribute < ActiveRecord::Base
-  has_many :attempt_values
+  has_many :attempt_values, :inverse_of => :attempt_attribute
   has_many :attempts, :through => :attempt_values
   attr_accessible :name
 

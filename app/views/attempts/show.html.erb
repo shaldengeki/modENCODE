@@ -9,7 +9,7 @@
   <dt>Current status</dt>
   <dd><%= @attempt.statuses.nil? ? "Planning" : link_to(@attempt.statuses.last.step.name, @attempt.statuses.last) %></dd>
 </dl>
-<h3>Attibutes</h3>
+<h3>Attributes</h3>
 <table class="table table-bordered table-striped">
   <thead>
   <tr>
@@ -27,7 +27,7 @@
   </tbody>
 </table>
 <h3>History</h3>
-<table class="table table-bordered table-striped">
+<table class="dataTable table table-bordered table-striped">
   <thead>
   <tr>
     <th>#</th>

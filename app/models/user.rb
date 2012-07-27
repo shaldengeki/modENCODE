@@ -6,10 +6,11 @@ class User < ActiveRecord::Base
     end
     ROLES.index(base_role.to_s) <= ROLES.index(role)
   end
-  belongs_to :source
+  belongs_to :source, :inverse_of => :users
+  has_many :statuses, :inverse_of => :user
   has_and_belongs_to_many :attempts
-  has_many :statuses
-  attr_accessible :email, :name, :password, :password_confirmation, :source_id
+  has_and_belongs_to_many :reagent_groups
+  attr_accessible :email, :name, :password, :password_confirmation, :source_id, :reagent_groups, :reagent_group_ids
   has_secure_password
 
   before_save {|user| user.email = email.downcase}

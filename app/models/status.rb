@@ -1,7 +1,7 @@
 class Status < ActiveRecord::Base
-  belongs_to :attempt
-  belongs_to :user
-  belongs_to :step
+  belongs_to :attempt, :inverse_of => :statuses
+  belongs_to :user, :inverse_of => :statuses
+  belongs_to :step, :inverse_of => :statuses
   has_one :reagent, :through => :attempt
   accepts_nested_attributes_for :attempt, :reject_if => lambda { |a| a[:user_ids].empty? }
   attr_accessible :start, :end, :position, :description, :attempt_id, :user_id, :step_id, :started_at, :success, :failure, :attempt_attributes, :reagent_id

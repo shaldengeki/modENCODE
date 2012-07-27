@@ -1,25 +1,22 @@
-<h1>Listing aliases</h1>
+<h1>Aliases</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Transcription factor</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @aliases.each do |alias| %>
-  <tr>
-    <td><%= alias.name %></td>
-    <td><%= alias.transcription_factor %></td>
-    <td><%= link_to 'Show', alias %></td>
-    <td><%= link_to 'Edit', edit_alias_path(alias) %></td>
-    <td><%= link_to 'Destroy', alias, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<table class='dataTable table table-striped table-bordered'>
+  <thead>
+    <tr>
+      <th>Alias</th>
+      <th>Gene</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<% @aliases.each do |this_alias| %>
+    <tr>
+      <td><%= link_to this_alias.name, this_alias %></td>
+      <td><%= link_to this_alias.transcription_factor.name, this_alias.transcription_factor %></td>
+      <td><%= link_to 'Destroy', this_alias, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
-
 <br />
-
 <%= link_to 'New Alias', new_alias_path %>

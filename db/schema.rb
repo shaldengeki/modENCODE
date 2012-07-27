@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706165251) do
+ActiveRecord::Schema.define(:version => 20120727192013) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -101,6 +101,28 @@ ActiveRecord::Schema.define(:version => 20120706165251) do
   end
 
   add_index "reagent_attributes", ["reagent_type_id"], :name => "index_reagent_attributes_on_reagent_type_id"
+
+  create_table "reagent_groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "reagent_groups_reagents", :id => false, :force => true do |t|
+    t.integer "reagent_id",       :null => false
+    t.integer "reagent_group_id", :null => false
+  end
+
+  add_index "reagent_groups_reagents", ["reagent_group_id"], :name => "index_reagent_reagent_groups_on_reagent_group_id"
+  add_index "reagent_groups_reagents", ["reagent_id", "reagent_group_id"], :name => "index_reagent_reagent_groups_on_reagent_id_and_reagent_group_id", :unique => true
+
+  create_table "reagent_groups_users", :id => false, :force => true do |t|
+    t.integer "reagent_group_id", :null => false
+    t.integer "user_id",          :null => false
+  end
+
+  add_index "reagent_groups_users", ["reagent_group_id", "user_id"], :name => "index_reagent_groups_users_on_reagent_group_id_and_user_id", :unique => true
+  add_index "reagent_groups_users", ["user_id"], :name => "index_reagent_groups_users_on_user_id"
 
   create_table "reagent_types", :force => true do |t|
     t.string   "name"

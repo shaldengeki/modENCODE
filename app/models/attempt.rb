@@ -1,9 +1,9 @@
 class Attempt < ActiveRecord::Base
   has_and_belongs_to_many :users
-  belongs_to :reagent
-  belongs_to :pipeline
+  belongs_to :reagent, :inverse_of => :attempts
+  belongs_to :pipeline, :inverse_of => :attempts
   has_many :attempt_attributes, :through => :attempt_values
-  has_many :attempt_values, :dependent => :destroy, :order => :attempt_attribute_id
+  has_many :attempt_values, :dependent => :destroy, :order => :attempt_attribute_id, :inverse_of => :attempt
 
   has_many :statuses, :dependent => :destroy
   has_many :steps, :through => :pipeline, :order => 'position ASC'
