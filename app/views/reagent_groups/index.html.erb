@@ -12,7 +12,7 @@
 <% @reagent_groups.each do |reagent_group| %>
     <tr>
       <td><%= link_to reagent_group.name, reagent_group %></td>
-      <td><%= reagent_group.users.map{|user| link_to(user.name, user) }.join(", ") %></td>
+      <td><%= raw(reagent_group.users.map{|user| link_to(user.name, user) }.join(", ")) %></td>
       <td><%= reagent_group.reagents.nil? ? "0" : reagent_group.reagents.count %></td>
     </tr>
 <% end %>
