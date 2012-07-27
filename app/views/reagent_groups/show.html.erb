@@ -11,6 +11,7 @@
 <table class='dataTable table table-bordered table-striped' id=''>
   <thead>
   <th>Reagent</th>
+  <th>Description</th>
   <th>Isoforms</th>
   <th>Last status</th>
   <th>Last updated</th>
@@ -19,6 +20,7 @@
   <% @reagent_group.reagents.each do |reagent| %>
     <tr>
       <td><%= link_to reagent.name, reagent %></td>
+      <td><%= reagent.description %></td>
       <td><%= raw(reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}.join(",")) %></td>
       <td><%= reagent.last_status.nil? ? "None" : reagent.last_status.description %></td>
       <td><%= reagent.last_status.nil? ? "Never" : I18n.localize(reagent.last_status.updated_at, :format => :short) %></td>
