@@ -4,6 +4,24 @@
     <div id="progressPieChart"></div>​
   </div>
   <div class="span6">
+    <h2>My Batches</h2>
+    <% if signed_in? %>
+    <ul id="myReagentGroups">
+      <% current_user.reagent_groups.order("updated_at DESC").all.each do |reagent_group| %>
+      <li><%= link_to reagent_group.name, reagent_group %><em class="pull-right"><%= I18n.localize(reagent_group.updated_at, :format => :short) %></em></li>
+      <% end %>
+    </ul>
+    <% else %>
+    Please sign in to view your batches.
+    <% end %>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="span6">
+    <h2>Update status</h2>
+    <%= render :partial => "statuses/form" %>
+  </div>
+  <div class="span6">
     <h2><%= link_to "Recently Updated", :controller => :statuses, :action => :index %></h2>
     <ul id="myTFRecentlyUpdated">
       <% if @latestStatuses.empty? %>
@@ -13,39 +31,7 @@
         <%= content_tag :li, raw(display_status_feed_item(status)), :class => "feedItem" %>
       <% end %>
     </ul>
-  </div>
-</div>
-<div class="row-fluid">
-  <div class="span6">
-    <h2>Update status</h2>
-    <%= render :partial => "statuses/form" %>
-  </div>
-  <div class="span6">
-    <h2>All Sources</h2>
-    <ul id="allSources">
-      <li class="feedItem">
-        <em class="pull-right" time="0">15m</em>
-        <div class="feedText">
-          <%= link_to '#' do %><h5>Fly Trap: Reagent 4</h5><% end %>
-          Another person is now screening Reagent 4.
-        </div>
-      </li>
-      <li class="feedItem">
-        <em class="pull-right" time="0">1h</em>
-        <div class="feedText">
-          <%= link_to '#' do %><h5>MIMiC: Reagent 6</h5><% end %>
-          This guy is sending Reagent 6 for injection.
-        </div>
-      </li>
-      <li class="feedItem">
-        <em class="pull-right" time="0">5h</em>
-        <div class="feedText">
-          <%= link_to '#' do %><h5>White Lab: Reagent 2</h5><% end %>
-          Charles Guo has started recombineering.
-        </div>
-      </li>
-      <%= link_to '#' do %><em>More...</em> <% end %>
-    </ul>
+    <%= link_to "More...", feed_path %>
   </div>
 </div>
 <script type="text/javascript">
