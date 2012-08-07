@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class Attempt - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/attempt.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-attempt_values-3D">#attempt_values=</a>
+    
+    <li><a href="#method-i-first_status">#first_status</a>
+    
+    <li><a href="#method-i-last_position">#last_position</a>
+    
+    <li><a href="#method-i-last_status">#last_status</a>
+    
+    <li><a href="#method-i-last_step">#last_step</a>
+    
+    <li><a href="#method-i-next_position">#next_position</a>
+    
+    <li><a href="#method-i-next_step_position">#next_step_position</a>
+    
+    <li><a href="#method-i-updated_at_localized">#updated_at_localized</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationController/Helper.html">ApplicationController::Helper</a>
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./Alias.html">Alias</a>
+  
+    <li><a href="./AliasesController.html">AliasesController</a>
+  
+    <li><a href="./AliasesHelper.html">AliasesHelper</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Attempt.html">Attempt</a>
+  
+    <li><a href="./AttemptAttribute.html">AttemptAttribute</a>
+  
+    <li><a href="./AttemptAttributesController.html">AttemptAttributesController</a>
+  
+    <li><a href="./AttemptAttributesHelper.html">AttemptAttributesHelper</a>
+  
+    <li><a href="./AttemptValue.html">AttemptValue</a>
+  
+    <li><a href="./AttemptValuesController.html">AttemptValuesController</a>
+  
+    <li><a href="./AttemptValuesHelper.html">AttemptValuesHelper</a>
+  
+    <li><a href="./AttemptsController.html">AttemptsController</a>
+  
+    <li><a href="./AttemptsHelper.html">AttemptsHelper</a>
+  
+    <li><a href="./Isoform.html">Isoform</a>
+  
+    <li><a href="./IsoformsController.html">IsoformsController</a>
+  
+    <li><a href="./IsoformsHelper.html">IsoformsHelper</a>
+  
+    <li><a href="./PagesController.html">PagesController</a>
+  
+    <li><a href="./PagesHelper.html">PagesHelper</a>
+  
+    <li><a href="./Pipeline.html">Pipeline</a>
+  
+    <li><a href="./PipelinesController.html">PipelinesController</a>
+  
+    <li><a href="./PipelinesHelper.html">PipelinesHelper</a>
+  
+    <li><a href="./Reagent.html">Reagent</a>
+  
+    <li><a href="./ReagentAttribute.html">ReagentAttribute</a>
+  
+    <li><a href="./ReagentAttributesController.html">ReagentAttributesController</a>
+  
+    <li><a href="./ReagentAttributesHelper.html">ReagentAttributesHelper</a>
+  
+    <li><a href="./ReagentGroup.html">ReagentGroup</a>
+  
+    <li><a href="./ReagentGroupsController.html">ReagentGroupsController</a>
+  
+    <li><a href="./ReagentGroupsHelper.html">ReagentGroupsHelper</a>
+  
+    <li><a href="./ReagentType.html">ReagentType</a>
+  
+    <li><a href="./ReagentTypesController.html">ReagentTypesController</a>
+  
+    <li><a href="./ReagentTypesHelper.html">ReagentTypesHelper</a>
+  
+    <li><a href="./ReagentValue.html">ReagentValue</a>
+  
+    <li><a href="./ReagentValuesController.html">ReagentValuesController</a>
+  
+    <li><a href="./ReagentValuesHelper.html">ReagentValuesHelper</a>
+  
+    <li><a href="./ReagentsController.html">ReagentsController</a>
+  
+    <li><a href="./ReagentsHelper.html">ReagentsHelper</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./SessionsHelper.html">SessionsHelper</a>
+  
+    <li><a href="./Source.html">Source</a>
+  
+    <li><a href="./SourcesController.html">SourcesController</a>
+  
+    <li><a href="./SourcesHelper.html">SourcesHelper</a>
+  
+    <li><a href="./Status.html">Status</a>
+  
+    <li><a href="./StatusesController.html">StatusesController</a>
+  
+    <li><a href="./StatusesHelper.html">StatusesHelper</a>
+  
+    <li><a href="./Step.html">Step</a>
+  
+    <li><a href="./StepsController.html">StepsController</a>
+  
+    <li><a href="./StepsHelper.html">StepsHelper</a>
+  
+    <li><a href="./TranscriptionFactor.html">TranscriptionFactor</a>
+  
+    <li><a href="./TranscriptionFactorsController.html">TranscriptionFactorsController</a>
+  
+    <li><a href="./TranscriptionFactorsHelper.html">TranscriptionFactorsHelper</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Attempt</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-attempt_values-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">attempt_values=</span><span
+            class="method-args">(hash)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="attempt_values-3D-source">
+            <pre><span class="ruby-comment"># File app/models/attempt.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">attempt_values=</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sequence</span>,<span class="ruby-identifier">attempt_value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">attempt_value</span>[<span class="ruby-value">:value</span>].<span class="ruby-identifier">blank?</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">attempt_value</span>[<span class="ruby-value">:attempt_attribute_id</span>].<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">attribute_id</span> = <span class="ruby-constant">AttemptAttribute</span>.<span class="ruby-identifier">find_or_create_by_name</span>(<span class="ruby-identifier">attempt_value</span>[<span class="ruby-value">:attempt_attribute_attributes</span>][<span class="ruby-value">:name</span>]).<span class="ruby-identifier">id</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">attribute_id</span> = <span class="ruby-identifier">attempt_value</span>[<span class="ruby-value">:attempt_attribute_id</span>]
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">new_value</span> = <span class="ruby-constant">AttemptValue</span>.<span class="ruby-identifier">find_or_initialize_by_attempt_attribute_id_and_attempt_id</span>(<span class="ruby-identifier">attribute_id</span>, <span class="ruby-identifier">id</span>)
+      <span class="ruby-identifier">new_value</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">attempt_value</span>[<span class="ruby-value">:value</span>]
+      <span class="ruby-identifier">new_value</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- attempt_values-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- attempt_values-3D-method -->
+
+    
+      <div id="method-i-first_status" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">first_status</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="first_status-source">
+            <pre><span class="ruby-comment"># File app/models/attempt.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">first_status</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">statuses</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">statuses</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;position ASC&quot;</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- first_status-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- first_status-method -->
+
+    
+      <div id="method-i-last_position" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">last_position</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="last_position-source">
+            <pre><span class="ruby-comment"># File app/models/attempt.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">last_position</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">statuses</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">statuses</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;position DESC&quot;</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">position</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- last_position-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- last_position-method -->
+
+    
+      <div id="method-i-last_status" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">last_status</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="last_status-source">
+            <pre><span class="ruby-comment"># File app/models/attempt.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">last_status</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">statuses</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">statuses</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;position DESC&quot;</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- last_status-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- last_status-method -->
+
+    
+      <div id="method-i-last_step" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">last_step</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="last_step-source">
+            <pre><span class="ruby-comment"># File app/models/attempt.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">last_step</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">statuses</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">statuses</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;position DESC&quot;</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">step_id</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- last_step-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- last_step-method -->
+
+    
+      <div id="method-i-next_position" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">next_position</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="next_position-source">
+            <pre><span class="ruby-comment"># File app/models/attempt.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">next_position</span>
+  <span class="ruby-identifier">last_position</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- next_position-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- next_position-method -->
+
+    
+      <div id="method-i-next_step_position" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">next_step_position</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="next_step_position-source">
+            <pre><span class="ruby-comment"># File app/models/attempt.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">next_step_position</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">last_step</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-value">1</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">last_step</span>.<span class="ruby-identifier">position</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- next_step_position-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- next_step_position-method -->
+
+    
+      <div id="method-i-updated_at_localized" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">updated_at_localized</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="updated_at_localized-source">
+            <pre><span class="ruby-comment"># File app/models/attempt.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">updated_at_localized</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">localize</span>(<span class="ruby-identifier">updated_at</span>, <span class="ruby-value">:format=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">:short</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- updated_at_localized-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- updated_at_localized-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
