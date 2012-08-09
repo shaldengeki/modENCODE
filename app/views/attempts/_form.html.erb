@@ -46,6 +46,12 @@
         <%= f.text_field :started_at, :id => 'attemptTime' %>
       </div>
     </div>
+    <div class="control-group">
+      <%= f.label :user_tokens, "Users", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :user_tokens, :data => {:load => @attempt.users} %>
+      </div>
+    </div>
     <div class="form-actions">
       <%= f.submit "Start Attempt", :id => "create_attempt", :class => "btn btn-primary" %>
     </div>

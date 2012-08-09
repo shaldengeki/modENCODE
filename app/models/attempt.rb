@@ -10,10 +10,15 @@ class Attempt < ActiveRecord::Base
   accepts_nested_attributes_for :attempt_values, :reject_if => lambda { |a| (a[:attempt_attribute_id].blank? || a[:value].blank?) }, :allow_destroy => true
   accepts_nested_attributes_for :statuses, :reject_if => lambda { |a| a[:step_id].blank? }, :allow_destroy => true
 
-  attr_accessible :reagent_id, :pipeline_id, :statuses, :created_at, :started_at, :statuses_attributes, :attempt_values_attributes, :user_ids, :attempt_values
+  attr_accessible :reagent_id, :pipeline_id, :statuses, :created_at, :started_at, :statuses_attributes, :attempt_values_attributes, :user_ids, :attempt_values, :user_tokens
+  attr_reader :user_tokens
 
   validates :reagent_id, :presence => true
   validates :pipeline_id, :presence => true
+
+  def user_tokens=(ids)
+    self.user_ids = ids.split(",")
+  end
 
   def updated_at_localized
     I18n.localize(updated_at, :format=>:short)

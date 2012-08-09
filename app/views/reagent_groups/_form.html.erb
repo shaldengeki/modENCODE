@@ -2,7 +2,6 @@
   <% if @reagent_group.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@reagent_group.errors.count, "error") %> prohibited this reagent_group from being saved:</h2>
-
       <ul>
       <% @reagent_group.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -10,7 +9,6 @@
       </ul>
     </div>
   <% end %>
-
   <div class="control-group">
     <%= f.label :name, :class => "control-label" %>
     <div class="controls">
@@ -40,6 +38,12 @@
       </table>
     </div>
   </div>
+  <div class="control-group">
+    <%= f.label :user_tokens, "Users", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :user_tokens, :data => {:load => @reagent_group.users} %>
+    </div>
+ </div>
   <div class="form-actions">
     <%= f.submit %>
   </div>
