@@ -6,18 +6,18 @@ class UsersController < ApplicationController
     @users = User.order(:name)
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @users.where("LOWER(name) like ?", "%#{params[:q]}%").map{|user| user.except(:password_hash, :remember_token)} }
+      format.json { render json: @users.where("LOWER(name) like ?", "%#{params[:q]}%").map{|user| user.as_json.except("password_digest", "remember_token")} }
     end
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id]).except(:password_hash, :remember_token)
+    @user = User.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @user }
+      format.json { render json: @user.as_json.except("password_digest", "remember_token") }
     end
   end
 
