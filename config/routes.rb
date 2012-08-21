@@ -1,6 +1,4 @@
 ModENCODE::Application.routes.draw do
-  resources :reagent_groups
-
   resources :aliases do
     get :autocomplete_alias_name, :on => :collection
   end
@@ -24,13 +22,6 @@ ModENCODE::Application.routes.draw do
 
   resources :pipelines
 
-  resources :reagent_attributes
-  match 'reagent_types/get_attributes' => 'reagent_types#get_attributes', :as => 'get_reagent_types_reagent_attributes'
-  resources :reagent_types
-  resources :reagent_values
-
-  get "reagents/batch"
-  post "reagents/create_by_batch"
   get "reagents/search"
   post "reagents/search"
   match 'reagents/search_by_isoforms' => 'reagents#search_by_isoforms', :as => 'search_reagents_by_isoforms'
@@ -38,8 +29,19 @@ ModENCODE::Application.routes.draw do
     get :autocomplete_reagent_name, :on => :collection
   end
 
+  get "reagent_groups/start_batch"
+  post "reagent_groups/review_batch"
+  post "reagent_groups/submit_batch"
+  resources :reagent_groups
+
+  resources :reagent_attributes
+  match 'reagent_types/get_attributes' => 'reagent_types#get_attributes', :as => 'get_reagent_types_reagent_attributes'
+  resources :reagent_types
+  resources :reagent_values
+
   resources :sessions, only: [:create, :destroy]
   match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy'
   match '/signout', to: 'sessions#destroy', via: :delete
 
   resources :sources
@@ -48,6 +50,8 @@ ModENCODE::Application.routes.draw do
   match '/feed', to: 'statuses#index'
 
   resources :steps
+
+  resources :gene_types
   match 'transcription_factors/get_isoforms' => 'transcription_factors#get_isoforms', :as => 'get_tf_isoforms'
   resources :transcription_factors do
     get :autocomplete_transcription_factor_name, :on => :collection

@@ -1,0 +1,27 @@
+<%
+   model_type ||= "transcription_factors"
+   global_style ||= ""
+%>
+<div class="control-group gene_input" id="gene_select_list" style="<%= global_style %>">
+  <%= label_tag :genes, nil, :class => "control-label" %>
+  <div class="controls">
+    <table class='dataTable table table-bordered table-striped' id='gene_select_table'>
+      <thead>
+      <th>#</th>
+      <th>Type</th>
+      <th>Gene</th>
+      <th>Also known as</th>
+      </thead>
+      <tbody>
+      <% TranscriptionFactor.order("UPPER(`name`) ASC").all.each do |transcription_factor| %>
+        <tr>
+          <td><%= number_field_tag model_type.to_s + "_select_list" + "[" + transcription_factor.id.to_s + "]", nil, :min => 0, :step => 1 %></td>
+          <td><%= transcription_factor.gene_type.nil? ? "None" : transcription_factor.gene_type.name %></td>
+          <td><%= transcription_factor.name %></td>
+          <td><%= transcription_factor.aliases.map{|this_alias| this_alias.name}.join(", ") %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

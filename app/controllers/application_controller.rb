@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => "You are not allowed to perform #{exception.action.nil? ? 'this action' : exception.action} on #{exception.subject.name.nil? ? exception.subject.class.name : exception.subject.name}."
+    redirect_to root_url, :alert => "You are not allowed to perform #{exception.action.nil? ? 'this action' : exception.action} on #{exception.subject.class.column_names.include?(:name) ? exception.subject.name : exception.subject.class.name}."
   end
 end

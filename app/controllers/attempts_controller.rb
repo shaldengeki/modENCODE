@@ -75,7 +75,7 @@ class AttemptsController < ApplicationController
   # POST /attempts.json
   def create
     @attempt = Attempt.new(params[:attempt])
-    @attempt.users.append(current_user)
+    @attempt.users.append(current_user) unless @attempt.users.include? current_user
     @attempt.statuses.each do |status|
       status[:start] = 1
       status[:user_id] = current_user.id

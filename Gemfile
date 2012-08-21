@@ -31,8 +31,10 @@ group :test, :development do
 end
 group :cucumber do
   gem 'capybara'
+  gem "capybara-webkit"
   gem 'database_cleaner'
   gem 'cucumber-rails'
+  gem 'factory_girl_rails'
   gem 'cucumber'
   gem 'spork'
   gem 'launchy'

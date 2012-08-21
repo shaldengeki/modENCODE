@@ -1,0 +1,75 @@
+<h1>Review Batch</h1>
+<%= form_for @reagent_group, :url => {:action => 'submit_batch'}, :html => { :class => "form-horizontal dataTable-form" } do |f| %>
+  <% if @reagent_group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reagent_group.errors.count, "error") %> prohibited this reagent from being saved:</h2>
+      <ul>
+        <% @reagent_group.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="control-group">
+    <%= f.label "Group name", :class => "control-label" %>
+    <div class="controls">
+      <span class='input-xlarge uneditable-input'><%= @reagent_group.name %></span>
+      <%= f.hidden_field :name %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :gene_type, :class => "control-label" %>
+    <div class="controls">
+      <span class='input-xlarge uneditable-input'><%= @reagent_group.gene_type.name %></span>
+      <%= f.hidden_field :gene_type_id %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :reagent_type, :class => "control-label" %>
+    <div class="controls">
+      <span class='input-xlarge uneditable-input'><%= @reagent_group.reagent_type.name %></span>
+      <%= f.hidden_field :reagent_type_id %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :reagents, :class => "control-label" %>
+    <div class="controls">
+      <table class='dataTable table table-bordered table-striped' id='reagent_review_table'>
+        <thead>
+        <th>Name</th>
+        <th>Gene</th>
+        <th>Type</th>
+        </thead>
+        <tbody>
+        <%= f.fields_for :reagents do |builder| %>
+          <tr>
+            <td>
+              <%= builder.object.name %>
+              <%= builder.hidden_field :name, :value => builder.object.name %>
+            </td>
+            <td>
+              <%= builder.object.description %>
+              <%= builder.hidden_field :description, :value => builder.object.description %>
+            </td>
+            <td>
+              <%= builder.object.reagent_type.name %>
+              <%= builder.hidden_field :reagent_type_id, :value => builder.object.reagent_type_id %>
+              <%= builder.hidden_field :source_id, :value => builder.object.source_id %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label "Users", :class => "control-label" %>
+    <div class="controls">
+      <span class='input-xlarge uneditable-input'><%= @reagent_group.user_tokens %></span>
+      <%= f.hidden_field :user_tokens, :value => @reagent_group.user_ids.join(",") %>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "Create Batch" %>
+  </div>
+<% end %>

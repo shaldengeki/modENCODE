@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120727192013) do
+ActiveRecord::Schema.define(:version => 20120821012139) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,12 @@ ActiveRecord::Schema.define(:version => 20120727192013) do
 
   add_index "attempts_users", ["attempt_id", "user_id"], :name => "index_attempts_users_on_attempt_id_and_user_id", :unique => true
   add_index "attempts_users", ["user_id"], :name => "index_attempts_users_on_user_id"
+
+  create_table "gene_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "isoforms", :force => true do |t|
     t.string   "name"
@@ -231,7 +237,10 @@ ActiveRecord::Schema.define(:version => 20120727192013) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.string   "isoform_image_path"
+    t.integer  "gene_type_id"
   end
+
+  add_index "transcription_factors", ["gene_type_id"], :name => "index_transcription_factors_on_gene_type_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

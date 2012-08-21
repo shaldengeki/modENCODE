@@ -55,6 +55,82 @@ class ReagentGroupsController < ApplicationController
       end
     end
   end
+  def start_batch
+    @reagent_group = ReagentGroup.new(:gene_type_id => 1, :reagent_type_id => 1)
+    unless @reagent_group.users.include? current_user
+      @reagent_group.users << current_user
+    end
+    respond_to do |format|
+      format.html # start_batch.html.erb
+      format.json { render json: @reagent_groups }
+    end
+  end
+  def review_batch
+    begin
+      ActiveRecord::Base.transaction do
+        # first, initialize the reagent group.
+        @reagent_group = ReagentGroup.new(params[:reagent_group])
+        @reagents = []
+        tf_list = []
+        # loop over all the entries in the text list, pushing candidate genes onto a list.
+        unless params[:transcription_factors_text_list].blank?
+          params[:transcription_factors_text_list][0].strip.split.each do |gene_name|
+            find_tf = nil
+            find_alias = Alias.find_by_name(gene_name)
+            find_tf = TranscriptionFactor.find_by_flybase_id(gene_name) if find_alias.nil?
+            find_tf = TranscriptionFactor.find_by_cg_id(gene_name) if find_tf.nil?
+            find_tf = TranscriptionFactor.find_by_refseq_id(gene_name) if find_tf.nil?
+
+            tf_list.push(TranscriptionFactor.find(find_alias.transcription_factor_id)) unless find_alias.nil?
+            tf_list.push(find_tf) unless find_tf.nil?
+          end
+        end
+        # push candidate genes from the select list.
+        unless params[:transcription_factors_select_list].blank?
+          params[:transcription_factors_select_list].each do |key,value|
+            value.to_i.times do
+              tf_list.push(TranscriptionFactor.find(key))
+            end
+          end
+        end
+        # pull the remaining genes down from the queue.
+        num_from_queue = (params[:reagent_group][:total_reagents].to_i - tf_list.length)
+        num_from_queue = 0 if num_from_queue < 0
+        queue_genes = TranscriptionFactor.where(:gene_type_id => params[:reagent_group][:gene_type_id]).where('id not in (?)', tf_list.map{|tf| tf.id}).order('created_at ASC').limit(num_from_queue)
+        tf_list = tf_list | queue_genes
+        # now create reagents and add them to an initialized reagent group.
+        i = 1
+        tf_list.each do |this_gene|
+          new_number = ("%0" + Math.log10(tf_list.length.to_i).ceil.to_s + "d") % i
+          new_name = params[:reagent_group][:name] + "-" + this_gene.name + "-" + new_number
+          new_description = this_gene.name
+          @reagent = Reagent.new(:name => new_name,
+                                 :description => new_description,
+                                 :source_id => current_user.source.id,
+                                 :reagent_type_id => params[:reagent_group][:reagent_type_id],
+                                 :reagent_groups => [@reagent_group])
+          @reagent_group.reagents << @reagent
+          i += 1
+        end
+      end
+    rescue ActiveRecord::RecordInvalid => invalid
+      respond_to do |format|
+        format.html {render action: "start_batch"}
+      end
+    else
+      respond_to do |format|
+        format.html # review_batch.html.erb
+        format.json { render json: @reagent_groups }
+      end
+    end
+  end
+  def submit_batch
+    @reagent_group = ReagentGroup.create(params[:reagent_group])
+    respond_to do |format|
+      format.html { redirect_to @reagent_group, notice: 'Successfully created batch.'}
+      format.json { render json: @reagent_group }
+    end
+  end
 
   # PUT /reagent_groups/1
   # PUT /reagent_groups/1.json

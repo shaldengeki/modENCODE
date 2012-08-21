@@ -79,12 +79,6 @@ class ReagentsController < ApplicationController
     end
   end
 
-  def batch
-    respond_to do |format|
-      format.html
-    end
-  end
-
   # GET /reagents/1/edit
   def edit
     @reagent = Reagent.find(params[:id])
@@ -104,45 +98,6 @@ class ReagentsController < ApplicationController
         format.json { render json: @reagent.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def create_by_batch
-    begin
-      ActiveRecord::Base.transaction do
-        # first, initialize the reagent group.
-        @reagent_group = ReagentGroup.create(:name => params[:reagent_group][:name], :user_ids => [current_user.id])
-        @reagents = []
-        params[:transcription_factors].each do |key,value|
-          this_gene = TranscriptionFactor.find(key)
-          i = 1
-          value.to_i.times do
-            new_number = ("%0" + Math.log10(value.to_i).ceil.to_s + "d") % i
-            new_name = params[:reagent_group][:name] + "-" + this_gene.name + "-" + new_number
-            new_description = this_gene.name
-
-            # save these new reagents and add them to the new reagent group.
-            @reagent = Reagent.create(:name => new_name,
-                                   :description => new_description,
-                                   :source_id => current_user.source.id,
-                                   :reagent_type_id => params[:reagent][:reagent_type_id],
-                                    :reagent_group_ids => [@reagent_group.id])
-            @reagent_group.reagent_ids << @reagent.id
-            i += 1
-          end
-        end
-        # finally, update the reagent group with all of the newly-created reagents.
-        @reagent_group.save
-      end
-    rescue ActiveRecord::RecordInvalid => invalid
-      respond_to do |format|
-        format.html {render action: "create_by_batch"}
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to @reagent_group, notice: 'Successfully created batch.'}
-      end
-    end
-
   end
 
   # PUT /reagents/1

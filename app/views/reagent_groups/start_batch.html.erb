@@ -1,0 +1,59 @@
+<h1>Start Batch</h1>
+<%= form_for @reagent_group, :url => {:action => 'review_batch'}, :html => { :class => "form-horizontal dataTable-form" } do |f| %>
+  <% if @reagent_group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reagent_group.errors.count, "error") %> prohibited this reagent from being saved:</h2>
+      <ul>
+        <% @reagent_group.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="control-group">
+    <%= f.label "Group name", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, :class => "input-xlarge" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :gene_type, :class => "control-label" %>
+    <div class="controls">
+      <%= f.collection_select :gene_type_id, GeneType.all, :id, :name %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :reagent_type, :class => "control-label" %>
+    <div class="controls">
+      <%= f.collection_select :reagent_type_id, ReagentType.all, :id, :name %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :input_method, :class => "control-label" %>
+    <div class="controls">
+      <label class="radio">
+        <%= f.radio_button :input_method, "text_list", :class => "workflow_input_method" %>Space-separated list
+      </label>
+      <label class="radio">
+        <%= f.radio_button :input_method, "select_list", :class => "workflow_input_method" %>Select from list
+      </label>
+    </div>
+  </div>
+  <%= render :partial => 'transcription_factors/select_list', :locals => {:global_style => "display:none"} %>
+  <%= render :partial => 'transcription_factors/text_input', :locals => {:global_style => "display:none"} %>
+  <div class="control-group">
+    <%= f.label :total_reagents, "Total Reagents (will fill to)", :class => "control-label" %>
+    <div class="controls">
+      <%= f.number_field :total_reagents, :min => 1, :step => 1 %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :user_tokens, "Users", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :user_tokens, :class => 'autofill_tokens', :data => {:load => @reagent_group.users} %>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "Review Batch" %>
+  </div>
+<% end %>

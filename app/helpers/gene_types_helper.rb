@@ -1,0 +1,2 @@
+module GeneTypesHelper
+end

@@ -2,7 +2,8 @@ class Alias < ActiveRecord::Base
   belongs_to :transcription_factor, :inverse_of => :aliases
   attr_accessible :name
 
-  validates_uniqueness_of :name, :scope => :transcription_factor_id
+  validates_uniqueness_of :name, :scope => :transcription_factor_id,
+                          :case_sensitive => false
   validates :name, :presence => true
 
   def transcription_factor_name

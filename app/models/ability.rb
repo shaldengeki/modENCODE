@@ -38,7 +38,7 @@ class Ability
       end
     end
     if user.role? :admin
-      can :manage, [TranscriptionFactor, Isoform, Reagent, Source, User, Attempt, AttemptAttribute, AttemptValue, Status, ReagentType, ReagentAttribute, ReagentValue, ReagentGroup, Pipeline, Step, Alias]
+      can :manage, [GeneType, TranscriptionFactor, Isoform, Reagent, Source, User, Attempt, AttemptAttribute, AttemptValue, Status, ReagentType, ReagentAttribute, ReagentValue, ReagentGroup, Pipeline, Step, Alias]
     end
     # Define abilities for the passed in user here. For example:
     #
