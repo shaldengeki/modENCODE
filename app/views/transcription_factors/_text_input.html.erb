@@ -4,7 +4,12 @@
 %>
 <div class="control-group gene_input" id="gene_text_list" style="<%= global_style %>">
   <%= label_tag :genes, nil, :class => "control-label" %>
-  <div class="controls">
-    <%= text_area model_type + "_text_list", nil, :cols => 100, :rows => 15 %>
+  <div class="controls row-fluid">
+    <div class="span8">
+      <%= text_area model_type + "_text_list", nil, :rows => 15, :class=>"span12" %>
+    </div>
+    <div class="span4">
+      Names can be gene names (not case-sensitive), flybase IDs, CG IDs, or Refseq IDs.
+    </div>
   </div>
 </div>

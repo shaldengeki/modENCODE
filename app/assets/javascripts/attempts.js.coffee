@@ -55,6 +55,6 @@ jQuery ->
       $('input[name=attempt_id]').val JSON.stringify(attempts)
       $('input[name=attempt_id]').trigger 'change'
 
-  $('#attempt_user_tokens').tokenInput '/users.json'
+  $('#attempt_user_tokens').tokenInput '/modENCODE/users.json'
     theme: 'facebook'
     prePopulate: $('#attempt_user_tokens').data('load')

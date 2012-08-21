@@ -12,7 +12,7 @@ displayGeneSelectionField = (val) ->
 
 jQuery ->
   $('.autofill_tokens').each ->
-    $(this).tokenInput '/users.json'
+    $(this).tokenInput '/modENCODE/users.json'
       theme: 'facebook'
       prePopulate: $('#reagent_group_user_tokens').data('load')
   $('.workflow_input_method').each ->
