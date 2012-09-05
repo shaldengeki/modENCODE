@@ -96,7 +96,23 @@ class ReagentGroupsController < ApplicationController
         # pull the remaining genes down from the queue.
         num_from_queue = (params[:reagent_group][:total_reagents].to_i - tf_list.length)
         num_from_queue = 0 if num_from_queue < 0
-        queue_genes = TranscriptionFactor.where(:gene_type_id => params[:reagent_group][:gene_type_id]).where('id not in (?)', tf_list.map{|tf| tf.id}).order('created_at ASC').limit(num_from_queue)
+        # TODO: make this not awful.
+        case params[:reagent_group][:sort_by]
+          when "fpkm"
+            params[:reagent_group][:sort_by] = "fpkm_r1"
+          when "frac"
+            params[:reagent_group][:sort_by] = "frac_r1"
+          else
+            params[:reagent_group][:sort_by] = "name"
+        end
+        case params[:reagent_group][:sort_order]
+          when "ASC"
+            params[:reagent_group][:sort_order] = "ASC"
+          else
+            params[:reagent_group][:sort_order] = "DESC"
+        end
+
+        queue_genes = TranscriptionFactor.where(:gene_type_id => params[:reagent_group][:gene_type_id]).where('transcription_factors.id not in (?)', tf_list.map{|tf| tf.id}).joins('left outer join isoforms on isoforms.transcription_factor_id = transcription_factors.id').where("isoforms." + params[:reagent_group][:sort_by] + " IS NOT NULL").order("isoforms." + params[:reagent_group][:sort_by] + ' ' + params[:reagent_group][:sort_order]).limit(num_from_queue)
         tf_list = tf_list | queue_genes
         # now create reagents and add them to an initialized reagent group.
         i = 1

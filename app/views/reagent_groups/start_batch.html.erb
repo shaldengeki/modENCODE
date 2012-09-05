@@ -48,6 +48,13 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :sort_order, "Sort by", :class => "control-label" %>
+    <div class="controls">
+      <%= f.select :sort_by, [["FPKM", "fpkm"], ["Frac", "frac"]] %>
+      <%= f.select :sort_order, [["ascending", "ASC"], ["descending", "DESC"]] %>
+    </div>
+  </div>
+  <div class="control-group">
     <%= f.label :user_tokens, "Users", :class => "control-label" %>
     <div class="controls">
       <%= f.text_field :user_tokens, :class => 'autofill_tokens', :data => {:load => @reagent_group.users} %>
