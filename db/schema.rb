@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905181625) do
+ActiveRecord::Schema.define(:version => 20120905193807) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(:version => 20120905181625) do
     t.string   "refseq_id"
     t.string   "ensembl_id"
     t.boolean  "strand"
-    t.string   "type"
+    t.string   "isoform_type"
     t.integer  "last_exon_start"
     t.integer  "last_exon_end"
     t.integer  "stop_codon_start"
@@ -94,11 +94,11 @@ ActiveRecord::Schema.define(:version => 20120905181625) do
   add_index "isoforms", ["fpkm_r2"], :name => "index_isoforms_on_fpkm_r2"
   add_index "isoforms", ["frac_r1"], :name => "index_isoforms_on_frac_r1"
   add_index "isoforms", ["frac_r2"], :name => "index_isoforms_on_frac_r2"
+  add_index "isoforms", ["isoform_type"], :name => "index_isoforms_on_type"
   add_index "isoforms", ["last_exon_start"], :name => "index_isoforms_on_last_exon_start"
   add_index "isoforms", ["stop_codon_start"], :name => "index_isoforms_on_stop_codon_start"
   add_index "isoforms", ["strand"], :name => "index_isoforms_on_strand"
   add_index "isoforms", ["transcription_factor_id"], :name => "index_isoforms_on_transcription_factor_id"
-  add_index "isoforms", ["type"], :name => "index_isoforms_on_type"
 
   create_table "isoforms_reagents", :id => false, :force => true do |t|
     t.integer "isoform_id", :null => false

@@ -81,15 +81,15 @@ class ReagentGroupsController < ApplicationController
             find_tf = TranscriptionFactor.find_by_cg_id(gene_name) if find_tf.nil?
             find_tf = TranscriptionFactor.find_by_refseq_id(gene_name) if find_tf.nil?
 
-            tf_list.push(TranscriptionFactor.find(find_alias.transcription_factor_id)) unless find_alias.nil?
-            tf_list.push(find_tf) unless find_tf.nil?
+            tf_list.push({:isoforms => [], :transcription_factor => TranscriptionFactor.find(find_alias.transcription_factor_id)}) unless find_alias.nil?
+            tf_list.push({:isoforms => [], :transcription_factor => find_tf}) unless find_tf.nil?
           end
         end
         # push candidate genes from the select list.
         unless params[:transcription_factors_select_list].blank?
           params[:transcription_factors_select_list].each do |key,value|
             value.to_i.times do
-              tf_list.push(TranscriptionFactor.find(key))
+              tf_list.push({:isoforms => [], :transcription_factor => TranscriptionFactor.find(key)})
             end
           end
         end
@@ -112,19 +112,21 @@ class ReagentGroupsController < ApplicationController
             params[:reagent_group][:sort_order] = "DESC"
         end
 
-        queue_genes = TranscriptionFactor.where(:gene_type_id => params[:reagent_group][:gene_type_id]).where('transcription_factors.id not in (?)', tf_list.map{|tf| tf.id}).joins('left outer join isoforms on isoforms.transcription_factor_id = transcription_factors.id').where("isoforms." + params[:reagent_group][:sort_by] + " IS NOT NULL").order("isoforms." + params[:reagent_group][:sort_by] + ' ' + params[:reagent_group][:sort_order]).limit(num_from_queue)
-        tf_list = tf_list | queue_genes
+        Isoform.joins('LEFT JOIN transcription_factors ON transcription_factors.id = isoforms.transcription_factor_id').where('transcription_factors.gene_type_id = :gene_type_id', :gene_type_id => params[:reagent_group][:gene_type_id]).where('transcription_factors.id not in (?)', tf_list.map{|tf| tf[:transcription_factor].id}).where("isoforms." + params[:reagent_group][:sort_by] + " IS NOT NULL").order("isoforms." + params[:reagent_group][:sort_by] + ' ' + params[:reagent_group][:sort_order]).limit(num_from_queue).each do |isoform|
+          tf_list.push({:isoforms => [isoform], :transcription_factor => isoform.transcription_factor})
+        end
         # now create reagents and add them to an initialized reagent group.
         i = 1
         tf_list.each do |this_gene|
           new_number = ("%0" + Math.log10(tf_list.length.to_i).ceil.to_s + "d") % i
-          new_name = params[:reagent_group][:name] + "-" + this_gene.name + "-" + new_number
-          new_description = this_gene.name
+          new_name = params[:reagent_group][:name] + "-" + this_gene[:transcription_factor].name + "-" + new_number
+          new_description = this_gene[:transcription_factor].name
           @reagent = Reagent.new(:name => new_name,
                                  :description => new_description,
                                  :source_id => current_user.source.id,
                                  :reagent_type_id => params[:reagent_group][:reagent_type_id],
-                                 :reagent_groups => [@reagent_group])
+                                 :reagent_groups => [@reagent_group],
+                                 :isoforms => this_gene[:isoforms])
           @reagent_group.reagents << @reagent
           i += 1
         end
