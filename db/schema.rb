@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905154213) do
+ActiveRecord::Schema.define(:version => 20120905181625) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -75,9 +75,30 @@ ActiveRecord::Schema.define(:version => 20120905154213) do
     t.integer  "transcription_factor_id"
     t.string   "flybase_id"
     t.string   "refseq_id"
+    t.string   "ensembl_id"
+    t.boolean  "strand"
+    t.string   "type"
+    t.integer  "last_exon_start"
+    t.integer  "last_exon_end"
+    t.integer  "stop_codon_start"
+    t.integer  "stop_codon_end"
+    t.float    "frac_r1"
+    t.integer  "fpkm_r1"
+    t.float    "frac_r2"
+    t.integer  "fpkm_r2"
+    t.integer  "flag"
   end
 
+  add_index "isoforms", ["ensembl_id"], :name => "index_isoforms_on_ensembl_id"
+  add_index "isoforms", ["fpkm_r1"], :name => "index_isoforms_on_fpkm_r1"
+  add_index "isoforms", ["fpkm_r2"], :name => "index_isoforms_on_fpkm_r2"
+  add_index "isoforms", ["frac_r1"], :name => "index_isoforms_on_frac_r1"
+  add_index "isoforms", ["frac_r2"], :name => "index_isoforms_on_frac_r2"
+  add_index "isoforms", ["last_exon_start"], :name => "index_isoforms_on_last_exon_start"
+  add_index "isoforms", ["stop_codon_start"], :name => "index_isoforms_on_stop_codon_start"
+  add_index "isoforms", ["strand"], :name => "index_isoforms_on_strand"
   add_index "isoforms", ["transcription_factor_id"], :name => "index_isoforms_on_transcription_factor_id"
+  add_index "isoforms", ["type"], :name => "index_isoforms_on_type"
 
   create_table "isoforms_reagents", :id => false, :force => true do |t|
     t.integer "isoform_id", :null => false
@@ -240,8 +261,11 @@ ActiveRecord::Schema.define(:version => 20120905154213) do
     t.integer  "gene_type_id"
     t.integer  "entrez_id"
     t.integer  "hgnc_id"
+    t.string   "description"
+    t.string   "ensembl_id"
   end
 
+  add_index "transcription_factors", ["ensembl_id"], :name => "index_transcription_factors_on_ensembl_id"
   add_index "transcription_factors", ["entrez_id"], :name => "index_transcription_factors_on_entrez_id"
   add_index "transcription_factors", ["gene_type_id"], :name => "index_transcription_factors_on_gene_type_id"
   add_index "transcription_factors", ["hgnc_id"], :name => "index_transcription_factors_on_hgnc_id"

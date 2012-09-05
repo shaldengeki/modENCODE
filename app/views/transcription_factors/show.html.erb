@@ -1,14 +1,30 @@
 <dl class="dl-horizontal">
   <dt>Name</dt>
   <dd><%= @transcription_factor.name %></dd>
-  <dt>Also known as</dt>
-  <dd><%= @transcription_factor.aliases.empty? ? "None" : (@transcription_factor.aliases.map {|aliasname| aliasname.name} ).join(", ") %></dd>
-  <dt>Flybase ID</dt>
-  <dd><%= link_to @transcription_factor.flybase_id, 'http://flybase.org/reports/' + @transcription_factor.flybase_id + '.html', :target => '_blank' %></dd>
-  <dt>CG ID</dt>
-  <dd><%= @transcription_factor.cg_id %></dd>
-  <dt>Refseq ID</dt>
-  <dd><%= @transcription_factor.refseq_id %></dd>
+  <% unless @transcription_factor.gene_type.nil? %>
+    <dt>Type</dt>
+    <dd><%= @transcription_factor.gene_type.name %></dd>
+  <% end %>
+  <% unless @transcription_factor.description.nil? %>
+    <dt>Description</dt>
+    <dd><%= @transcription_factor.description %></dd>
+  <% end %>
+  <% unless @transcription_factor.aliases.empty? %>
+    <dt>Also known as</dt>
+    <dd><%= (@transcription_factor.aliases.map {|aliasname| aliasname.name} ).join(", ") %></dd>
+  <% end %>
+  <% unless @transcription_factor.flybase_id.nil? %>
+    <dt>Flybase ID</dt>
+    <dd><%= link_to @transcription_factor.flybase_id, 'http://flybase.org/reports/' + @transcription_factor.flybase_id + '.html', :target => '_blank' %></dd>
+  <% end %>
+  <% unless @transcription_factor.cg_id.nil? %>
+    <dt>CG ID</dt>
+    <dd><%= @transcription_factor.cg_id %></dd>
+  <% end %>
+  <% unless @transcription_factor.refseq_id.nil? %>
+    <dt>RefSeq ID</dt>
+    <dd><%= @transcription_factor.refseq_id %></dd>
+  <% end %>
 </dl>
 <h3>Gene Map</h3>
 <%= image_tag("/images/isoforms/" + @transcription_factor.isoform_image_path.to_s) unless @transcription_factor.isoform_image_path.nil? %><br />
