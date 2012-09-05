@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120821012139) do
+ActiveRecord::Schema.define(:version => 20120905154213) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -238,9 +238,13 @@ ActiveRecord::Schema.define(:version => 20120821012139) do
     t.datetime "updated_at",         :null => false
     t.string   "isoform_image_path"
     t.integer  "gene_type_id"
+    t.integer  "entrez_id"
+    t.integer  "hgnc_id"
   end
 
+  add_index "transcription_factors", ["entrez_id"], :name => "index_transcription_factors_on_entrez_id"
   add_index "transcription_factors", ["gene_type_id"], :name => "index_transcription_factors_on_gene_type_id"
+  add_index "transcription_factors", ["hgnc_id"], :name => "index_transcription_factors_on_hgnc_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
