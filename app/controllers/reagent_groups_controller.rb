@@ -125,8 +125,10 @@ class ReagentGroupsController < ApplicationController
                                  :description => new_description,
                                  :source_id => current_user.source.id,
                                  :reagent_type_id => params[:reagent_group][:reagent_type_id],
-                                 :reagent_groups => [@reagent_group],
-                                 :isoforms => this_gene[:isoforms])
+                                 :reagent_groups => [@reagent_group])
+          unless this_gene[:isoforms].empty?
+            @reagent.isoforms = this_gene[:isoforms]
+          end
           @reagent_group.reagents << @reagent
           i += 1
         end

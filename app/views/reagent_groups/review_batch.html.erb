@@ -39,6 +39,7 @@
         <th>Name</th>
         <th>Gene</th>
         <th>Type</th>
+        <th>Isoform(s)</th>
         </thead>
         <tbody>
         <%= f.fields_for :reagents do |builder| %>
@@ -55,6 +56,10 @@
               <%= builder.object.reagent_type.name %>
               <%= builder.hidden_field :reagent_type_id, :value => builder.object.reagent_type_id %>
               <%= builder.hidden_field :source_id, :value => builder.object.source_id %>
+            </td>
+            <td>
+              <%= builder.object.isoforms.nil? ? "None" : raw(builder.object.isoforms.map{|isoform| link_to(isoform.name, isoform)}.join(", ")) %>
+              <%= builder.hidden_field(:isoform_id_tokens, :value => builder.object.isoform_ids.join(",")) unless builder.object.isoform_ids.empty? %>
             </td>
           </tr>
         <% end %>

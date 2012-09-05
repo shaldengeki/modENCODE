@@ -8,7 +8,9 @@ class Reagent < ActiveRecord::Base
   has_many :reagent_values, :dependent => :destroy, :order => :reagent_attribute_id, :inverse_of => :reagent
   accepts_nested_attributes_for :reagent_values, :reject_if => lambda { |a| (a[:reagent_attribute_id].blank? || a[:value].blank?) }, :allow_destroy => true
   accepts_nested_attributes_for :reagent_type, :reject_if => lambda { |a| a[:name].blank? }
-  attr_accessible :description, :name, :tag_id, :source_id, :reagent_type_id, :isoform_ids, :reagent_values_attributes, :reagent_values, :reagent_groups, :reagent_group_ids, :reagent_type, :reagent_type_attributes, :isoforms
+  accepts_nested_attributes_for :isoforms, :reject_if => lambda { |a| a[:name].blank? }
+  attr_accessible :description, :name, :tag_id, :source_id, :reagent_type_id, :isoform_ids, :reagent_values_attributes, :reagent_values, :reagent_groups, :reagent_group_ids, :reagent_type, :reagent_type_attributes, :isoforms, :isoform_id_tokens
+  attr_reader :isoform_id_tokens
 
   validates :name, :presence => true,
                     :uniqueness => {:case_sensitive => false}
@@ -46,4 +48,11 @@ class Reagent < ActiveRecord::Base
       end
     end
   end
+  def isoform_id_tokens
+    self.isoform_ids.join(", ")
+  end
+  def isoform_id_tokens=(ids)
+    self.isoform_ids = ids.split(",") unless ids.blank?
+  end
+
 end
