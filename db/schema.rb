@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905193807) do
+ActiveRecord::Schema.define(:version => 20120914151148) do
 
   create_table "aliases", :force => true do |t|
     t.string   "name"
@@ -175,12 +175,10 @@ ActiveRecord::Schema.define(:version => 20120905193807) do
     t.integer  "reagent_type_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "tag_id"
   end
 
   add_index "reagents", ["reagent_type_id"], :name => "index_reagents_on_reagent_type_id"
   add_index "reagents", ["source_id"], :name => "index_reagents_on_source_id"
-  add_index "reagents", ["tag_id"], :name => "index_reagents_on_tag_id"
 
   create_table "reagents_users", :id => false, :force => true do |t|
     t.integer "reagent_id", :null => false

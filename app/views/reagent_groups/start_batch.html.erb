@@ -37,10 +37,19 @@
       <label class="radio">
         <%= f.radio_button :input_method, "select_list", :class => "workflow_input_method" %>Select from list
       </label>
+      <label class="radio">
+        <%= f.radio_button :input_method, "spreadsheet_file", :class => "workflow_input_method" %>Upload spreadsheet
+      </label>
     </div>
   </div>
   <%= render :partial => 'transcription_factors/select_list', :locals => {:global_style => "display:none"} %>
   <%= render :partial => 'transcription_factors/text_input', :locals => {:global_style => "display:none"} %>
+  <div class="control-group gene_input" id="gene_spreadsheet_file" style="display:none">
+    <%= f.label :genes, :class => "control-label" %>
+    <div class="controls">
+      <%= f.file_field :spreadsheet_file %>
+    </div>
+  </div>
   <div class="control-group">
     <%= f.label :total_reagents, "Total Reagents (will fill to)", :class => "control-label" %>
     <div class="controls">

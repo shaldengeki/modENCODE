@@ -3,10 +3,10 @@ class ReagentGroup < ActiveRecord::Base
   # TODO: Make this a has_many :through in order to add a "display on homepage" field in the join table.
   has_and_belongs_to_many :users
   accepts_nested_attributes_for :reagents
-  attr_accessible :name, :reagents, :reagents_attributes, :reagent_ids, :users, :user_ids, :users_attributes, :user_tokens, :gene_type_id, :gene_type, :reagent_type_id, :reagent_type, :input_method, :total_reagents, :sort_by, :sort_order
+  attr_accessible :name, :reagents, :reagents_attributes, :reagent_ids, :users, :user_ids, :users_attributes, :user_tokens, :gene_type_id, :gene_type, :reagent_type_id, :reagent_type, :input_method, :total_reagents, :sort_by, :sort_order, :spreadsheet_file
   attr_reader :user_tokens, :reagent_names
   attr_reader :gene_type_id, :reagent_type_id
-  attr_accessor :gene_type, :reagent_type, :input_method, :total_reagents, :sort_by, :sort_order
+  attr_accessor :gene_type, :reagent_type, :input_method, :total_reagents, :sort_by, :sort_order, :spreadsheet_file
 
   validates :name, :presence => true,
                     :allow_blank => false,
