@@ -9,7 +9,11 @@
   <% @transcription_factor.isoforms.each do |isoform| %>
       <tr>
         <td><%= link_to isoform.name, isoform %></td>
-        <td><%= link_to isoform.flybase_id, 'http://flybase.org/reports/' + isoform.flybase_id + '.html', :target => '_blank' %></td>
+        <td>
+          <% unless isoform.flybase_id.nil?
+          <%= link_to isoform.flybase_id, 'http://flybase.org/reports/' + isoform.flybase_id + '.html', :target => '_blank' %>
+          <% end %>
+        </td>
       </tr>
   <% end %>
   </tbody>
