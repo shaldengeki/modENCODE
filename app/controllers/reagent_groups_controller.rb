@@ -135,7 +135,7 @@ class ReagentGroupsController < ApplicationController
             target_attributes[attribute.name] =  ReagentAttribute
           end
           target_attributes["gene"] = "transcription_factor_name"
-          params[:target_attributes] = target_attributes
+          # params[:target_attributes] = target_attributes
 
           # get column headers and set target attributes.
           column_headers = {}
@@ -148,12 +148,15 @@ class ReagentGroupsController < ApplicationController
               column_headers[column] = target_attributes[header]
             end
           end
-          params[:column_headers] = column_headers
-          params[:foo] = []
+          # params[:column_headers] = column_headers
+          # params[:foo] = []
           # now create reagents for each row based on these attributes.
-          for row in (worksheet.dimensions[0]+1)..worksheet.dimensions[1] do
+          reagent_i = 1
+          start_row = worksheet.dimensions[0]+1
+          end_row = worksheet.dimensions[1]
+          for row in start_row..end_row do
             if worksheet.cell(row, worksheet.dimensions[2]).blank?
-              break
+              next
             end
             prospectiveReagent = Reagent.new
             for column in worksheet.dimensions[2]..(worksheet.dimensions[3]-1) do
@@ -163,8 +166,8 @@ class ReagentGroupsController < ApplicationController
                     value = worksheet.cell(row, column)
                     idField = column_headers[column]
                   else
-                    findIDEntry = column_headers[column].where('LOWER(name) = :name', :name => worksheet.cell(row, column).downcase).limit(1).all
-                    params[:foo].push({'column'=> column, 'header'=> column_headers[column], 'name'=> worksheet.cell(row, column), 'idEntry'=> findIDEntry})
+                    findIDEntry = column_headers[column].where('name LIKE :name', :name => "%#{worksheet.cell(row, column).downcase}%").limit(1).all
+                    # params[:foo].push({'column'=> column, 'header'=> column_headers[column], 'name'=> worksheet.cell(row, column), 'idEntry'=> findIDEntry})
                     unless findIDEntry.empty?
                       value = findIDEntry.first.id
                       idField = column_headers[column].name.underscore + '_id'
@@ -185,6 +188,8 @@ class ReagentGroupsController < ApplicationController
             if prospectiveReagent.reagent_type_id.nil?
               prospectiveReagent.reagent_type_id = ReagentType.all.first.id
             end
+            prospectiveReagent.name = prospectiveReagent.name + "-" + reagent_i.to_s
+            reagent_i += 1
             newReagentList << prospectiveReagent
           end
           # params[:bal] = worksheet.cell(1,1)

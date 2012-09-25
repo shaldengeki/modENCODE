@@ -57,11 +57,12 @@ class Reagent < ActiveRecord::Base
   def transcription_factor_name
   end
   def transcription_factor_name=(name)
-    tf = TranscriptionFactor.where("LOWER(name) = :name", :name => name).first
+    tf = Alias.where(:name => name).first
     if tf.nil?
       self.isoforms = []
     else
-      Isoform.where(:transcription_factor_id => tf.id).all.each do |isoform|
+      self.description = TranscriptionFactor.find(tf.transcription_factor_id).name
+      Isoform.where(:transcription_factor_id => tf.transcription_factor_id).all.each do |isoform|
         self.isoforms << isoform
       end
     end
