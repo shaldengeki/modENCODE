@@ -9,7 +9,7 @@ class TranscriptionFactorsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @transcription_factors }
+      format.json { render json: TranscriptionFactorsDatatable.new(view_context) }
     end
   end
 

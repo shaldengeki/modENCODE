@@ -12,6 +12,7 @@ gem 'rails3-jquery-autocomplete', :git => 'git@github.com:shaldengeki/rails3-jqu
 gem 'd3-rails'
 gem 'acts_as_list'
 gem 'roo'
+gem 'will_paginate'
 
 # Gems used only for assets and not required
 # in production environments by default.

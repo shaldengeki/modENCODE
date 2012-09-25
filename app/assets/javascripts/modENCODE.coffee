@@ -15,7 +15,9 @@ jQuery ->
       "oLanguage": {"sEmptyTable": "No records were found..", "sZeroRecords": "No records match your filter."}
     $(".dataTable-form").each ->
       $(this).submit ->
-        $(thisDataTable.fnGetHiddenTrNodes()).find("input").appendTo this
+        $(thisDataTable.fnGetHiddenTrNodes()).find("input").filter ->
+          this.value.length != 0;
+        .appendTo this
         return
       return
     return

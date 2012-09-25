@@ -134,7 +134,7 @@ class ReagentGroupsController < ApplicationController
           ReagentAttribute.all.each do |attribute|
             target_attributes[attribute.name] =  ReagentAttribute
           end
-          # params[:target_attributes] = target_attributes
+          params[:target_attributes] = target_attributes
 
           # get column headers and set target attributes.
           column_headers = {}
@@ -147,8 +147,8 @@ class ReagentGroupsController < ApplicationController
               column_headers[column] = target_attributes[header]
             end
           end
-          # params[:column_headers] = column_headers
-          # params[:foo] = []
+          params[:column_headers] = column_headers
+          params[:foo] = []
           # now create reagents for each row based on these attributes.
           for row in (worksheet.dimensions[0]+1)..worksheet.dimensions[1] do
             if worksheet.cell(row, worksheet.dimensions[2]).blank?
@@ -163,7 +163,7 @@ class ReagentGroupsController < ApplicationController
                     idField = column_headers[column]
                   else
                     findIDEntry = column_headers[column].where('LOWER(name) = :name', :name => worksheet.cell(row, column).downcase).limit(1).all
-                    # params[:foo].push({'column'=> column, 'header'=> column_headers[column], 'name'=> worksheet.cell(row, column), 'idEntry'=> findIDEntry})
+                    params[:foo].push({'column'=> column, 'header'=> column_headers[column], 'name'=> worksheet.cell(row, column), 'idEntry'=> findIDEntry})
                     unless findIDEntry.empty?
                       value = findIDEntry.first.id
                       idField = column_headers[column].name.underscore + '_id'
@@ -189,10 +189,12 @@ class ReagentGroupsController < ApplicationController
           # params[:bal] = worksheet.cell(1,1)
         end
         # pull the remaining genes down from the queue.
-        num_from_queue = (params[:reagent_group][:total_reagents].to_i - tf_list.length)
+        num_from_queue = (params[:reagent_group][:total_reagents].to_i - newReagentList.length)
         num_from_queue = 0 if num_from_queue < 0
         # TODO: make this not awful.
         case params[:reagent_group][:sort_by]
+          when "flag"
+            params[:reagent_group][:sort_by] = "flag"
           when "fpkm"
             params[:reagent_group][:sort_by] = "fpkm_r1"
           when "frac"
@@ -207,8 +209,10 @@ class ReagentGroupsController < ApplicationController
             params[:reagent_group][:sort_order] = "DESC"
         end
 
-        Isoform.joins('LEFT JOIN transcription_factors ON transcription_factors.id = isoforms.transcription_factor_id').where('transcription_factors.gene_type_id = :gene_type_id', :gene_type_id => params[:reagent_group][:gene_type_id]).where('transcription_factors.id not in (?)', tf_list.map{|tf| tf[:transcription_factor].id}).where("isoforms." + params[:reagent_group][:sort_by] + " IS NOT NULL").order("isoforms." + params[:reagent_group][:sort_by] + ' ' + params[:reagent_group][:sort_order]).limit(num_from_queue).each do |isoform|
-          tf_list.push({:isoforms => [isoform], :transcription_factor => isoform.transcription_factor})
+        if num_from_queue > 0
+          Isoform.joins('LEFT JOIN transcription_factors ON transcription_factors.id = isoforms.transcription_factor_id').where('transcription_factors.gene_type_id = :gene_type_id', :gene_type_id => params[:reagent_group][:gene_type_id]).where('transcription_factors.id not in (?)', tf_list.map{|tf| tf[:transcription_factor].id}).where("isoforms." + params[:reagent_group][:sort_by] + " IS NOT NULL").order("isoforms." + params[:reagent_group][:sort_by] + ' ' + params[:reagent_group][:sort_order]).limit(num_from_queue).each do |isoform|
+            tf_list.push({:isoforms => [isoform], :transcription_factor => isoform.transcription_factor})
+          end
         end
         # now create reagents and add them to an initialized reagent group.
         i = 1
