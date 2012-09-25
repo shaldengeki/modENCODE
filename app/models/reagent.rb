@@ -54,5 +54,16 @@ class Reagent < ActiveRecord::Base
   def isoform_id_tokens=(ids)
     self.isoform_ids = ids.split(",") unless ids.blank?
   end
-
+  def transcription_factor_name
+  end
+  def transcription_factor_name=(name)
+    tf = TranscriptionFactor.where("LOWER(name) = :name", :name => name).first
+    if tf.nil?
+      self.isoforms = []
+    else
+      Isoform.where(:transcription_factor_id => tf.id).all.each do |isoform|
+        self.isoforms << isoform
+      end
+    end
+  end
 end

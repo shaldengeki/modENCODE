@@ -17,8 +17,8 @@ ModENCODE::Application.routes.draw do
   get "pages/dashboard"
   get "pages/completionProgress"
   get "pages/contact"
-  match '/dashboard', :to => 'pages#dashboard'
-  match '/contact', :to => 'pages#contact'
+  match '/dashboard', :to => 'pages#dashboard', :as => :dashboard
+  match '/contact', :to => 'pages#contact', :as => :contact
 
   resources :pipelines
 

@@ -134,6 +134,7 @@ class ReagentGroupsController < ApplicationController
           ReagentAttribute.all.each do |attribute|
             target_attributes[attribute.name] =  ReagentAttribute
           end
+          target_attributes["gene"] = "transcription_factor_name"
           params[:target_attributes] = target_attributes
 
           # get column headers and set target attributes.
@@ -188,6 +189,7 @@ class ReagentGroupsController < ApplicationController
           end
           # params[:bal] = worksheet.cell(1,1)
         end
+        params[:newReagentList] = newReagentList
         # pull the remaining genes down from the queue.
         num_from_queue = (params[:reagent_group][:total_reagents].to_i - newReagentList.length)
         num_from_queue = 0 if num_from_queue < 0
@@ -232,10 +234,14 @@ class ReagentGroupsController < ApplicationController
           i += 1
         end
         # add appropriate isoforms to each reagent.
+        params[:addedIsoforms] = []
+        params[:newReagentIsoforms] = []
         newReagentList.each_with_index do |reagent, key|
+          params[:newReagentIsoforms] << reagent.isoforms
           unless key.nil? or reagent.isoforms.empty?
             # add all isoforms that converge at the same stop codon as any of these isoforms.
             reagent.isoforms.each do |isoform|
+              params[:addedIsoforms] << isoform
               unless isoform.stop_codon_end.blank?
                 Isoform.where(:stop_codon_end => isoform.stop_codon_end).all.each do |addIsoform|
                   unless newReagentList[key].isoforms.include? addIsoform
