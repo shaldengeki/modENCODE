@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id].except(:password_hash, :remember_token))
+    @user = User.find(params[:id])
   end
 
   # POST /users
