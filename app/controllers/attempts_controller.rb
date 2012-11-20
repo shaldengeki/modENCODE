@@ -82,7 +82,7 @@ class AttemptsController < ApplicationController
       status[:started_at] = DateTime.now
     end
     respond_to do |format|
-      if @attempt.save
+      if @attempt.save and @attempt.update_attributes(:attempt_values => params[:attempt][:attempt_values_attributes])
         format.html { redirect_to @attempt, notice: 'Attempt was successfully created.' }
         format.json { render json: @attempt, status: :created, location: @attempt }
       else

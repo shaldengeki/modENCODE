@@ -90,7 +90,7 @@ class ReagentsController < ApplicationController
     @reagent = Reagent.new(params[:reagent])
 
     respond_to do |format|
-      if @reagent.save
+      if @reagent.save and @reagent.update_attributes(:reagent_values => params[:reagent][:reagent_values_attributes])
         format.html { redirect_to @reagent, notice: 'Reagent was successfully created.' }
         format.json { render json: @reagent, status: :created, location: @reagent }
       else

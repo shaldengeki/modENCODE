@@ -6,7 +6,7 @@ class Status < ActiveRecord::Base
   accepts_nested_attributes_for :attempt, :reject_if => lambda { |a| a[:user_ids].empty? }
   attr_accessible :start, :end, :position, :description, :attempt_id, :user_id, :step_id, :started_at, :success, :failure, :attempt_attributes, :reagent_id
 
-  validates :description, :presence => true
+  validates :description, :length => {:in => 0..1000}, :allow_blank => true
   validates :start, :inclusion => {:in => [true, false]}
   validates :end, :inclusion => {:in => [true, false]}
   validates :success, :inclusion => {:in => [true, false]}

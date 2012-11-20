@@ -26,7 +26,9 @@ class PipelinesController < ApplicationController
   # GET /pipelines/new
   # GET /pipelines/new.json
   def new
-    3.times { @pipeline.steps.build }
+    for i in 1..3
+      @pipeline.steps.build(:position => i)
+    end
 
     respond_to do |format|
       format.html # new.html.erb

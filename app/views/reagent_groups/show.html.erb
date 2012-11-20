@@ -22,7 +22,7 @@
       <td><%= link_to reagent.name, reagent %></td>
       <td><%= reagent.description %></td>
       <td><%= raw(reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}.join(",")) %></td>
-      <td><%= reagent.last_status.nil? ? "None" : reagent.last_status.description %></td>
+      <td><%= reagent.last_status.nil? ? "None" : link_to(reagent.last_status.step.name.to_s + " (" + reagent.last_status.outcome_text + ")", reagent.last_status) %></td>
       <td><%= reagent.last_status.nil? ? "Never" : I18n.localize(reagent.last_status.updated_at, :format => :short) %></td>
     </tr>
   <% end %>

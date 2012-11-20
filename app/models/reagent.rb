@@ -17,12 +17,17 @@ class Reagent < ActiveRecord::Base
   validates :source_id, :presence => true
   validates :reagent_type_id, :presence => true
 
+  def transcription_factor_id
+    self.isoforms.first.transcription_factor_id
+  end
+
   def last_status
     most_recent_attempt = attempts.max_by do |attempt|
       attempt.last_status.nil? ? nil : attempt.last_status.updated_at
     end
     most_recent_attempt.nil? ? nil : most_recent_attempt.last_status
   end
+
   def reagent_values=(hash)
     hash.each do |key, reagent_value|
       unless reagent_value.nil? or (reagent_value[:reagent_attribute_id].nil? and reagent_value[:reagent_attribute_attributes][:name].blank?)
@@ -48,14 +53,18 @@ class Reagent < ActiveRecord::Base
       end
     end
   end
+
   def isoform_id_tokens
     self.isoform_ids.join(", ")
   end
+
   def isoform_id_tokens=(ids)
     self.isoform_ids = ids.split(",") unless ids.blank?
   end
+
   def transcription_factor_name
   end
+
   def transcription_factor_name=(name)
     tf = Alias.where(:name => name).first
     if tf.nil?

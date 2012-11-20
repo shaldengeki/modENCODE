@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(:version => 20120914151148) do
     t.datetime "updated_at",              :null => false
   end
 
-  add_index "aliases", ["name", "transcription_factor_id"], :name => "name", :unique => true
   add_index "aliases", ["name"], :name => "index_aliases_on_name"
   add_index "aliases", ["transcription_factor_id"], :name => "index_aliases_on_transcription_factor_id"
 
@@ -195,20 +194,6 @@ ActiveRecord::Schema.define(:version => 20120914151148) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "status_updates", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "status_id"
-    t.integer  "reagent_id"
-    t.datetime "time"
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "status_updates", ["reagent_id"], :name => "index_status_updates_on_reagent_id"
-  add_index "status_updates", ["status_id"], :name => "index_status_updates_on_status_id"
-  add_index "status_updates", ["user_id"], :name => "index_status_updates_on_user_id"
-
   create_table "statuses", :force => true do |t|
     t.string   "description"
     t.boolean  "start"
@@ -240,13 +225,6 @@ ActiveRecord::Schema.define(:version => 20120914151148) do
 
   add_index "steps", ["name"], :name => "index_steps_on_name"
   add_index "steps", ["pipeline_id"], :name => "index_steps_on_pipeline_id"
-
-  create_table "tags", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
 
   create_table "transcription_factors", :force => true do |t|
     t.string   "name"

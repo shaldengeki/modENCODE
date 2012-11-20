@@ -67,6 +67,7 @@ class ReagentGroupsController < ApplicationController
   end
   def review_batch
     begin
+      flashErrors = []
       ActiveRecord::Base.transaction do
         # first, initialize the reagent group.
         @reagent_group = ReagentGroup.new(params[:reagent_group])
@@ -77,16 +78,27 @@ class ReagentGroupsController < ApplicationController
         unless params[:transcription_factors_text_list].blank?
           params[:transcription_factors_text_list][0].strip.split.each do |gene_name|
             find_tf = nil
-            find_alias = Alias.find_by_name(gene_name)
-            find_tf = TranscriptionFactor.find_by_flybase_id(gene_name) if find_alias.nil?
-            find_tf = TranscriptionFactor.find_by_cg_id(gene_name) if find_tf.nil?
-            find_tf = TranscriptionFactor.find_by_refseq_id(gene_name) if find_tf.nil?
-            find_tf = TranscriptionFactor.find_by_entrez_id(gene_name) if find_tf.nil?
-            find_tf = TranscriptionFactor.find_by_hgnc_id(gene_name) if find_tf.nil?
-            find_tf = TranscriptionFactor.find_by_ensembl_id(gene_name) if find_tf.nil?
-
-            tf_list.push({:isoforms => [], :transcription_factor => TranscriptionFactor.find(find_alias.transcription_factor_id)}) unless find_alias.nil?
-            tf_list.push({:isoforms => [], :transcription_factor => find_tf}) unless find_tf.nil?
+            find_alias = Alias.find(:first, :conditions => ["lower(name) = ?", gene_name.downcase])
+            if find_alias.nil?
+              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(flybase_id) = ?", gene_name.downcase])
+              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(cg_id) = ?", gene_name.downcase]) if addTf.nil?
+              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(refseq_id) = ?", gene_name.downcase]) if addTf.nil?
+              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(entrez_id) = ?", gene_name.downcase]) if addTf.nil?
+              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(hgnc_id) = ?", gene_name.downcase]) if addTf.nil?
+              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(ensembl_id) = ?", gene_name.downcase]) if addTf.nil?
+            else
+              addTf = TranscriptionFactor.find(find_alias.transcription_factor_id)
+            end
+            if addTf.nil?
+              flashErrors << "#{gene_name} could not be found!"
+            else
+              if addTf.isoforms.empty?
+                addIsoforms = []
+              else
+                addIsoforms = [addTf.isoforms.first]
+              end
+              tf_list.push({:isoforms => addIsoforms, :transcription_factor => addTf})
+            end
           end
         end
         # push candidate genes from the select list.
@@ -111,8 +123,7 @@ class ReagentGroupsController < ApplicationController
 
           # load a list of target attributes to search against.
           target_attributes = Hash.new
-          target_methods = Reagent.public_instance_methods
-          target_methods.each do |method|
+          Reagent.public_instance_methods.each do |method|
             # if this is an object, set its search method properly.
             begin
               target_attributes[method.to_s] = method.to_s.singularize.camelize.constantize
@@ -122,11 +133,15 @@ class ReagentGroupsController < ApplicationController
           end
           Reagent.columns.each do |column|
             if column.sql_type == "int(11)" and column.name.end_with? "_id"
-              # this is a nested model ID.
-              attributeName = column.name[0..-4]
-              tableName = attributeName.pluralize
-              attributeObject = attributeName.camelize.constantize
-              target_attributes[attributeName] = attributeObject
+              # this might be a nested model ID.
+              begin
+                attributeName = column.name[0..-4]
+                tableName = attributeName.pluralize
+                attributeObject = attributeName.camelize.constantize
+                target_attributes[attributeName] = attributeObject
+              rescue NameError
+                target_attributes[column.name] = column.name
+              end
             else
               target_attributes[column.name] = column.name
             end
@@ -192,10 +207,38 @@ class ReagentGroupsController < ApplicationController
             reagent_i += 1
             newReagentList << prospectiveReagent
           end
-          # params[:bal] = worksheet.cell(1,1)
         end
-        params[:newReagentList] = newReagentList
+
+        # now create reagents and add them to an initialized reagent group.
+        i = 1
+        tf_list.each do |this_gene|
+          new_number = (Reagent.joins('LEFT JOIN isoforms_reagents ON reagent_id = reagents.id').joins('LEFT JOIN isoforms ON isoforms.id = isoforms_reagents.isoform_id').where('isoforms.transcription_factor_id = :transcription_factor_id', :transcription_factor_id => this_gene[:transcription_factor].id).count + 1).to_s
+          # new_number = ("%0" + Math.log10(tf_list.length.to_i).ceil.to_s + "d") % i
+          new_name = this_gene[:transcription_factor].name + "-" + new_number
+          new_description = this_gene[:transcription_factor].name
+          @reagent = Reagent.new(:name => new_name,
+                                 :description => new_description,
+                                 :source_id => current_user.source.id,
+                                 :reagent_type_id => params[:reagent_group][:reagent_type_id],
+                                 :reagent_groups => [@reagent_group])
+          unless this_gene[:isoforms].empty?
+            @reagent.isoforms = this_gene[:isoforms]
+          end
+          # add all codons that converge on any of the stop codons.
+          stopCodons = @reagent.isoforms.map{|isoform| isoform.stop_codon_end unless isoform.stop_codon_end.blank?}
+          this_gene[:isoforms].each do |appendIsoform|
+            if not appendIsoform.stop_codon_end.blank? and not @reagent.isoforms.include?(appendIsoform) and stopCodons.include?(appendIsoform.stop_codon_end)
+              @reagent.isoforms << appendIsoform
+            end
+          end
+          newReagentList << @reagent
+          i += 1
+        end
+
         # pull the remaining genes down from the queue.
+        if params[:reagent_group][:total_reagents].blank? or params[:reagent_group][:total_reagents].to_i < 1
+          params[:reagent_group][:total_reagents] = newReagentList.length
+        end
         num_from_queue = (params[:reagent_group][:total_reagents].to_i - newReagentList.length)
         num_from_queue = 0 if num_from_queue < 0
         # TODO: make this not awful.
@@ -218,37 +261,28 @@ class ReagentGroupsController < ApplicationController
 
         if num_from_queue > 0
           Isoform.joins('LEFT JOIN transcription_factors ON transcription_factors.id = isoforms.transcription_factor_id').where('transcription_factors.gene_type_id = :gene_type_id', :gene_type_id => params[:reagent_group][:gene_type_id]).where('transcription_factors.id not in (?)', tf_list.map{|tf| tf[:transcription_factor].id}).where("isoforms." + params[:reagent_group][:sort_by] + " IS NOT NULL").order("isoforms." + params[:reagent_group][:sort_by] + ' ' + params[:reagent_group][:sort_order]).limit(num_from_queue).each do |isoform|
-            tf_list.push({:isoforms => [isoform], :transcription_factor => isoform.transcription_factor})
+            new_number = (Reagent.joins('LEFT JOIN isoforms_reagents ON reagent_id = reagents.id').joins('LEFT JOIN isoforms ON isoforms.id = isoforms_reagents.isoform_id').where('isoforms.transcription_factor_id = :transcription_factor_id', :transcription_factor_id => isoform.transcription_factor.id).count + 1).to_s
+            # new_number = ("%0" + Math.log10(tf_list.length.to_i).ceil.to_s + "d") % i
+            new_name = isoform.transcription_factor.name + "-" + new_number
+            new_description = isoform.transcription_factor.name
+            @reagent = Reagent.new(:name => new_name,
+                                   :description => new_description,
+                                   :source_id => current_user.source.id,
+                                   :reagent_type_id => params[:reagent_group][:reagent_type_id],
+                                   :reagent_groups => [@reagent_group])
+            @reagent.isoforms = [isoform]
+            newReagentList << @reagent
+            i += 1
           end
         end
-        # now create reagents and add them to an initialized reagent group.
-        i = 1
-        tf_list.each do |this_gene|
-          new_number = ("%0" + Math.log10(tf_list.length.to_i).ceil.to_s + "d") % i
-          new_name = params[:reagent_group][:name] + "-" + this_gene[:transcription_factor].name + "-" + new_number
-          new_description = this_gene[:transcription_factor].name
-          @reagent = Reagent.new(:name => new_name,
-                                 :description => new_description,
-                                 :source_id => current_user.source.id,
-                                 :reagent_type_id => params[:reagent_group][:reagent_type_id],
-                                 :reagent_groups => [@reagent_group])
-          unless this_gene[:isoforms].empty?
-            @reagent.isoforms = this_gene[:isoforms]
-          end
-          newReagentList << @reagent
-          i += 1
-        end
+
         # add appropriate isoforms to each reagent.
-        params[:addedIsoforms] = []
-        params[:newReagentIsoforms] = []
         newReagentList.each_with_index do |reagent, key|
-          params[:newReagentIsoforms] << reagent.isoforms
           unless key.nil? or reagent.isoforms.empty?
             # add all isoforms that converge at the same stop codon as any of these isoforms.
             reagent.isoforms.each do |isoform|
-              params[:addedIsoforms] << isoform
               unless isoform.stop_codon_end.blank?
-                Isoform.where(:stop_codon_end => isoform.stop_codon_end).all.each do |addIsoform|
+                Isoform.where(:transcription_factor_id => isoform.transcription_factor_id, :stop_codon_end => isoform.stop_codon_end).all.each do |addIsoform|
                   unless newReagentList[key].isoforms.include? addIsoform
                     newReagentList[key].isoforms << addIsoform
                   end
@@ -257,8 +291,10 @@ class ReagentGroupsController < ApplicationController
             end
           end
         end
-
         @reagent_group.reagents = newReagentList
+      end
+      unless flashErrors.empty?
+        flash[:error] = flashErrors.join(" ")
       end
     rescue ActiveRecord::RecordInvalid => invalid
       respond_to do |format|
