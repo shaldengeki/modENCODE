@@ -36,10 +36,10 @@ private
   end
 
   def fetch_transcription_factors
-    transcription_factors = TranscriptionFactor.order("#{sort_column} #{sort_direction}")
+    transcription_factors = TranscriptionFactor.joins(:gene_type).order("#{sort_column} #{sort_direction}")
     transcription_factors = transcription_factors.page(page).per_page(per_page)
     if params[:sSearch].present?
-      transcription_factors = transcription_factors.where("name like :search or flybase_id like :search or cg_id like :search or refseq_id like :search or entrez_id like :search or hgnc_id like :search or ensembl_id like :search", search: "%#{params[:sSearch]}%")
+      transcription_factors = transcription_factors.joins(:gene_type).joins(:aliases).where("UPPER(`transcription_factors`.`name`) like UPPER(:search) or UPPER(`aliases`.`name`) LIKE UPPER(:search) or UPPER(flybase_id) like UPPER(:search) or UPPER(cg_id) like UPPER(:search) or UPPER(refseq_id) like UPPER(:search) or UPPER(entrez_id) like UPPER(:search) or UPPER(hgnc_id) like UPPER(:search) or UPPER(ensembl_id) like UPPER(:search) or UPPER(`gene_types`.`name`) like UPPER(:search)", search: "%#{params[:sSearch]}%")
     end
     transcription_factors
   end
@@ -53,7 +53,7 @@ private
   end
 
   def sort_column
-    columns = %w[name category released_on price]
+    columns = %w[id `gene_types`.`name` name]
     columns[params[:iSortCol_0].to_i]
   end
 

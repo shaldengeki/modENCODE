@@ -40,8 +40,9 @@ class StatusesController < ApplicationController
   # POST /statuses
   # POST /statuses.json
   def create
-    if not params[:attempt_id].nil? and params[:attempt_id].is_json?
-      params[:status][:attempt_id] = JSON.parse(params[:attempt_id])
+    if params[:attempt_ids] and params[:attempt_ids].is_json?
+      # updating multiple attempt IDs with the same status.
+      params[:status][:attempt_id] = JSON.parse(params[:attempt_ids])
       final_status = true
       params[:status][:attempt_id].each do |attempt_id|
         attempt = Attempt.find(attempt_id)
@@ -54,6 +55,31 @@ class StatusesController < ApplicationController
         @status.position = @status.next_position
         @status.user_id = current_user.id
         final_status = final_status && @status.save && attempt.save
+      end
+    elsif params[:reagent_ids] and params[:reagent_ids].is_json?
+      # creating / updating multiple attempts with the same status.
+      final_status = true
+      params[:reagent_ids] = JSON.parse(params[:reagent_ids])
+      params[:reagent_ids].each do |reagent_id|
+        targetReagent = Reagent.find(reagent_id)
+        attempt = Attempt.where(:reagent_id => reagent_id).first
+        params[:baby] = attempt
+        unless attempt
+          attempt = targetReagent.attempts.build()
+          attempt.pipeline_id = Step.find(params[:status][:step_id]).pipeline.id
+          params[:dont] = attempt
+        end
+        unless attempt.user_ids.include? current_user.id
+          attempt.user_ids = attempt.user_ids.append(current_user.id)
+          params[:hurt] = attempt
+        end
+        @status = attempt.statuses.build(params[:status].except(:attempt_id, :position))
+        @status.user_id = current_user.id
+        @status.start = 0
+        @status.position = @status.next_position
+        params[:me] = @status
+        final_status = final_status && @status.save && attempt.save && targetReagent.save
+        logger.debug @status.errors.full_messages
       end
     else
       attempt = Attempt.find(params[:status][:attempt_id])

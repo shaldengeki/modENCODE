@@ -20,3 +20,12 @@ jQuery ->
       displayGeneSelectionField $(this).val()
   $('#reagent_group_gene_type_id').change ->
     filterGeneList $("#reagent_group_gene_type_id option:selected").text()
+
+  $('.reagent_checkbox').each () ->
+    $(this).click () ->
+      reagents = []
+      $('.reagent_checkbox:checked').each () ->
+        reagents.push $(this).val()
+        return
+      $('input[name=reagent_ids]').val JSON.stringify(reagents)
+      $('input[name=reagent_ids]').trigger 'change'

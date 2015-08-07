@@ -10,15 +10,17 @@
 <h2>Reagents:</h2>
 <table class='dataTable table table-bordered table-striped' id=''>
   <thead>
-  <th>Reagent</th>
-  <th>Description</th>
-  <th>Isoforms</th>
-  <th>Last status</th>
-  <th>Last updated</th>
+    <th></th>
+    <th>Reagent</th>
+    <th>Description</th>
+    <th>Isoforms</th>
+    <th>Last status</th>
+    <th>Last updated</th>
   </thead>
   <tbody>
   <% @reagent_group.reagents.each do |reagent| %>
     <tr>
+      <td><%= check_box_tag("reagent_ids[]", reagent.id, false, :class => "reagent_checkbox") %></td>
       <td><%= link_to reagent.name, reagent %></td>
       <td><%= reagent.description %></td>
       <td><%= raw(reagent.isoforms.map{|isoform| link_to(isoform.name, isoform)}.join(",")) %></td>
@@ -28,6 +30,11 @@
   <% end %>
   </tbody>
 </table>
-
 <%= link_to 'Edit', edit_reagent_group_path(@reagent_group) %> |
-<%= link_to 'Back', reagent_groups_path %>
+
+<div class='row-fluid'>
+  <div class='span6'>
+    <h2 class='center'>Update selected reagents</h2>
+    <%= render :partial => 'statuses/form', :locals => {:attempt_ids => []} %>
+  </div>
+</div>

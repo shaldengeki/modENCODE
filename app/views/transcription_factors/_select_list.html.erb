@@ -3,17 +3,14 @@
    global_style ||= ""
 %>
 <div class="control-group gene_input" id="gene_select_list" style="<%= global_style %>">
-  <%= label_tag :genes, nil, :class => "control-label" %>
-  <div class="controls">
-    <table class='dataTable-ajax table table-bordered table-striped' id='gene_select_table' data-source="<%= transcription_factors_url(format: "json") %>">
-      <thead>
-      <th>#</th>
-      <th>Type</th>
-      <th>Gene</th>
-      <th>Also known as</th>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-  </div>
+  <table class='dataTable-ajax table table-bordered table-striped' id='gene_select_table' data-source="<%= transcription_factors_url(format: "json") %>">
+    <thead>
+    <th>#</th>
+    <th>Type</th>
+    <th>Gene</th>
+    <th>Also known as</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </div>

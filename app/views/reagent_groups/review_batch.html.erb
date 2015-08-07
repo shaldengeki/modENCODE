@@ -40,6 +40,8 @@
         <th>Gene</th>
         <th>Type</th>
         <th>Isoform(s)</th>
+        <th>Avg FPKM</th>
+        <th>Max FPKM (protein only)</th>
         </thead>
         <tbody>
         <%= f.fields_for :reagents do |builder| %>
@@ -61,6 +63,29 @@
               <%= builder.object.isoforms.nil? ? "None" : raw(builder.object.isoforms.map{|isoform| link_to(isoform.name, isoform)}.join(", ")) %>
               <%= builder.hidden_field(:isoform_id_tokens, :value => builder.object.isoform_ids.join(",")) unless builder.object.isoform_ids.empty? %>
             </td>
+            <td>
+              <% if builder.object.isoforms.nil? or builder.object.isoforms.empty? %>
+              None
+            </td>
+            <td>
+              None
+            </td>
+              <% else
+                  avgFPKM = builder.object.isoforms.inject(0){ |sum, isoform| sum + isoform.fpkm_r1 unless isoform.fpkm_r1.nil?}.to_f / builder.object.isoforms.reject{|isoform| not isoform.fpkm_r1.nil? }.size %>
+              <%= avgFPKM %>
+            </td>
+            <td>
+              <%
+                  selectedIsoforms = builder.object.isoforms.select{|isoform| isoform.isoform_type == "protein_coding" && !isoform.fpkm_r1.nil? }
+                  if selectedIsoforms.nil? or selectedIsoforms.empty? %>
+              None
+            </td>
+                  <% else
+                    maxFPKM = selectedIsoforms.map{|isoform| isoform.fpkm_r2.nil? ? isoform.fpkm_r1 : (isoform.fpkm_r1 + isoform.fpkm_r2)/2.0}.max %>
+              <%= maxFPKM %>
+            </td>
+                  <% end
+              end %>
           </tr>
         <% end %>
         </tbody>

@@ -3,13 +3,14 @@
    global_style ||= ""
 %>
 <div class="control-group gene_input" id="gene_text_list" style="<%= global_style %>">
-  <%= label_tag :genes, nil, :class => "control-label" %>
-  <div class="controls row-fluid">
+  <div class="row-fluid">
     <div class="span8">
-      <%= text_area model_type + "_text_list", nil, :rows => 15, :class=>"span12" %>
+      <div class="row-fluid">
+        <%= text_area model_type + "_text_list", nil, :rows => 15, :class=>"span12" %>
+      </div>
     </div>
     <div class="span4">
-      <p>Names can be gene names, flybase, CG, refseq, hgnc, entrez, or ensembl IDs.</p>
+      <p>Gene names can be gene names, flybase, CG, refseq, hgnc, entrez, or ensembl IDs.</p>
       <p>The names aren't case-sensitive, so there's no need to worry about that.</p>
     </div>
   </div>

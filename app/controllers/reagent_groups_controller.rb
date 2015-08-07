@@ -1,3 +1,5 @@
+require 'uri'
+require "net/http"
 class ReagentGroupsController < ApplicationController
   load_and_authorize_resource
   # GET /reagent_groups
@@ -15,6 +17,7 @@ class ReagentGroupsController < ApplicationController
   # GET /reagent_groups/1.json
   def show
     @reagent_group = ReagentGroup.find(params[:id])
+    @status = Status.new()
 
     respond_to do |format|
       format.html # show.html.erb
@@ -76,11 +79,19 @@ class ReagentGroupsController < ApplicationController
         newReagentList = []
         # loop over all the entries in the text list, pushing candidate genes onto a list.
         unless params[:transcription_factors_text_list].blank?
+          # if appropriate, validate the HUGO names of this list.
+          if params[:validate_hugo].to_i == 1
+            # hit the HUGO website with this list of gene names.
+            formParams = {:data => params[:transcription_factors_text_list], :format => 'table', :table_case => 'insensitive', :list_format => 'text', :onfail => 'retain', :mode => 'list', :submit => 'submit'}
+            x = Net::HTTP.post_form(URI.parse("http://www.genenames.org/cgi-bin/hgnc_bulkcheck.pl"), formParams)
+            params[:foo] = x.body
+          end
           params[:transcription_factors_text_list][0].strip.split.each do |gene_name|
             find_tf = nil
             find_alias = Alias.find(:first, :conditions => ["lower(name) = ?", gene_name.downcase])
             if find_alias.nil?
-              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(flybase_id) = ?", gene_name.downcase])
+              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(name) = ?", gene_name.downcase])
+              addTf = TranscriptionFactor.find(:first, :conditions => ["lower(flybase_id) = ?", gene_name.downcase]) if addTf.nil?
               addTf = TranscriptionFactor.find(:first, :conditions => ["lower(cg_id) = ?", gene_name.downcase]) if addTf.nil?
               addTf = TranscriptionFactor.find(:first, :conditions => ["lower(refseq_id) = ?", gene_name.downcase]) if addTf.nil?
               addTf = TranscriptionFactor.find(:first, :conditions => ["lower(entrez_id) = ?", gene_name.downcase]) if addTf.nil?
@@ -262,7 +273,6 @@ class ReagentGroupsController < ApplicationController
         if num_from_queue > 0
           Isoform.joins('LEFT JOIN transcription_factors ON transcription_factors.id = isoforms.transcription_factor_id').where('transcription_factors.gene_type_id = :gene_type_id', :gene_type_id => params[:reagent_group][:gene_type_id]).where('transcription_factors.id not in (?)', tf_list.map{|tf| tf[:transcription_factor].id}).where("isoforms." + params[:reagent_group][:sort_by] + " IS NOT NULL").order("isoforms." + params[:reagent_group][:sort_by] + ' ' + params[:reagent_group][:sort_order]).limit(num_from_queue).each do |isoform|
             new_number = (Reagent.joins('LEFT JOIN isoforms_reagents ON reagent_id = reagents.id').joins('LEFT JOIN isoforms ON isoforms.id = isoforms_reagents.isoform_id').where('isoforms.transcription_factor_id = :transcription_factor_id', :transcription_factor_id => isoform.transcription_factor.id).count + 1).to_s
-            # new_number = ("%0" + Math.log10(tf_list.length.to_i).ceil.to_s + "d") % i
             new_name = isoform.transcription_factor.name + "-" + new_number
             new_description = isoform.transcription_factor.name
             @reagent = Reagent.new(:name => new_name,

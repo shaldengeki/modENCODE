@@ -29,36 +29,43 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :input_method, :class => "control-label" %>
-    <div class="controls">
-      <label class="radio">
-        <%= f.radio_button :input_method, "text_list", :class => "workflow_input_method" %>Space-separated list
-      </label>
-      <label class="radio">
-        <%= f.radio_button :input_method, "select_list", :class => "workflow_input_method" %>Select from list
-      </label>
-      <label class="radio">
-        <%= f.radio_button :input_method, "spreadsheet_file", :class => "workflow_input_method" %>Upload spreadsheet
-      </label>
-    </div>
-  </div>
-  <%= render :partial => 'transcription_factors/select_list', :locals => {:global_style => "display:none"} %>
-  <%= render :partial => 'transcription_factors/text_input', :locals => {:global_style => "display:none"} %>
-  <div class="control-group gene_input" id="gene_spreadsheet_file" style="display:none">
     <%= f.label :genes, :class => "control-label" %>
     <div class="controls">
-      <%= f.file_field :spreadsheet_file %>
+      <div class="tabbable"> <!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-text-list" data-toggle="tab">Input names</a></li>
+          <li><a href="#tab-select-list" data-toggle="tab">Select from list</a></li>
+          <li><a href="#tab-spreadsheet-file" data-toggle="tab">Upload spreadsheet</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-text-list">
+            <%= render :partial => 'transcription_factors/text_input' %>
+          </div>
+          <div class="tab-pane" id="tab-select-list">
+            <%= render :partial => 'transcription_factors/select_list' %>
+          </div>
+          <div class="tab-pane" id="tab-spreadsheet-file">
+            <div class="control-group gene_input" id="gene_spreadsheet_file">
+              <%= f.file_field :spreadsheet_file %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :options, :class => "control-label" %>
+    <div class="controls">
+      <label class="checkbox">
+        <%= check_box_tag :validate_hugo %> Validate HUGO names
+      </label>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :total_reagents, "Total Reagents (will fill to)", :class => "control-label" %>
     <div class="controls">
       <%= f.number_field :total_reagents, :min => 1, :step => 1 %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :sort_order, "Sort by", :class => "control-label" %>
-    <div class="controls">
+      sorted by 
       <%= f.select :sort_by, [["Name", "name"], ["Flag", "flag"], ["FPKM", "fpkm"], ["Frac", "frac"]] %>
       <%= f.select :sort_order, [["ascending", "ASC"], ["descending", "DESC"]] %>
     </div>

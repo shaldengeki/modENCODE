@@ -11,8 +11,10 @@
   <% end %>
   <fieldset>
     <% attempt_ids ||= false
-    if attempt_ids %>
-      <%= hidden_field_tag "attempt_id", "" %>
+    reagent_ids ||= false
+    if attempt_ids or reagent_ids %>
+      <%= hidden_field_tag "attempt_ids", "" %>
+      <%= hidden_field_tag "reagent_ids", "" %>
     <% else %>
     <%= render :partial => 'reagents/find_by_tf_isoforms', :locals => {:f => f, :model_type => "status"} %>
     <div class="control-group">

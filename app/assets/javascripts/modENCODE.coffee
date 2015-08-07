@@ -10,9 +10,10 @@ $(".deselectRadioButton").click((e) ->
 jQuery ->
   $('.dataTable').each ->
     thisDataTable = $(this).dataTable
-      "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
-      "sPaginationType": "bootstrap"
-      "oLanguage": {"sEmptyTable": "No records were found.", "sZeroRecords": "No records match your filter."}
+      sDom: "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
+      sPaginationType: "bootstrap"
+      oLanguage: {"sEmptyTable": "No records were found.", "sZeroRecords": "No records match your filter."}
+      iDisplayLength: 50
     $(".dataTable-form").each ->
       $(this).submit ->
         $(thisDataTable.fnGetHiddenTrNodes()).find("input").filter ->

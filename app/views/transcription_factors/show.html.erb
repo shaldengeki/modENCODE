@@ -9,9 +9,10 @@
     <dt>Description</dt>
     <dd><%= @transcription_factor.description %></dd>
   <% end %>
-  <% unless @transcription_factor.aliases.empty? %>
+  <% uniqueAliases = @transcription_factor.aliases.reject{|aliasObj| aliasObj.name == @transcription_factor.name}.map{|aliasname| aliasname.name}
+  unless uniqueAliases.empty? %>
     <dt>Also known as</dt>
-    <dd><%= (@transcription_factor.aliases.map {|aliasname| aliasname.name} ).join(", ") %></dd>
+    <dd><%= uniqueAliases.join(", ") %></dd>
   <% end %>
   <% unless @transcription_factor.flybase_id.nil? %>
     <dt>Flybase ID</dt>

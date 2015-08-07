@@ -4,7 +4,7 @@
     <div id="progressPieChart"></div>​
   </div>
   <div class="span6">
-    <h2>My Batches</h2>
+    <h2>My Batches <small><%= link_to "(Create one)", "reagent_groups/start_batch" %></small></h2>
     <% if signed_in? %>
     <ul id="myReagentGroups">
       <% current_user.reagent_groups.order("updated_at DESC").all.each do |reagent_group| %>

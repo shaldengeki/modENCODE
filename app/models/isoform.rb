@@ -6,4 +6,5 @@ class Isoform < ActiveRecord::Base
   validates :transcription_factor, :presence => true
   # validates :reagents, :presence => true, :allow_blank => true, :allow_nil => true
   validates :name, :presence => true, :uniqueness => {:case_sensitive => false}
+
 end
